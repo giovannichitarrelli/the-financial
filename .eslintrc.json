@@ -1,8 +1,24 @@
+// {
+//   "extends": [
+//     "next/core-web-vitals"
+//    ],
+//   "rules": {
+//     "no-unused-vars": "error"
+//   }
+// }
 {
   "extends": [
     "next/core-web-vitals"
-   ],
+  ],
   "rules": {
     "no-unused-vars": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["app/_components/ui/**"],
+      "rules": {
+        "no-unused-vars": "off"
+      }
+    }
+  ]
 }
