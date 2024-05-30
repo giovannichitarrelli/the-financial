@@ -1,10 +1,9 @@
 import Stripe from "stripe";
-
-import { headers } from "next/headers";
 import {
   handleProcessWebhookUpdatedSubscription,
   stripe,
-} from "@/app/_lib/stripe";
+} from "@/services/stripe";
+import { headers } from "next/headers";
 
 export async function POST(req: Request) {
   const body = await req.text();

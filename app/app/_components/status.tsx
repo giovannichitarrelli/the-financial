@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/app/_components/ui/badge";
 import { Check, Clock, Pin, PinOff } from "lucide-react";
 
 type StatusBadgeProps = {

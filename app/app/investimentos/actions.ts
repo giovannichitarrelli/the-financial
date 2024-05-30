@@ -1,6 +1,6 @@
 "use server";
-
-import { auth } from "@/app/_lib/auth";
+import { db } from "@/services/database";
+import { auth } from "@/services/auth";
 import {
   DeleteInvestmentsSchema,
   DeleteWithdrawsSchema,
@@ -8,7 +8,6 @@ import {
   upsertWithdrawsSchema,
 } from "./schema";
 import { z } from "zod";
-import { db } from "@/app/_lib/prisma";
 
 // investments
 export async function getUserInvestments() {

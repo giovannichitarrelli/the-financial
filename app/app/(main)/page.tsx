@@ -34,8 +34,7 @@ import {
   PizzaChartYear,
   ProgressChartsYear,
 } from "./_components/charts/data-charts";
-import { auth } from "@/app/_lib/auth";
-import { getUserCurrentPlan } from "@/app/_lib/stripe";
+import { auth } from "@/services/auth";
 import {
   DashboardPage,
   DashboardPageHeader,
@@ -52,6 +51,7 @@ import {
 import ResumeCards from "./_components/resume-cards";
 import ResumeList from "./_components/resume-list";
 import ChartsCards from "./_components/charts-cards";
+import { getUserCurrentPlan } from "@/services/stripe";
 
 export const metadata: Metadata = {
   title: "DinDin - Dashboard",

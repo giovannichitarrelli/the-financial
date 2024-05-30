@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { MainSideBar } from "./_components/main-sidebar";
-import { auth } from "@/app/_lib/auth";
+import { auth } from "@/services/auth";
 
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await auth();

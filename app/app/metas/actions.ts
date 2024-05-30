@@ -1,10 +1,10 @@
 "use server";
 
-import { auth } from "@/app/_lib/auth";
 import { DeleteWishlistSchema, upsertWishlistSchema } from "./schema";
 import { z } from "zod";
-import { db } from "@/app/_lib/prisma";
 
+import { db } from "@/services/database";
+import { auth } from "@/services/auth";
 export async function getUserWishlist() {
   const session = await auth();
   const wishlist = await db.wishlist.findMany({

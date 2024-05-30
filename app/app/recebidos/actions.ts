@@ -1,9 +1,9 @@
 "use server";
 
-import { auth } from "@/app/_lib/auth";
+import { auth } from "@/services/auth";
 import { DeleteSalarySchema, upsertSalarySchema } from "./schema";
 import { z } from "zod";
-import { db } from "@/app/_lib/prisma";
+import { db } from "@/services/database";
 
 export async function getUserSalary() {
   const session = await auth();

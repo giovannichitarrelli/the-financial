@@ -1,8 +1,8 @@
 "use server";
+import { auth } from "@/services/auth";
 import { DeleteExpensesSchema, upsertExpensesSchema } from "./schema";
 import { z } from "zod";
-import { db } from "@/app/_lib/prisma";
-import { auth } from "@/app/_lib/auth";
+import { db } from "@/services/database";
 
 export async function getCategories() {
   const categories = await db.categories.findMany({});

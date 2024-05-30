@@ -1,7 +1,7 @@
 import { Badge } from "@/app/_components/ui/badge";
-import { auth } from "@/app/_lib/auth";
-import { getUserCurrentPlan } from "@/app/_lib/stripe";
+import { auth } from "@/services/auth";
 import { BadgeAlert } from "lucide-react";
+import { getUserCurrentPlan } from "@/services/stripe";
 
 export const FreeAlert = async () => {
   const session = await auth();

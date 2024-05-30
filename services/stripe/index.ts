@@ -1,7 +1,6 @@
 import Stripe from "stripe";
-
 import { config } from "@/config";
-import { db } from "../prisma";
+import { db } from "../database";
 
 export const stripe = new Stripe(config.stripe.secretKey || "", {
   apiVersion: "2024-04-10",
@@ -29,7 +28,7 @@ export const createStripeCustomer = async (input: {
     customer: createdCustomer.id,
     items: [{ price: config.stripe.plans.free.priceId }],
   });
-  Prisma;
+
   await db.user.update({
     where: {
       email: input.email,
@@ -178,8 +177,9 @@ export const getUserCurrentPlan = async (userId: string) => {
 
   if (!user || !user.stripePriceId) {
     throw new Error("User or user stripePriceId not found");
+    //redirect page 404
   }
-  Prisma;
+
   const plan = getPlanByPrice(user.stripePriceId);
 
   // const tasksCount = await Prisma.expenses.count({
@@ -188,7 +188,6 @@ export const getUserCurrentPlan = async (userId: string) => {
   //   },
   // });
 
-  // const stripe = await Stripe.subs
   // const availableTasks = plan.quota.TASKS;
   // const currentTasks = tasksCount;
   // const usage = (currentTasks / availableTasks) * 100;

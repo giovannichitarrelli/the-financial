@@ -25,7 +25,7 @@ import {
   DashboardSideBarNavLink,
   DashboardSideBarNavMain,
 } from "./dashboard/sidebar";
-import { ShareLink } from "./Share";
+import { ShareLink } from "./share";
 
 type MainSideBarProps = {
   user: Session["user"];

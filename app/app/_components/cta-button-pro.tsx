@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/app/_components/ui/button";
 import { Loader2, Rocket } from "lucide-react";
-// import { createCheckoutSessionAction } from "../settings/billing/actions";
+import { createCheckoutSessionAction } from "../settings/billing/actions";
 import React from "react";
 
 const CtaButtonPro = () => {
@@ -11,7 +11,7 @@ const CtaButtonPro = () => {
   }, 3000);
   async function handleSubmit() {
     setIsLoading(true);
-    // await createCheckoutSessionAction();
+    await createCheckoutSessionAction();
   }
 
   return (

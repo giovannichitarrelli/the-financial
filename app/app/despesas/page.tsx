@@ -20,15 +20,16 @@ import CtaButtonPro from "../_components/cta-button-pro";
 import { ExpensesUpsertSheet } from "../_components/_upserts/expenses-upersert-sheet";
 import { FreeAlert } from "../_components/plan-alert";
 import DataFilterExpenses from "./_components/filter-component-expenses";
-import { auth } from "@/app/_lib/auth";
-import { db } from "@/app/_lib/prisma";
-import { getUserCurrentPlan } from "@/app/_lib/stripe";
+
+import { db } from "@/services/database";
+import { auth } from "@/services/auth";
 import {
   DashboardPage,
   DashboardPageHeader,
   DashboardPageHeaderTitle,
   DashboardPageMain,
 } from "../_components/dashboard/page";
+import { getUserCurrentPlan } from "@/services/stripe";
 
 export default async function Page() {
   const currentDate = new Date();
