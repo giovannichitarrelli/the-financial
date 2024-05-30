@@ -37,11 +37,6 @@ import { Categories } from "@prisma/client";
 import { toast } from "sonner";
 import { CalendarDatePicker } from "../data-sheet-picker";
 
-// type ExpensesUpsertSheetProps = {
-//   children?: React.ReactNode;
-//   defaultValue?: Expenses;
-// };
-
 export function ExpensesUpsertSheet() {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
