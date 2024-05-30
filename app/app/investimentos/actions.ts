@@ -25,7 +25,7 @@ export async function getUserInvestments() {
 }
 export async function getUserMonthInvestments(month: number, year: number) {
   const session = await auth();
-  const monthInvestments = await Prisma.investments.findMany({
+  const monthInvestments = await db.investments.findMany({
     where: {
       userId: session?.user?.id,
       createAt: {
