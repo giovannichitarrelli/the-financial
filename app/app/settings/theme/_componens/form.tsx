@@ -38,8 +38,8 @@ export function ThemeForm() {
 
   const onSubmit = form.handleSubmit(async (data) => {
     theme.setTheme(data.theme as "light" | "dark");
-    toast.success("Seu perfil foi atualizado com sucesso!", {
-      description: "Seus dados serão exibidos corretamente...",
+    toast.success("Seu tema foi atualizado com sucesso!", {
+      description: "Atualize a página e aproveite seu novo tema...",
     });
   });
 
