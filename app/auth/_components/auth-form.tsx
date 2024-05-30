@@ -1,3 +1,4 @@
+"use client";
 import { Icons } from "@/app/_components/icons";
 import Logo from "@/app/_components/logo";
 import { Button } from "@/app/_components/ui/button";
