@@ -275,7 +275,7 @@ export default function Home() {
           </div>
         </section>
 
-        <SectionCta />
+        {/* <SectionCta /> */}
 
         <section id="plans" className="px-6 py-12 ">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
