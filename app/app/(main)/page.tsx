@@ -40,7 +40,7 @@ import {
   DashboardPageHeader,
   DashboardPageHeaderTitle,
   DashboardPageMain,
-} from "../_components/dashboard/page";
+} from "../_components/dashboard/dashboard-page";
 import CtaButtonPro from "../_components/cta-button-pro";
 import { HeaderAddButtons } from "./_components/header-add-buttons";
 import { FreeAlert } from "../_components/plan-alert";

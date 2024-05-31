@@ -28,7 +28,7 @@ import {
   DashboardPageHeader,
   DashboardPageHeaderTitle,
   DashboardPageMain,
-} from "../_components/dashboard/page";
+} from "../_components/dashboard/dashboard-page";
 import { getUserCurrentPlan } from "@/services/stripe";
 
 export default async function Page() {

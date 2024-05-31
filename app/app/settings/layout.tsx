@@ -5,7 +5,7 @@ import {
   DashboardPageHeader,
   DashboardPageHeaderTitle,
   DashboardPageMain,
-} from "../_components/dashboard/page";
+} from "../_components/dashboard/dashboard-page";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (

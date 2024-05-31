@@ -1,6 +1,6 @@
 import { ExpensesUpsertSheet } from "../../_components/_upserts/expenses-upersert-sheet";
 import { SalaryUpsertSheet } from "../../_components/_upserts/salary-upersert-sheet";
-import { DashboardPageHeaderNav } from "../../_components/dashboard/page";
+import { DashboardPageHeaderNav } from "../../_components/dashboard/dashboard-page";
 
 export function HeaderAddButtons() {
   return (

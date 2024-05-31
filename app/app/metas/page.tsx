@@ -9,7 +9,7 @@ import {
   DashboardPageHeader,
   DashboardPageHeaderTitle,
   DashboardPageMain,
-} from "../_components/dashboard/page";
+} from "../_components/dashboard/dashboard-page";
 import CtaButtonPro from "../_components/cta-button-pro";
 import { FreeAlert } from "../_components/plan-alert";
 import MsgNoData from "../_components/no-data-table";
