@@ -37,4 +37,5 @@ export const {
     },
   },
   secret: process.env.NEXT_AUTH_SECRET,
+  trustHost: true,
 });
