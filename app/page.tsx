@@ -299,10 +299,10 @@ export default function Home() {
                   <div className="p-6">
                     <p className="text-xl">Assinatura mensal</p>
                     <div className="flex items-center justify-center gap-2 py-6">
-                      <span className="text-xl text-red-500	line-through">
+                      <span className="text-lg text-red-500 line-through	lg:text-xl">
                         R$ 19,90
                       </span>
-                      <span className="text-6xl font-bold text-green-500">
+                      <span className="text-4xl font-bold text-green-500 lg:text-6xl">
                         R$ 9,90
                       </span>
                     </div>
