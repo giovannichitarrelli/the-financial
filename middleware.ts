@@ -1,23 +1,19 @@
 /* eslint-disable no-unused-vars */
 
 import { NextRequest, NextResponse } from "next/server";
-// import { getUrl } from "./app/_lib/get-url";
+import { getUrl } from "./app/_lib/get-url";
 
-// export function middleware(request: NextRequest) {
-//   const token = request.cookies.get("authjs.session-token");
-//   const pathname = request.nextUrl.pathname;
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get("authjs.session-token");
+  const pathname = request.nextUrl.pathname;
 
-//   if (pathname === "/auth" && token) {
-//     return NextResponse.redirect(new URL(getUrl("/app")));
-//   }
+  if (pathname === "/auth" && token) {
+    return NextResponse.redirect(new URL(getUrl("/app")));
+  }
 
-//   if (pathname.includes("/app") && !token) {
-//     return NextResponse.redirect(new URL(getUrl("/auth")));
-//   }
-// }
-
-export default function middleware(req: NextRequest) {
-  return NextResponse.next();
+  if (pathname.includes("/app") && !token) {
+    return NextResponse.redirect(new URL(getUrl("/auth")));
+  }
 }
 
 export const config = {
