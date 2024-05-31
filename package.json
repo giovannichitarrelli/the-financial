@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "cross-env NODE_ENV=development husky install"
+    "prepare": "cross-env NODE_ENV=development husky install",
+    "prisma:generate": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node ./prisma/seed.ts"
