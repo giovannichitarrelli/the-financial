@@ -39,7 +39,6 @@ import {
 } from "./_components/ui/accordion";
 import Link from "next/link";
 import Footer from "./_components/footer";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 export default function Home() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true, isFinite }),
@@ -48,7 +47,6 @@ export default function Home() {
     <div>
       {/* <PageMenu /> */}
       <main>
-        <SpeedInsights />
         <section className=" m-auto flex max-w-screen-xl flex-col justify-center  gap-3 px-6 py-12 md:flex-row">
           <div className="flex w-full flex-col gap-6 md:w-1/2">
             <h1 className=" text-4xl font-extrabold lg:text-6xl">
