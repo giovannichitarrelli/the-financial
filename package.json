@@ -30,6 +30,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@remixicon/react": "^4.2.0",
     "@tremor/react": "^3.17.2",
+    "@vercel/speed-insights": "^1.0.11",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
