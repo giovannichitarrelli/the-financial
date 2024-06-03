@@ -1,3 +1,41 @@
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
+import { Adapter } from "next-auth/adapters";
+import { db } from "@/services/database";
+import { AuthOptions } from "next-auth";
+import { createStripeCustomer } from "@/services/stripe";
+import EmailProvider from "next-auth/providers/email";
+
+export const auth: AuthOptions = {
+  adapter: PrismaAdapter(db) as Adapter,
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+    EmailProvider({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+    }),
+  ],
+  callbacks: {
+    async session({ session, user }) {
+      // Adiciona o ID do usuário na sessão
+      session.user.id = user.id;
+      return session;
+    },
+  },
+  events: {
+    createUser: async (message) => {
+      await createStripeCustomer({
+        email: message.user.email as string,
+        name: message.user.name as string,
+      });
+    },
+  },
+  secret: process.env.NEXT_AUTH_SECRET,
+};
+
 // import { PrismaAdapter } from "@auth/prisma-adapter";
 // import { AuthOptions } from "next-auth";
 // import GoogleProvider from "next-auth/providers/google";

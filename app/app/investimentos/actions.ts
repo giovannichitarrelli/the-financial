@@ -1,6 +1,5 @@
 "use server";
 import { db } from "@/services/database";
-import { auth } from "@/services/auth";
 import {
   DeleteInvestmentsSchema,
   DeleteWithdrawsSchema,
@@ -8,10 +7,12 @@ import {
   upsertWithdrawsSchema,
 } from "./schema";
 import { z } from "zod";
+import { getServerSession } from "next-auth";
+import { auth } from "@/services/auth";
 
 // investments
 export async function getUserInvestments() {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const investments = await db.investments.findMany({
     where: {
       userId: session?.user?.id,
@@ -23,7 +24,7 @@ export async function getUserInvestments() {
   return investments;
 }
 export async function getUserMonthInvestments(month: number, year: number) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const monthInvestments = await db.investments.findMany({
     where: {
       userId: session?.user?.id,
@@ -38,7 +39,7 @@ export async function getUserMonthInvestments(month: number, year: number) {
 export async function upsertInvestments(
   input: z.infer<typeof upsertInvestmentsSchema>,
 ) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   if (!session?.user?.id) {
     return {
       error: "Não autorizado",
@@ -106,7 +107,7 @@ export async function upsertInvestments(
 export async function deleteInvestments(
   input: z.infer<typeof DeleteInvestmentsSchema>,
 ) {
-  const session = await auth();
+  const session = await getServerSession(auth);
 
   if (!session?.user?.id) {
     return {
@@ -145,7 +146,7 @@ export async function deleteInvestments(
 
 // withdraw
 export async function getUserWithdraws() {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const withdraws = await db.withdraw.findMany({
     where: {
       userId: session?.user?.id,
@@ -159,7 +160,7 @@ export async function getUserWithdraws() {
 export async function upsertWithdraws(
   input: z.infer<typeof upsertWithdrawsSchema>,
 ) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   if (!session?.user?.id) {
     return {
       error: "Não autorizado",
@@ -225,7 +226,7 @@ export async function upsertWithdraws(
   return withdraws;
 }
 export async function getUserMonthWithdraws(month: number, year: number) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const monthWithdraws = await db.withdraw.findMany({
     where: {
       userId: session?.user?.id,
@@ -240,8 +241,7 @@ export async function getUserMonthWithdraws(month: number, year: number) {
 export async function deleteWithdraws(
   input: z.infer<typeof DeleteWithdrawsSchema>,
 ) {
-  const session = await auth();
-
+  const session = await getServerSession(auth);
   if (!session?.user?.id) {
     return {
       error: "Não autorizado",

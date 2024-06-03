@@ -1,15 +1,17 @@
 "use server";
-import { auth } from "@/services/auth";
+
 import { DeleteExpensesSchema, upsertExpensesSchema } from "./schema";
 import { z } from "zod";
 import { db } from "@/services/database";
+import { getServerSession } from "next-auth";
+import { auth } from "@/services/auth";
 
 export async function getCategories() {
   const categories = await db.categories.findMany({});
   return categories;
 }
 export async function getUserExpenses() {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const expenses = await db.expenses.findMany({
     where: {
       userId: session?.user?.id,
@@ -22,7 +24,7 @@ export async function getUserExpenses() {
 }
 
 export async function getUserMonthExpenses(month: number, year: number) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const monthExpenses = await db.expenses.findMany({
     where: {
       userId: session?.user?.id,
@@ -39,7 +41,7 @@ export async function getUserMonthExpenses(month: number, year: number) {
 }
 
 export async function getUserYearExpenses(year: number) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const yearExpenses = await db.expenses.findMany({
     where: {
       userId: session?.user?.id,
@@ -55,7 +57,7 @@ export async function getUserYearExpenses(year: number) {
 export async function upsertExpenses(
   input: z.infer<typeof upsertExpensesSchema>,
 ) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   if (!session?.user?.id) {
     return {
       error: "Não autorizado",
@@ -123,7 +125,7 @@ export async function upsertExpenses(
 export async function deleteExpenses(
   input: z.infer<typeof DeleteExpensesSchema>,
 ) {
-  const session = await auth();
+  const session = await getServerSession(auth);
 
   if (!session?.user?.id) {
     return {

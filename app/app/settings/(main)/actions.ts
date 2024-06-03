@@ -2,14 +2,14 @@
 
 import { z } from "zod";
 import { updateProfileSchema } from "./schemas";
-import { auth } from "@/services/auth";
 import { db } from "@/services/database";
+import { getServerSession } from "next-auth";
+import { auth } from "@/services/auth";
 
 export async function updateProfile(
   input: z.infer<typeof updateProfileSchema>,
 ) {
-  const session = await auth();
-
+  const session = await getServerSession(auth);
   if (!session?.user?.id) {
     return {
       error: "Not authorized",

@@ -2,11 +2,11 @@
 
 import { DeleteWishlistSchema, upsertWishlistSchema } from "./schema";
 import { z } from "zod";
-
 import { db } from "@/services/database";
+import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
 export async function getUserWishlist() {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const wishlist = await db.wishlist.findMany({
     where: {
       userId: session?.user?.id,
@@ -21,7 +21,7 @@ export async function getUserWishlist() {
 export async function upsertWishlist(
   input: z.infer<typeof upsertWishlistSchema>,
 ) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   if (!session?.user?.id) {
     return {
       error: "Não autorizado",
@@ -89,7 +89,7 @@ export async function upsertWishlist(
 export async function deleteWishlist(
   input: z.infer<typeof DeleteWishlistSchema>,
 ) {
-  const session = await auth();
+  const session = await getServerSession(auth);
 
   if (!session?.user?.id) {
     return {

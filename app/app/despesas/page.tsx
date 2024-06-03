@@ -22,7 +22,6 @@ import { FreeAlert } from "../_components/plan-alert";
 import DataFilterExpenses from "./_components/filter-component-expenses";
 
 import { db } from "@/services/database";
-import { auth } from "@/services/auth";
 import {
   DashboardPage,
   DashboardPageHeader,
@@ -30,6 +29,8 @@ import {
   DashboardPageMain,
 } from "../_components/dashboard/dashboard-page";
 import { getUserCurrentPlan } from "@/services/stripe";
+import { getServerSession } from "next-auth";
+import { auth } from "@/services/auth";
 
 export default async function Page() {
   const currentDate = new Date();
@@ -40,7 +41,7 @@ export default async function Page() {
     parseInt(currentMonth),
     parseInt(currentYear),
   );
-  const session = await auth();
+  const session = await getServerSession(auth);
   const plan = await getUserCurrentPlan(session?.user.id as string);
   const categories = await db.categories.findMany({});
   return (

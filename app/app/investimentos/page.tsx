@@ -1,7 +1,6 @@
 import React from "react";
 import { getUserMonthInvestments, getUserMonthWithdraws } from "./actions";
 import { getUserCurrentPlan } from "@/services/stripe";
-import { auth } from "@/services/auth";
 import {
   Card,
   CardContent,
@@ -31,11 +30,13 @@ import {
 } from "../_components/dashboard/dashboard-page";
 import CtaButtonPro from "../_components/cta-button-pro";
 import { FreeAlert } from "../_components/plan-alert";
+import { getServerSession } from "next-auth";
+import { auth } from "@/services/auth";
 export default async function Page() {
   const currentDate = new Date();
   const currentMonth = (currentDate.getMonth() + 1).toString();
   const currentYear = currentDate.getFullYear().toString();
-  const session = await auth();
+  const session = await getServerSession(auth);
   const plan = await getUserCurrentPlan(session?.user.id as string);
 
   const investments = await getUserMonthInvestments(

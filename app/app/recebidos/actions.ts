@@ -1,12 +1,13 @@
 "use server";
 
-import { auth } from "@/services/auth";
 import { DeleteSalarySchema, upsertSalarySchema } from "./schema";
 import { z } from "zod";
 import { db } from "@/services/database";
+import { getServerSession } from "next-auth";
+import { auth } from "@/services/auth";
 
 export async function getUserSalary() {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const salary = await db.salary.findMany({
     where: {
       userId: session?.user?.id,
@@ -19,7 +20,7 @@ export async function getUserSalary() {
 }
 
 export async function getUserMonthSalary(month: number, year: number) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const monthSalary = await db.salary.findMany({
     where: {
       userId: session?.user?.id,
@@ -36,7 +37,7 @@ export async function getUserMonthSalary(month: number, year: number) {
 }
 
 export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
-  const session = await auth();
+  const session = await getServerSession(auth);
   if (!session?.user?.id) {
     return {
       error: "Não autorizado",
@@ -104,7 +105,7 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
 }
 
 export async function deleteSalary(input: z.infer<typeof DeleteSalarySchema>) {
-  const session = await auth();
+  const session = await getServerSession(auth);
 
   if (!session?.user?.id) {
     return {

@@ -8,15 +8,16 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { createCheckoutSessionAction } from "./actions";
-import { auth } from "@/services/auth";
 import { getUserCurrentPlan } from "@/services/stripe";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { FreeAlert, ProAlert } from "../../_components/plan-alert";
 import CtaButtonPro from "../../_components/cta-button-pro";
+import { auth } from "@/services/auth";
+import { getServerSession } from "next-auth";
 
 export default async function Page() {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const plan = await getUserCurrentPlan(session?.user.id as string);
 
   return (

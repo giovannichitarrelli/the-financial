@@ -34,7 +34,6 @@ import {
   PizzaChartYear,
   ProgressChartsYear,
 } from "./_components/charts/data-charts";
-import { auth } from "@/services/auth";
 import {
   DashboardPage,
   DashboardPageHeader,
@@ -52,6 +51,8 @@ import ResumeCards from "./_components/resume-cards";
 import ResumeList from "./_components/resume-list";
 import ChartsCards from "./_components/charts-cards";
 import { getUserCurrentPlan } from "@/services/stripe";
+import { getServerSession } from "next-auth";
+import { auth } from "@/services/auth";
 
 export const metadata: Metadata = {
   title: "DinDin - Dashboard",
@@ -59,11 +60,14 @@ export const metadata: Metadata = {
 };
 
 export default async function AppPage() {
-  const session = await auth();
-  const plan = await getUserCurrentPlan(session?.user.id as string);
-  if (!session) {
+  const session = await getServerSession(auth);
+  console.log("Session:", session);
+  if (!session?.user.id) {
+    console.error("User ID not found in session.");
     return;
   }
+  const plan = await getUserCurrentPlan(session?.user.id);
+
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
   const currentYear = currentDate.getFullYear();

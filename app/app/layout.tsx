@@ -1,9 +1,10 @@
 import { PropsWithChildren } from "react";
 import { MainSideBar } from "./_components/main-sidebar";
+import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
 
 export default async function Layout({ children }: PropsWithChildren) {
-  const session = await auth();
+  const session = await getServerSession(auth);
 
   return (
     <div className="grid w-full lg:grid-cols-[270px_1fr] ">

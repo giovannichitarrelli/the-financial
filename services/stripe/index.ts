@@ -161,7 +161,6 @@ export const getPlanByPrice = (priceId: string) => {
 
   return {
     name: planKey,
-    // quota: plan.quota,
   };
 };
 
@@ -182,25 +181,8 @@ export const getUserCurrentPlan = async (userId: string) => {
 
   const plan = getPlanByPrice(user.stripePriceId);
 
-  // const tasksCount = await Prisma.expenses.count({
-  //   where: {
-  //     userId,
-  //   },
-  // });
-
-  // const availableTasks = plan.quota.TASKS;
-  // const currentTasks = tasksCount;
-  // const usage = (currentTasks / availableTasks) * 100;
-
   return {
     name: plan.name,
-    // quota: {
-    //   TASKS: {
-    //     available: availableTasks,
-    //     current: currentTasks,
-    //     usage,
-    //   },
-    // },
   };
 };
 

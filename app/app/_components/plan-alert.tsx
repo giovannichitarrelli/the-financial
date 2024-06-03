@@ -1,10 +1,11 @@
 import { Badge } from "@/app/_components/ui/badge";
 import { auth } from "@/services/auth";
-import { BadgeAlert } from "lucide-react";
 import { getUserCurrentPlan } from "@/services/stripe";
+import { BadgeAlert } from "lucide-react";
+import { getServerSession } from "next-auth";
 
 export const FreeAlert = async () => {
-  const session = await auth();
+  const session = await getServerSession(auth);
   const plan = await getUserCurrentPlan(session?.user.id as string);
   return (
     <Badge
