@@ -4,7 +4,7 @@ import { Adapter } from "next-auth/adapters";
 import { db } from "@/services/database";
 import { AuthOptions } from "next-auth";
 import { createStripeCustomer } from "@/services/stripe";
-import EmailProvider from "next-auth/providers/email";
+// import EmailProvider from "next-auth/providers/email";
 
 export const auth: AuthOptions = {
   adapter: PrismaAdapter(db) as Adapter,
@@ -13,10 +13,10 @@ export const auth: AuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
-    EmailProvider({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-    }),
+    // EmailProvider({
+    //   server: process.env.EMAIL_SERVER,
+    //   from: process.env.EMAIL_FROM,
+    // }),
   ],
   callbacks: {
     async session({ session, user }) {
