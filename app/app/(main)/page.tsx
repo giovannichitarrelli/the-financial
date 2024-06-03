@@ -53,6 +53,7 @@ import ChartsCards from "./_components/charts-cards";
 import { getUserCurrentPlan } from "@/services/stripe";
 import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "DinDin - Dashboard",
@@ -61,10 +62,8 @@ export const metadata: Metadata = {
 
 export default async function AppPage() {
   const session = await getServerSession(auth);
-  console.log("Session:", session);
-  if (!session?.user.id) {
-    console.error("User ID not found in session.");
-    return;
+  if (!session || !session.user || !session.user.id) {
+    redirect("/erro");
   }
   const plan = await getUserCurrentPlan(session?.user.id);
 

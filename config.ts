@@ -7,16 +7,10 @@ export const config = {
       free: {
         // priceId: "price_1PJInsJPcepMZEYbvLFwOxQ0",
         priceId: "price_1PJLhlJPcepMZEYbw0ONVazb",
-        // quota: {
-        //   TASKS: 7,
-        // },
       },
       pro: {
         // priceId: "price_1PJOuLJPcepMZEYbLVLqjY4j",
         priceId: "price_1PJLgyJPcepMZEYbOr69KWfF",
-        // quota: {
-        //   TASKS: 7,
-        // },
       },
     },
   },
