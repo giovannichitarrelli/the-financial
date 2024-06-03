@@ -1,3 +1,3 @@
-export const Page = () => {
+export default async function Page() {
   return <h1>Aconteceu algo inesperado. Por favor, faça login novamente!</h1>;
-};
+}
