@@ -37,7 +37,7 @@ export default async function Page() {
   return (
     <DashboardPage>
       <DashboardPageHeader>
-        <DashboardPageHeaderTitle>Receitas / Entradas</DashboardPageHeaderTitle>
+        <DashboardPageHeaderTitle>Recebimentos</DashboardPageHeaderTitle>
 
         {plan.name === "free" ? <CtaButtonPro /> : <SalaryUpsertSheet />}
       </DashboardPageHeader>

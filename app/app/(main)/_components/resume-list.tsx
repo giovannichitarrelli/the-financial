@@ -15,11 +15,11 @@ interface CardsProps {
 const ResumeList = ({ title, component, description }: CardsProps) => {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="bg-muted/40">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent>{component}</CardContent>
+      <CardContent className="py-4">{component}</CardContent>
     </Card>
   );
 };

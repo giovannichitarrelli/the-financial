@@ -42,8 +42,8 @@ export default async function Page() {
       <CardFooter className=" border-t border-border pt-6 ">
         {plan.name === "free" ? (
           <form action={createCheckoutSessionAction} className="  w-full">
-            <div className="flex items-center justify-between  ">
-              <span>
+            <div className="flex flex-wrap items-center justify-center gap-2 ">
+              <span className="min-w-[250px]">
                 Seja PRO e tenha acesso a todos os recursos agora mesmo! 😉
               </span>
               <CtaButtonPro />

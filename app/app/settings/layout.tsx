@@ -14,7 +14,7 @@ export default function Layout({ children }: PropsWithChildren) {
         <DashboardPageHeaderTitle>Configurações</DashboardPageHeaderTitle>
       </DashboardPageHeader>
       <DashboardPageMain>
-        <div className="container max-w-screen-lg">
+        <div>
           <SettingsSidebar />
           <div>{children}</div>
         </div>

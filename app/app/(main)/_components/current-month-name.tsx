@@ -26,7 +26,7 @@ export const CurrentMonthName = () => {
     <Card>
       <CardContent className="py-2">
         <p className="flex items-center">
-          <Calendar className="mr-2 h-4 w-4" /> Dashboard -
+          <Calendar className="mr-2 h-4 w-4" />
           <span className="ml-2 font-bold">{currentMonthName}</span>
         </p>
       </CardContent>

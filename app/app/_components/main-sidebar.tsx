@@ -43,10 +43,11 @@ export function MainSideBar({ user }: MainSideBarProps) {
             </Button>
           </SheetTrigger>
 
-          <SheetContent side="right" className="flex flex-col">
-            <DashboardSideBarHeader>
-              <Logo />
-            </DashboardSideBarHeader>
+          <SheetContent
+            side="right"
+            className="flex min-h-[80vh] flex-col justify-between pb-0"
+          >
+            <Logo />
 
             <SideBarNavLinks user={user} />
           </SheetContent>

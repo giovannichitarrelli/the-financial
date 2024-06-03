@@ -80,15 +80,13 @@ export default function FilterComponentInvestments({
 
   return (
     <>
-      <div className="flex justify-between">
-        <div className="flex items-center gap-2">
-          <SelectMonthFilter onSelectMonth={handleMonthSelect} />
-          <SelectYearPickerFilter onSelectYear={handleYearSelect} />
-        </div>
+      <div className="flex items-center justify-between gap-2 lg:justify-start">
+        <SelectMonthFilter onSelectMonth={handleMonthSelect} />
+        <SelectYearPickerFilter onSelectYear={handleYearSelect} />
       </div>
 
       <Card>
-        <CardContent className="flex items-center justify-between py-2">
+        <CardContent className="flex flex-col items-center justify-between gap-2 py-2 md:flex-row">
           <p className="flex items-center">
             <HandCoins className="mr-2 h-4 w-4" /> Saldo total:
             <span className="ml-2 font-bold text-blue-500">{totalSaved}</span>

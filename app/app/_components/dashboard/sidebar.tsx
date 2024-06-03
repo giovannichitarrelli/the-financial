@@ -112,7 +112,7 @@ export function DashboardMenuMobile({
   return (
     <aside
       className={cn(
-        "] flex h-16 items-center justify-between border-b bg-muted/40 px-4 lg:hidden",
+        "flex h-20 items-center justify-between border-b bg-muted/40 p-4 lg:hidden",
         className,
       )}
     >

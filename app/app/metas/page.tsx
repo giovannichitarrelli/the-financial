@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <DashboardPage>
       <DashboardPageHeader>
-        <DashboardPageHeaderTitle>Lista de desejos</DashboardPageHeaderTitle>
+        <DashboardPageHeaderTitle>Metas</DashboardPageHeaderTitle>
         {plan.name === "free" ? <CtaButtonPro /> : <WishlistUpsertSheet />}
       </DashboardPageHeader>
 

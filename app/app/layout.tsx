@@ -13,7 +13,6 @@ export default async function Layout({ children }: PropsWithChildren) {
           <MainSideBar user={session?.user} />
         </div>
       </div>
-
       <main>{children}</main>
     </div>
   );
