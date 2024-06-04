@@ -41,7 +41,7 @@ const PageLinks = () => {
         </Link>
       </NavigationMenuItem>
 
-      <ButtonCta cta="TESTAR GRATUITAMENTE" />
+      <ButtonCta cta="Testar gratuitamente" />
     </>
   );
 };

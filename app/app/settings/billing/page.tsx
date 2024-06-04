@@ -41,7 +41,7 @@ export default async function Page() {
       </CardContent>
       <CardFooter className=" border-t border-border pt-6 ">
         {plan.name === "free" ? (
-          <form action={createCheckoutSessionAction} className="  w-full">
+          <form action={createCheckoutSessionAction} className="w-full">
             <div className="flex flex-wrap items-center justify-center gap-2 ">
               <span className="min-w-[250px]">
                 Seja PRO e tenha acesso a todos os recursos agora mesmo! 😉
@@ -50,7 +50,7 @@ export default async function Page() {
             </div>
           </form>
         ) : (
-          <div>
+          <div className="flex  flex-wrap items-center justify-start gap-2 ">
             <span>
               Parabéns! Você é PRO. Esperamos que esteja controlando bem os seus
               gastos! 😉

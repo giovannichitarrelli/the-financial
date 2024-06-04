@@ -20,6 +20,7 @@ const badgeVariants = cva(
         pending:
           "border-transparent bg-yellow-600	 text-destructive-foreground hover:bg-yellow/80",
         foreground: "border-transparent bg-white text-black hover:bg-white/80",
+        gold: "border-transparent bg-yellow-400 text-white hover:bg-yellow-400/80",
       },
     },
     defaultVariants: {

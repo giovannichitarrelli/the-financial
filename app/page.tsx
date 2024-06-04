@@ -11,6 +11,7 @@ import {
   CircleFadingPlus,
   ClipboardList,
   Computer,
+  Diff,
   Grid2X2,
   Grid2x2,
   HandCoins,
@@ -50,72 +51,71 @@ export default function Home() {
         <PageMenu />
       </div>
       <main>
-        <section className=" m-auto flex max-w-screen-xl flex-col justify-center  gap-3 px-6 py-12 md:flex-row">
-          <div className="flex w-full flex-col gap-6 md:w-1/2">
-            <h1 className=" text-4xl font-extrabold lg:text-6xl">
-              <span className="text-gradient-dindin-hero bg-clip-text text-transparent">
-                Organize
-              </span>{" "}
-              seus gastos de forma Prática.
-              <span className="text-gradient-dindin-hero bg-clip-text text-transparent ">
-                {" "}
-                Controlador Financeiro
-              </span>{" "}
-              que você sempre quis!
-            </h1>
-            <p className="font-extralight	">
-              O DinDin é uma solução completa, intuitiva e segura. Com ele, você
-              dará adeus a desorganização financeira da sua família!
-            </p>
-            <div>
-              <ButtonCta cta="TESTAR 7 DIAS GRÁTIS" />
-            </div>
-          </div>
+        <section className="px-6 py-12 text-center">
+          <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+            Controle seus gastos
+          </span>
 
-          <div className="w-full space-y-4 md:w-1/2">
-            <Image
-              priority
-              src="/dindin-dashboard-main.png"
-              alt="dindin-dashboard-main"
-              className="object-contain"
-              width={1080}
-              height={565}
-            />
-            <div className="grid-cols-2 gap-4 space-y-3 lg:grid lg:space-y-0">
-              <Card className=" flex items-center ">
-                <CardContent className="flex items-center pt-6">
-                  <div className="mr-3 rounded bg-foreground p-2">
-                    <Computer className="text-muted" />
-                  </div>
-                  <span className="font-extralight	">
-                    Pode usar no celular ou no computador
-                  </span>
-                </CardContent>
-              </Card>
-              <Card className="flex items-center ">
-                <CardContent className="flex items-center pt-6">
-                  <div className="mr-3 rounded bg-foreground p-2">
-                    <ShieldBan className="text-muted" />
-                  </div>
-                  <span className="font-extralight	">
-                    Livre dos bugs das planilhas de excel
-                  </span>
-                </CardContent>
-              </Card>
+          <div className=" m-auto flex max-w-screen-xl flex-col items-center justify-center gap-3 md:flex-row">
+            <div className="flex w-full flex-col gap-6 text-center md:w-1/2 md:text-left">
+              <h1 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-left md:text-6xl/tight ">
+                Organize seus gastos de forma prática. Controlador financeiro
+                que você sempre quis!
+              </h1>
+              <p className="font-extralight	">
+                O DinDin é uma solução completa, intuitiva e segura. Com ele,
+                você dará adeus a desorganização financeira da sua família!
+              </p>
+              <div className="mx-auto md:mx-0 ">
+                <ButtonCta cta="Testar plataforma" />
+              </div>
+            </div>
+            <div className="w-full space-y-4 md:w-1/2">
+              <Image
+                priority
+                src="/dindin-dashboard-main.png"
+                alt="dindin-dashboard-main"
+                className="object-contain"
+                width={1080}
+                height={565}
+              />
+              <div className="grid-cols-2 gap-4 space-y-3 lg:grid lg:space-y-0">
+                <Card className=" flex items-center ">
+                  <CardContent className="flex items-center pt-6">
+                    <div className="mr-3 rounded bg-foreground p-2">
+                      <Computer className="text-muted" />
+                    </div>
+                    <span className="font-extralight	">
+                      Pode usar no celular ou no computador
+                    </span>
+                  </CardContent>
+                </Card>
+                <Card className="flex items-center ">
+                  <CardContent className="flex items-center pt-6">
+                    <div className="mr-3 rounded bg-foreground p-2">
+                      <ShieldBan className="text-muted" />
+                    </div>
+                    <span className="font-extralight	">
+                      Livre dos bugs das planilhas de excel
+                    </span>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-gradient-dindin-hero w-full px-6 py-12">
-          <div className="m-auto text-center lg:w-2/3 ">
-            <Badge variant="secondary" className="text-md shadow-md">
-              Teste gratuitamente
-            </Badge>
-            <h2 className="py-4 text-center text-4xl font-extrabold lg:text-6xl  ">
+        <section className=" px-6 py-12 ">
+          {/* <div className="m-auto px-4 py-6 text-center  shadow-lg shadow-green-950 lg:w-2/3 lg:p-6"> */}
+          <div className="m-auto px-4 py-6 text-center  shadow-[rgba(34,197,94,0.2)_0px_5px_15px_10px] lg:w-2/3 lg:p-6">
+            <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+              Testar agora
+            </span>
+            <h2 className="py-4 text-center text-4xl/tight  font-extrabold lg:text-6xl/tight   ">
               Não deixe que suas despesas fiquem desorganizadas!
             </h2>
             <div className=" flex justify-center pt-2">
-              <ButtonCta cta="TESTAR GRATUITAMENTE" />
+              <ButtonCta cta="Testar gratuitamente" />
             </div>
           </div>
         </section>
@@ -132,13 +132,12 @@ export default function Home() {
           </div>
 
           <div className="flex w-full flex-col gap-6 md:w-2/3">
-            <p className="text-green-500">Organize suas despesas</p>
-            <h2 className="text-4xl font-extrabold lg:text-6xl">
-              Não sabe pra onde vai o dinheiro?{" "}
-              <span className="text-gradient-dindin-hero bg-clip-text text-transparent">
-                Controle gastos{" "}
-              </span>
-              com sabedoria.
+            <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary md:ml-0">
+              Organize suas despesas
+            </span>
+
+            <h2 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-left md:text-6xl/tight ">
+              Não sabe pra onde vai o dinheiro? Controle gastos com sabedoria.
             </h2>
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <Card>
@@ -204,19 +203,17 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-muted/40 px-6 py-12">
+        <section className=" px-6 py-12">
           <div className=" m-auto flex max-w-screen-xl flex-col items-center justify-center gap-3 md:flex-row">
             <div className="flex w-full flex-col gap-6 md:w-1/2">
-              <p className="text-green-500">
+              <span className="mb-2 mr-auto rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
                 Controle de gastos em primeiro lugar
-              </p>
-              <h2 className=" text-4xl font-extrabold lg:text-6xl">
-                Tenha a{" "}
-                <span className="text-gradient-dindin-hero bg-clip-text text-transparent">
-                  gestão de gastos
-                </span>{" "}
-                que sempre sonhou
+              </span>
+
+              <h2 className="z-10 bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text  text-4xl/tight font-extrabold text-transparent  md:text-6xl/tight ">
+                Alcance a gestão de gastos que sempre desejou
               </h2>
+
               <ul className="flex flex-col gap-3">
                 <li className="flex items-center font-extralight">
                   <CircleCheck className="mr-2 h-4 w-4 text-green-500" />{" "}
@@ -278,16 +275,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* <SectionCta /> */}
-
         <section id="plans" className="px-6 py-12 ">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <h2 className=" text-4xl font-extrabold lg:text-6xl">
-              Experimente um controle que{" "}
-              <span className="text-gradient-dindin-hero bg-clip-text text-transparent">
-                realmente funciona
-              </span>{" "}
-              e que tem tudo que você precisa
+            <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+              Tudo que você precisa
+            </span>
+            <h2 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-6xl/tight ">
+              Experimente o controle do DinDin que realmente funciona
             </h2>
             <p className="font-extralight ">
               Após o período de teste você poderá escolher um dos planos abaixo
@@ -300,7 +294,10 @@ export default function Home() {
                     50% de economia
                   </p>
                   <div className="p-6">
-                    <p className="text-xl">Assinatura mensal</p>
+                    <div className="flex items-center justify-center gap-2">
+                      <p className="text-xl">Assinatura mensal</p>
+                      <Badge variant="gold">50%OFF</Badge>
+                    </div>
                     <div className="flex items-center justify-center gap-2 py-6">
                       <span className="text-lg text-red-500 line-through	lg:text-xl">
                         R$ 19,90
@@ -310,7 +307,11 @@ export default function Home() {
                       </span>
                     </div>
                     <div className="flex items-center justify-center gap-4">
-                      <Badge>50%OFF</Badge>
+                      <Link href="/auth">
+                        <Button variant="outline">
+                          Assinar <Diff className="ml-2" />
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </CardContent>
@@ -365,18 +366,21 @@ export default function Home() {
                 </div>
 
                 <div className="flex justify-center lg:w-1/3">
-                  <ButtonCta cta="TESTAR 7 DIAS GRÁTIS" />
+                  <ButtonCta cta="Testar 7 dias grátis" />
                 </div>
               </CardContent>
             </Card>
           </div>
         </section>
 
-        <section className="bg-muted/40 px-6 py-12 ">
+        <section className=" px-6 py-12 ">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <p className="text-green-500 ">Controle total</p>
-            <h2 className=" text-4xl font-extrabold lg:text-6xl">
-              Por que controlar suas finanças
+            <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+              Controle total
+            </span>
+
+            <h2 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-left md:text-6xl/tight ">
+              Por que controlar seus gastos diários
             </h2>
             <div className="mx-auto mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               <Card className="max-w-full md:w-[300px]">
@@ -567,7 +571,7 @@ export default function Home() {
                     </div>
                     <div>
                       <span className="font-extralight	">
-                        Ultrapassamos 10.000 usuários
+                        Ultrapassamos 1.000 usuários
                       </span>
                     </div>
                   </CardContent>
@@ -586,12 +590,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="explore" className="bg-green-50 px-6 py-12 ">
+        <section id="explore" className="px-6 py-12 ">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <h2 className="text-4xl font-extrabold text-black lg:text-6xl">
+            <h2 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-6xl/tight ">
               Nossos principais recursos
             </h2>
-            <p className="font-extralight text-black">
+            <p className="font-extralight">
               Conheça os recursos que vão revolucionar seu controle financeiro
               pessoal, proporcionando uma visão clara da sua situação financeira
               e te ajudando a tomar decisões mais assertivas para alcançar seus
@@ -647,11 +651,11 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </div>
-              <div>
+              <div className="py-4">
                 <Image
                   src="/resume-cards-main.png"
                   alt="resume-cards-main"
-                  className="object-contain"
+                  className="mx-auto object-contain"
                   width={400}
                   height={800}
                 />
@@ -711,8 +715,9 @@ export default function Home() {
 
         <section className="overflow-x-hidden px-6 py-12">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <p className=" text-green-500">O que eles estão falando</p>
-
+            <span className="mx-auto mb-2 rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+              O que eles estão falando
+            </span>
             <h2 className="mb-10 text-4xl font-extrabold lg:text-6xl">
               Veja porquê nossos clientes amam o
               <span className=" text-green-500"> DinDin</span>
@@ -919,11 +924,13 @@ export default function Home() {
 
         <SectionCta />
 
-        <section className="bg-muted/40 px-6 py-12 ">
+        <section className="px-6 py-12 ">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <p className=" text-green-500">FAQ</p>
+            <span className="mx-auto mb-2 rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+              FAQ
+            </span>
 
-            <h2 className="text-4xl font-extrabold lg:text-6xl">
+            <h2 className="z-10 bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text  text-4xl/tight font-extrabold text-transparent  md:text-6xl/tight ">
               Perguntas frequentes
             </h2>
 
@@ -1054,7 +1061,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-muted/40 px-6 py-12 ">
+        <section className="px-6 py-12 ">
           <Card className="m-auto flex max-w-screen-lg flex-col gap-3 border-orange-400 text-center shadow-md shadow-orange-400 lg:px-6">
             <CardContent className="gap-6 py-6 lg:flex lg:items-center ">
               <div className="lg:w-2/3">
