@@ -54,6 +54,31 @@ export function ProfileForm({ defaultValues }: ProfileFormProps) {
       <form onSubmit={onSubmit} className="space-y-8">
         <Card>
           <CardHeader>
+            <CardTitle>Email</CardTitle>
+            <CardDescription>
+              Entre em contato pelo email suporte@dindin.online para alterar o
+              email.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Digite seu email" readOnly {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
             <CardTitle>Nome</CardTitle>
             <CardDescription>
               Este será o nome exibido publicamente.
@@ -78,21 +103,24 @@ export function ProfileForm({ defaultValues }: ProfileFormProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Email</CardTitle>
+            <CardTitle>Senha</CardTitle>
             <CardDescription>
-              Entre em contato pelo email suporte@dindin.online para alterar o
-              email.
+              Cadastre uma senha para acesso com email e senha.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <FormField
               control={form.control}
-              name="email"
+              name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Senha</FormLabel>
                   <FormControl>
-                    <Input placeholder="Digite seu email" readOnly {...field} />
+                    <Input
+                      type="password"
+                      placeholder="Digite sua senha..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
