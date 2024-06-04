@@ -137,9 +137,6 @@ export const handleProcessWebhookUpdatedSubscription = async (event: {
 
 type Plan = {
   priceId: string;
-  // quota: {
-  //   TASKS: number;
-  // };
 };
 
 type Plans = {
@@ -171,18 +168,38 @@ export const getUserCurrentPlan = async (userId: string) => {
     },
     select: {
       stripePriceId: true,
+      stripeSubscriptionStatus: true, //adicionado
     },
   });
 
   if (!user || !user.stripePriceId) {
     throw new Error("User or user stripePriceId not found");
-    //redirect page 404
   }
 
   const plan = getPlanByPrice(user.stripePriceId);
-
+  const status = user.stripeSubscriptionStatus;
   return {
     name: plan.name,
+    status: status,
+  };
+};
+
+export const getUserCurrentStatus = async (userId: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      stripeSubscriptionStatus: true, //adicionado
+    },
+  });
+
+  if (!user || !user.stripeSubscriptionStatus) {
+    throw new Error("User or user stripeSubscriptionStatus not found");
+  }
+  const status = user.stripeSubscriptionStatus;
+  return {
+    status: status,
   };
 };
 

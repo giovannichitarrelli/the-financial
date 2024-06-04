@@ -15,7 +15,7 @@ export async function MonthExpenses() {
         expenses.slice(-5).map((expenses) => (
           <div
             key={expenses.id}
-            className="flex items-center justify-between bg-red-500 py-3 md:grid md:grid-cols-4"
+            className="flex items-center justify-between py-3 md:grid md:grid-cols-4"
           >
             <p className="text-md font-bold md:col-span-2">{expenses.title}</p>
             <div>{formatCurrency(Number(expenses.price))}</div>

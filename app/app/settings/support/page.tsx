@@ -122,7 +122,7 @@ export default function Support() {
       <CardFooter className="flex items-center justify-between border-t pt-6">
         <span> Entre em contato pelo email!</span>
         <Link
-          href="mailto:suporte@dindin.com"
+          href="mailto:suporte@meudindin.online"
           target="_blank"
           rel="noopener noreferrer"
           passHref={true}

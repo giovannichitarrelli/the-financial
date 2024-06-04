@@ -10,6 +10,7 @@ import DashboardSideBar, {
   DashboardMenuMobile,
   DashboardSideBarHeader,
 } from "./dashboard/sidebar";
+import Link from "next/link";
 
 type MainSideBarProps = {
   user?: Session["user"];
@@ -24,13 +25,17 @@ export function MainSideBar({ user }: MainSideBarProps) {
     <>
       <DashboardSideBar>
         <DashboardSideBarHeader>
-          <Logo />
+          <Link href="/app">
+            <Logo />
+          </Link>
         </DashboardSideBarHeader>
         <SideBarNavLinks user={user} />
       </DashboardSideBar>
 
       <DashboardMenuMobile>
-        <Logo />
+        <Link href="/app">
+          <Logo />
+        </Link>
         <Sheet>
           <SheetTrigger asChild>
             <Button

@@ -1073,7 +1073,7 @@ export default function Home() {
               </div>
               <div className="lg:w-1/3">
                 <Link
-                  href="https://wa.me/+5516981969823?text=Olá,%20gostaria%20de%20obter%20suporte%20com%20o%20app%20Dindin!"
+                  href="mailto:suporte@meudindin.online"
                   target="_blank"
                   passHref={true}
                 >

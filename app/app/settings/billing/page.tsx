@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { createCheckoutSessionAction } from "./actions";
-import { getUserCurrentPlan } from "@/services/stripe";
+import { getUserCurrentPlan, getUserCurrentStatus } from "@/services/stripe";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { FreeAlert, ProAlert } from "../../_components/plan-alert";
@@ -19,7 +19,7 @@ import { getServerSession } from "next-auth";
 export default async function Page() {
   const session = await getServerSession(auth);
   const plan = await getUserCurrentPlan(session?.user.id as string);
-
+  const status = await getUserCurrentStatus(session?.user.id as string);
   return (
     <Card>
       <CardHeader className="border-b border-border">
@@ -34,8 +34,12 @@ export default async function Page() {
 
       <CardContent className="pt-6">
         <div className="space-y-2">
-          <main className="flex justify-center">
-            {plan.name === "free" ? <FreeAlert /> : <ProAlert />}
+          <main>
+            Status da assinatura:{" "}
+            {status.status === "active" ? "Ativo" : status.status}
+            <div className="flex">
+              {plan.name === "free" ? <FreeAlert /> : <ProAlert />}
+            </div>
           </main>
         </div>
       </CardContent>
@@ -50,13 +54,13 @@ export default async function Page() {
             </div>
           </form>
         ) : (
-          <div className="flex  flex-wrap items-center justify-start gap-2 ">
+          <div className="flex w-full flex-wrap items-center justify-between gap-2">
             <span>
               Parabéns! Você é PRO. Esperamos que esteja controlando bem os seus
               gastos! 😉
             </span>
             <Link
-              href="https://wa.me/+5516981969823?text=Ol%C3%A1,%20estou%20dentro%20do%20prazo%20de%20cancelamento%20do%20plano%20PRO%20do%20DinDin%20e%20gostaria%20de%20solicitar%20reembolso."
+              href="mailto:suporte@meudindin.online"
               target="_blank"
               rel="noopener noreferrer"
               passHref={true}
