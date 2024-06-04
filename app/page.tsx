@@ -39,13 +39,16 @@ import {
 } from "./_components/ui/accordion";
 import Link from "next/link";
 import Footer from "./_components/footer";
+import PageMenu from "./_components/landingpage/LPMenu";
 export default function Home() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true, isFinite }),
   );
   return (
     <div>
-      {/* <PageMenu /> */}
+      <div>
+        <PageMenu />
+      </div>
       <main>
         <section className=" m-auto flex max-w-screen-xl flex-col justify-center  gap-3 px-6 py-12 md:flex-row">
           <div className="flex w-full flex-col gap-6 md:w-1/2">
