@@ -56,7 +56,6 @@ export function WithdrawsDataTable({ data }: WithDrawsDataTableProps) {
             <CardContent className="flex flex-col gap-2 p-3">
               <div className="flex items-center justify-between ">
                 <div className="flex items-center gap-4">
-                  <h2 className="font-bold">{withdraws.title}</h2>
                   <div>
                     <StatusPayment doneAt={withdraws.doneAt} />
                   </div>
@@ -67,7 +66,7 @@ export function WithdrawsDataTable({ data }: WithDrawsDataTableProps) {
                   onDelete={() => handleDeleteWithdraws(withdraws)}
                 />
               </div>
-
+              <h2 className="font-bold">{withdraws.title}</h2>
               <p className="text-sm font-bold text-red-500">
                 {formatCurrency(Number(withdraws.price))}
               </p>

@@ -51,8 +51,7 @@ export function WishlistDataTable({ data }: WishlistDataTableProps) {
           <Card key={wishlist.id}>
             <CardContent className="flex flex-col gap-2 p-3">
               <div className="flex items-center justify-between ">
-                <div className="flex items-center gap-4">
-                  <h2 className="font-bold">{wishlist.title}</h2>
+                <div className="flex items-center gap-2">
                   <div>
                     <StatusPayment doneAt={wishlist.doneAt} />
                   </div>
@@ -63,7 +62,7 @@ export function WishlistDataTable({ data }: WishlistDataTableProps) {
                   onDelete={() => handleDeleteWishlist(wishlist)}
                 />
               </div>
-
+              <h2 className="font-bold">{wishlist.title}</h2>
               <p className="text-sm font-bold text-primary">
                 {formatCurrency(Number(wishlist.price))}
               </p>

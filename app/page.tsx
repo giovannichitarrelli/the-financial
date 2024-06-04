@@ -43,16 +43,15 @@ import Footer from "./_components/footer";
 import PageMenu from "./_components/landingpage/LPMenu";
 export default function Home() {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true, isFinite }),
+    Autoplay({ delay: 2000, stopOnInteraction: true, isFinite: true }),
   );
   return (
     <div>
-      <div>
-        <PageMenu />
-      </div>
+      <PageMenu />
+
       <main>
         <section className="px-6 py-12 text-center">
-          <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+          <span className="mx-auto mb-2 inline-block animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
             Controle seus gastos
           </span>
 
@@ -66,9 +65,7 @@ export default function Home() {
                 O DinDin é uma solução completa, intuitiva e segura. Com ele,
                 você dará adeus a desorganização financeira da sua família!
               </p>
-              <div className="mx-auto md:mx-0 ">
-                <ButtonCta cta="Testar plataforma" />
-              </div>
+              <ButtonCta cta="Testar plataforma" />
             </div>
             <div className="w-full space-y-4 md:w-1/2">
               <Image
@@ -105,13 +102,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className=" px-6 py-12 ">
-          {/* <div className="m-auto px-4 py-6 text-center  shadow-lg shadow-green-950 lg:w-2/3 lg:p-6"> */}
-          <div className="m-auto px-4 py-6 text-center  shadow-[rgba(34,197,94,0.2)_0px_5px_15px_10px] lg:w-2/3 lg:p-6">
-            <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+        <section className=" px-6 py-12 ease-in">
+          <div className="m-auto px-4 py-6 text-center  shadow-[rgba(34,197,94,0.2)_0px_1px_10px_5px] lg:w-2/3 lg:p-6">
+            <span className="mx-auto mb-2 inline-block animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
               Testar agora
             </span>
-            <h2 className="py-4 text-center text-4xl/tight  font-extrabold lg:text-6xl/tight   ">
+            <h2 className="py-4  text-center text-4xl/tight  font-extrabold lg:text-6xl/tight   ">
               Não deixe que suas despesas fiquem desorganizadas!
             </h2>
             <div className=" flex justify-center pt-2">
@@ -121,23 +117,24 @@ export default function Home() {
         </section>
 
         <section className="first-line m-auto flex max-w-screen-xl flex-col items-center justify-center gap-3 px-6 py-12 md:flex-row">
-          <div className="w-full md:w-1/3">
+          <div className="w-full md:w-1/3 ">
             <Image
               src="/analises-mobile.png"
               alt="analises-mobile"
-              className="object-contain"
+              className="object-contain  transition-all "
               width={1390}
               height={500}
             />
           </div>
 
           <div className="flex w-full flex-col gap-6 md:w-2/3">
-            <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary md:ml-0">
+            <span className="mx-auto mb-2 inline-block animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary md:ml-0">
               Organize suas despesas
             </span>
 
             <h2 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-left md:text-6xl/tight ">
-              Não sabe pra onde vai o dinheiro? Controle gastos com sabedoria.
+              Não sabe pra onde vai o seu dinheiro? Controle gastos com
+              sabedoria.
             </h2>
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <Card>
@@ -206,7 +203,7 @@ export default function Home() {
         <section className=" px-6 py-12">
           <div className=" m-auto flex max-w-screen-xl flex-col items-center justify-center gap-3 md:flex-row">
             <div className="flex w-full flex-col gap-6 md:w-1/2">
-              <span className="mb-2 mr-auto rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+              <span className="mb-2 mr-auto animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
                 Controle de gastos em primeiro lugar
               </span>
 
@@ -277,11 +274,11 @@ export default function Home() {
 
         <section id="plans" className="px-6 py-12 ">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+            <span className="mx-auto mb-2 inline-block animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
               Tudo que você precisa
             </span>
             <h2 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-6xl/tight ">
-              Experimente o controle do DinDin que realmente funciona
+              Experimente o controle que realmente funciona
             </h2>
             <p className="font-extralight ">
               Após o período de teste você poderá escolher um dos planos abaixo
@@ -375,7 +372,7 @@ export default function Home() {
 
         <section className=" px-6 py-12 ">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+            <span className="mx-auto mb-2 inline-block animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
               Controle total
             </span>
 
@@ -715,7 +712,7 @@ export default function Home() {
 
         <section className="overflow-x-hidden px-6 py-12">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <span className="mx-auto mb-2 rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+            <span className="mx-auto mb-2 animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
               O que eles estão falando
             </span>
             <h2 className="mb-10 text-4xl font-extrabold lg:text-6xl">
@@ -926,7 +923,7 @@ export default function Home() {
 
         <section className="px-6 py-12 ">
           <div className="m-auto flex max-w-screen-xl flex-col gap-3 text-center">
-            <span className="mx-auto mb-2 rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+            <span className="mx-auto mb-2 animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
               FAQ
             </span>
 

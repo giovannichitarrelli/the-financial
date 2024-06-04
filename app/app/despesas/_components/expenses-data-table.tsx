@@ -65,13 +65,11 @@ export function ExpensesDataTable({
           <Card key={expenses.id}>
             <CardContent className="flex flex-col gap-2 p-3">
               <div className="flex items-center justify-between ">
-                <div className="flex items-center gap-4">
-                  <h2 className="font-bold">{expenses.title}</h2>
+                <div className="flex items-center gap-2">
                   <StatusPayment
                     doneAt={expenses.doneAt}
                     expiryAt={expenses.expiryAt}
                   />
-
                   <StatusFixed isFixed={expenses.isFixed} />
                 </div>
                 <DropdownMenuComponent
@@ -79,7 +77,7 @@ export function ExpensesDataTable({
                   onDelete={() => handleDeleteExpenses(expenses)}
                 />
               </div>
-
+              <h2 className="font-bold">{expenses.title}</h2>
               <p className="text-sm">
                 Categoria:{" "}
                 {expenses.categoriesId

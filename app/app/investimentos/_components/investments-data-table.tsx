@@ -55,20 +55,17 @@ export function InvestmentsDataTable({ data }: InvestmentsDataTableProps) {
           <Card key={investments.id}>
             <CardContent className="flex flex-col gap-2 p-3">
               <div className="flex items-center justify-between ">
-                <div className="flex items-center gap-4">
-                  <h2 className="font-bold">{investments.title}</h2>
-
+                <div className="flex items-center gap-2">
                   <div>
                     <StatusPayment doneAt={investments.doneAt} />
                   </div>
                 </div>
-
                 <DropdownMenuComponent
                   onToggleDone={() => handleToggleDoneInvestments(investments)}
                   onDelete={() => handleDeleteInvestments(investments)}
                 />
               </div>
-
+              <h2 className="font-bold">{investments.title}</h2>
               <p className="text-sm font-bold text-primary">
                 {formatCurrency(Number(investments.price))}
               </p>

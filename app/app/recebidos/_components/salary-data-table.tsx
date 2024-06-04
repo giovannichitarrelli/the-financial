@@ -54,7 +54,6 @@ export function SalaryDataTable({ data }: SalaryDataTableProps) {
             <CardContent className="flex flex-col gap-2 p-3">
               <div className="flex items-center justify-between ">
                 <div className="flex items-center gap-4">
-                  <h2 className="font-bold">{salary.title}</h2>
                   <StatusPayment
                     doneAt={salary.doneAt}
                     expiryAt={salary.expiryAt}
@@ -66,7 +65,7 @@ export function SalaryDataTable({ data }: SalaryDataTableProps) {
                   onDelete={() => handleDeleteSalary(salary)}
                 />
               </div>
-
+              <h2 className="font-bold">{salary.title}</h2>
               <p className="text-sm">
                 Vencimento:{" "}
                 {salary.expiryAt

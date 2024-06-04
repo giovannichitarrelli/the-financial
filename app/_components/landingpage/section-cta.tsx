@@ -5,7 +5,7 @@ const SectionCta = () => {
     <section className=" px-6 py-12">
       <div className=" mx-auto max-w-screen-xl">
         <div className="mx-auto flex w-full flex-col gap-6 text-center lg:w-2/3">
-          <span className="mx-auto mb-2 inline-block rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
+          <span className="mx-auto mb-2 inline-block animate-pulse rounded-md bg-primary/10 p-2 text-center text-xs font-semibold uppercase text-primary">
             Sem complicações
           </span>
 
