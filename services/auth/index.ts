@@ -4,18 +4,41 @@ import { Adapter } from "next-auth/adapters";
 import { db } from "@/services/database";
 import { AuthOptions } from "next-auth";
 import { createStripeCustomer } from "@/services/stripe";
-// import EmailProvider from "next-auth/providers/email";
+// import CredentialsProvider from "next-auth/providers/credentials";
 
 export const auth: AuthOptions = {
+  pages: {
+    signIn: "/auth",
+    signOut: "/auth",
+    error: "/auth",
+    verifyRequest: "/auth",
+    newUser: "/app",
+  },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
-    // EmailProvider({
-    //   server: process.env.EMAIL_SERVER,
-    //   from: process.env.EMAIL_FROM,
+    // CredentialsProvider({
+    //   name: "Credentials",
+    //   credentials: {
+    //     email: { label: "Email", type: "text" },
+    //     password: { label: "Password", type: "password" },
+    //   },
+    //   async authorize(credentials) {
+    //     if (!credentials) return null;
+    //     const user = await db.user.findFirst({
+    //       where: {
+    //         email: credentials.email,
+    //       },
+    //     });
+    //     if (user && user.password === credentials.password) {
+    //       return { id: user.id, name: user.name, email: user.email };
+    //     } else {
+    //       return null;
+    //     }
+    //   },
     // }),
   ],
   callbacks: {
