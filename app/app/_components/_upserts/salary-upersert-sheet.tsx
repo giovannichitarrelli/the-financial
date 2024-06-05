@@ -27,7 +27,9 @@ import { CirclePlus, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import { toast } from "sonner";
-import { CalendarDatePicker } from "../data-sheet-picker";
+import { Calendar } from "@/app/_components/ui/calendar";
+import { ptBR } from "date-fns/locale";
+import { ScrollArea } from "@/app/_components/ui/scroll-area";
 
 export function SalaryUpsertSheet() {
   const ref = useRef<HTMLDivElement>(null);
@@ -37,7 +39,9 @@ export function SalaryUpsertSheet() {
   });
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
   const [expiryAt, setExpiryAt] = useState<Date | undefined>(new Date());
-
+  const handleDateClick = (date: Date | undefined) => {
+    setExpiryAt(date);
+  };
   async function onSubmit(data: z.infer<typeof upsertSalarySchema>) {
     setSheetIsOpen(true);
     try {
@@ -103,100 +107,127 @@ export function SalaryUpsertSheet() {
 
       <SheetContent className="p-0">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className=" h-screen">
-            <SheetHeader className="border-b border-solid border-secondary p-5 text-left">
-              <SheetTitle>Criar Recebimento</SheetTitle>
-            </SheetHeader>
+          <ScrollArea>
+            <form onSubmit={form.handleSubmit(onSubmit)} className=" h-screen">
+              <SheetHeader className="border-b border-solid border-secondary p-5 text-left">
+                <SheetTitle>Criar Recebimento</SheetTitle>
+              </SheetHeader>
 
-            <div className="space-y-2 p-6">
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Título</FormLabel>
-                    <FormControl>
-                      <Input
-                        required
-                        placeholder="Insira o título do seu recebimento"
-                        {...field}
-                        value={field.value || ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="ammount"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Valor</FormLabel>
-                    <FormControl>
-                      <Input
-                        required
-                        placeholder="Insira o valor do seu recebimento"
-                        {...field}
-                        type="number"
-                        value={field.value || ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="expiryAt"
-                render={() => (
-                  <FormItem>
-                    <FormLabel>Vencimento (Opcional)</FormLabel>
-                    <FormControl>
-                      <CalendarDatePicker
-                        value={expiryAt}
-                        onChange={(date) => setExpiryAt(date)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="isFixed"
-                render={({ field }) => (
-                  <FormItem className="space-x-2">
-                    <FormLabel>Salário Fixo</FormLabel>
-                    <FormControl>
-                      <Checkbox
-                        id="isFixed"
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <SheetFooter className="pt-6">
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Cadastrando
-                    </>
-                  ) : (
-                    "Cadastrar Recebimento"
+              <div className="space-y-2 p-6">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Título</FormLabel>
+                      <FormControl>
+                        <Input
+                          required
+                          placeholder="Insira o título do seu recebimento"
+                          {...field}
+                          value={field.value || ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
-                </Button>
-              </SheetFooter>
-            </div>
-          </form>
+                />
+                <FormField
+                  control={form.control}
+                  name="ammount"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Valor</FormLabel>
+                      <FormControl>
+                        <Input
+                          required
+                          placeholder="Insira o valor do seu recebimento"
+                          {...field}
+                          type="number"
+                          value={field.value || ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="expiryAt"
+                  render={() => (
+                    <FormItem>
+                      <FormLabel>Vencimento (Opcional)</FormLabel>
+                      <FormControl>
+                        <Calendar
+                          locale={ptBR}
+                          mode="single"
+                          selected={expiryAt}
+                          onSelect={handleDateClick}
+                          // styles={{
+                          //   head_cell: {
+                          //     width: "100%",
+                          //     textTransform: "capitalize",
+                          //   },
+                          //   cell: {
+                          //     width: "100%",
+                          //   },
+                          //   button: {
+                          //     width: "100%",
+                          //   },
+                          //   nav_button_previous: {
+                          //     width: "32px",
+                          //     height: "32px",
+                          //   },
+                          //   nav_button_next: {
+                          //     width: "32px",
+                          //     height: "32px",
+                          //   },
+                          //   caption: {
+                          //     textTransform: "capitalize",
+                          //   },
+                          // }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="isFixed"
+                  render={({ field }) => (
+                    <FormItem className="space-x-2">
+                      <FormLabel>Salário Fixo</FormLabel>
+                      <FormControl>
+                        <Checkbox
+                          id="isFixed"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <SheetFooter className="pb-10 pt-6">
+                  <Button type="submit" disabled={form.formState.isSubmitting}>
+                    {form.formState.isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Cadastrando
+                      </>
+                    ) : (
+                      "Cadastrar Recebimento"
+                    )}
+                  </Button>
+                </SheetFooter>
+              </div>
+            </form>
+          </ScrollArea>
         </Form>
       </SheetContent>
     </Sheet>

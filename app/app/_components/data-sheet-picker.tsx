@@ -23,7 +23,7 @@ export function CalendarDatePicker({
   onChange,
 }: CalendarDatePickerProps) {
   const formattedDate = value
-    ? format(value, "dd '/' LLLL '/' yyyy", { locale: ptBR })
+    ? format(value, "dd '-' LLLL '-' yyyy", { locale: ptBR })
     : "Escolha a data";
 
   return (
@@ -50,7 +50,60 @@ export function CalendarDatePicker({
           defaultMonth={value}
           selected={value}
           onSelect={onChange}
+          styles={{
+            head_cell: {
+              width: "100%",
+              textTransform: "capitalize",
+            },
+            cell: {
+              width: "100%",
+            },
+            button: {
+              width: "100%",
+            },
+            nav_button_previous: {
+              width: "32px",
+              height: "32px",
+            },
+            nav_button_next: {
+              width: "32px",
+              height: "32px",
+            },
+            caption: {
+              textTransform: "capitalize",
+            },
+          }}
         />
+        {/* <Calendar
+                        locale={ptBR}
+                        mode="single"
+                        selected={expiryAt}
+                        onSelect={handleDateClick}
+                        // fromDate={addDays(new Date(), 1)}
+                        styles={{
+                          head_cell: {
+                            width: "100%",
+                            textTransform: "capitalize",
+                          },
+                          cell: {
+                            width: "100%",
+                          },
+                          button: {
+                            width: "100%",
+                          },
+                          nav_button_previous: {
+                            width: "32px",
+                            height: "32px",
+                          },
+                          nav_button_next: {
+                            width: "32px",
+                            height: "32px",
+                          },
+                          caption: {
+                            textTransform: "capitalize",
+                          },
+                        }}
+                      /> */}
       </PopoverContent>
     </Popover>
   );

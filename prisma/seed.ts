@@ -38,7 +38,7 @@ async function seedDatabase() {
         color: "#f59e0b",
       },
       {
-        title: "Lazer e Entretenimento",
+        title: "Viagens",
         color: "#eab308",
       },
       {
@@ -50,11 +50,11 @@ async function seedDatabase() {
         color: "#22c55e",
       },
       {
-        title: "Seguros",
+        title: "Assinaturas",
         color: "#10b981",
       },
       {
-        title: "Impostos e Taxas",
+        title: "Taxas e seguros ",
         color: "#14b8a6",
       },
       {
@@ -66,7 +66,7 @@ async function seedDatabase() {
         color: "#0ea5e9",
       },
       {
-        title: "Eletrônicos",
+        title: "Compras",
         color: "#3b82f6",
       },
       {
@@ -86,11 +86,11 @@ async function seedDatabase() {
         color: "#d946ef",
       },
       {
-        title: "Equipamento de trabalho",
+        title: "Lazer",
         color: "#ec4899",
       },
       {
-        title: "Outros",
+        title: "Lanches",
         color: "#f43f5e",
       },
     ];
