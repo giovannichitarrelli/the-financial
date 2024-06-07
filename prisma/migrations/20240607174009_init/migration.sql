@@ -12,8 +12,6 @@ CREATE TABLE "Account" (
     "scope" TEXT,
     "id_token" TEXT,
     "session_state" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
 );
@@ -54,26 +52,6 @@ CREATE TABLE "VerificationToken" (
     "identifier" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "TwoFactorToken" (
-    "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "token" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "TwoFactorToken_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ResetPasswordToken" (
-    "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "token" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "ResetPasswordToken_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -174,24 +152,6 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
-
--- CreateIndex
-CREATE UNIQUE INDEX "TwoFactorToken_email_key" ON "TwoFactorToken"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "TwoFactorToken_token_key" ON "TwoFactorToken"("token");
-
--- CreateIndex
-CREATE UNIQUE INDEX "TwoFactorToken_email_token_key" ON "TwoFactorToken"("email", "token");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ResetPasswordToken_email_key" ON "ResetPasswordToken"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ResetPasswordToken_token_key" ON "ResetPasswordToken"("token");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ResetPasswordToken_email_token_key" ON "ResetPasswordToken"("email", "token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_CategoriesToExpenses_AB_unique" ON "_CategoriesToExpenses"("A", "B");
