@@ -66,6 +66,10 @@ async function seedDatabase() {
         color: "#0ea5e9",
       },
       {
+        title: "Despesas familiares",
+        color: "#d946ef",
+      },
+      {
         title: "Compras",
         color: "#3b82f6",
       },
