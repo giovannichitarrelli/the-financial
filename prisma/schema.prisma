@@ -20,10 +20,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -37,30 +34,25 @@ model Session {
 }
 
 model User {
-  id                     String    @id @default(cuid())
-  name                   String?
-  email                  String?   @unique
-  emailVerified          DateTime?
-  image                  String?
-  createAt               DateTime  @default(now())
-  updatedAt              DateTime  @updatedAt
-  password               String?
-  username               String?   @unique
-  isTwoFactorAuthEnabled Boolean   @default(false)
-  twoFactorAuthVerified  DateTime?
-
+  id                       String        @id @default(cuid())
+  name                     String?
+  email                    String?       @unique
+  emailVerified            DateTime?
+  image                    String?
+  createAt                 DateTime      @default(now())
+  password                 String?
+  username                 String?       @unique
   stripeCustomerId         String?
   stripeSubscriptionId     String?
   stripeSubscriptionStatus String?
   stripePriceId            String?
-
-  accounts    Account[]
-  sessions    Session[]
-  expenses    Expenses[]
-  salary      Salary[]
-  investments Investments[]
-  wishlist    Wishlist[]
-  withdraw    Withdraw[]
+  accounts                 Account[]
+  expenses                 Expenses[]
+  investments              Investments[]
+  salary                   Salary[]
+  sessions                 Session[]
+  wishlist                 Wishlist[]
+  withdraw                 Withdraw[]
 }
 
 model VerificationToken {
@@ -71,28 +63,9 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model TwoFactorToken {
-  id      String   @id @default(cuid())
-  email   String   @unique
-  token   String   @unique
-  expires DateTime
-
-  @@unique([email, token])
-}
-
-model ResetPasswordToken {
-  id      String   @id @default(cuid())
-  email   String   @unique
-  token   String   @unique
-  expires DateTime
-
-  @@unique([email, token])
-}
-
 model Expenses {
   id           String       @id @default(cuid())
   title        String
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
   price        String?
   createAt     DateTime     @default(now())
@@ -100,56 +73,56 @@ model Expenses {
   doneAt       DateTime?
   isFixed      Boolean      @default(false)
   expiryAt     DateTime?
-  categories   Categories[]
   categoriesId String?
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categories   Categories[] @relation("CategoriesToExpenses")
 }
 
 model Categories {
   id       String     @id @default(uuid())
   title    String
   color    String
-  expenses Expenses[]
+  expenses Expenses[] @relation("CategoriesToExpenses")
 }
 
 model Salary {
   id       String    @id @default(cuid())
   title    String
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
   price    String
   createAt DateTime  @default(now())
   isFixed  Boolean   @default(false)
   doneAt   DateTime?
   expiryAt DateTime
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Investments {
-  id       String   @id @default(cuid())
+  id       String    @id @default(cuid())
   title    String
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
   price    String
-  createAt DateTime @default(now())
-
-  doneAt DateTime?
+  createAt DateTime  @default(now())
+  doneAt   DateTime?
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Withdraw {
   id       String    @id @default(cuid())
   title    String
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
   price    String
   createAt DateTime  @default(now())
   doneAt   DateTime?
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Wishlist {
   id       String    @id @default(cuid())
   title    String
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
   price    String
   createAt DateTime  @default(now())
   doneAt   DateTime?
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
