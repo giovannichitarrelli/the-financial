@@ -274,7 +274,7 @@ export function ExpensesUpsertSheet() {
                   )}
                 />
 
-                <SheetFooter className="pb-18 pt-6">
+                <SheetFooter className="pb-16 pt-6">
                   <Button type="submit" disabled={form.formState.isSubmitting}>
                     {form.formState.isSubmitting ? (
                       <>

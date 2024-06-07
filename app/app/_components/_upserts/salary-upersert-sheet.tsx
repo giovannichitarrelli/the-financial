@@ -189,9 +189,6 @@ export function SalaryUpsertSheet() {
                               mode="single"
                               selected={expiryAt}
                               onSelect={handleDateClick}
-                              // disabled={(date) =>
-                              //   date > new Date() || date < new Date("1900-01-01")
-                              // }
                               initialFocus
                             />
                           </PopoverContent>
@@ -203,27 +200,27 @@ export function SalaryUpsertSheet() {
                           onSelect={handleDateClick}
                           styles={{
                             head_cell: {
-                              width: "100%",
-                              textTransform: "capitalize",
+                                width: '100%',
+                                textTransform: 'capitalize',
                             },
                             cell: {
-                              width: "100%",
+                                width: '100%',
                             },
                             button: {
-                              width: "100%",
+                                width: '100%',
                             },
                             nav_button_previous: {
-                              width: "32px",
-                              height: "32px",
+                                width: '32px',
+                                height: '32px',
                             },
                             nav_button_next: {
-                              width: "32px",
-                              height: "32px",
+                                width: '32px',
+                                height: '32px',
                             },
                             caption: {
-                              textTransform: "capitalize",
-                            },
-                          }}
+                                textTransform: 'capitalize'
+                            }
+                        }}
                         /> */}
                       </FormControl>
                       <FormMessage />
@@ -250,7 +247,7 @@ export function SalaryUpsertSheet() {
                   )}
                 />
 
-                <SheetFooter className="pb-18 pt-6">
+                <SheetFooter className="pb-16 pt-6">
                   <Button type="submit" disabled={form.formState.isSubmitting}>
                     {form.formState.isSubmitting ? (
                       <>
