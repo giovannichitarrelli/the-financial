@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { getUserCurrentPlan } from "@/services/stripe";
 import { getUserWishlist } from "./actions";
 import { WishlistUpsertSheet } from "../_components/_upserts/wishlist-upersert-sheet";
 import { WishlistDataTable } from "./_components/wishlist-data-table";
@@ -12,25 +11,50 @@ import {
 import CtaButtonPro from "../_components/cta-button-pro";
 import { FreeAlert } from "../_components/plan-alert";
 import MsgNoData from "../_components/no-data-table";
-import { getServerSession } from "next-auth";
-import { auth } from "@/services/auth";
+import { isAvailable } from "@/app/_lib/utils";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/app/_components/ui/card";
 export const metadata: Metadata = {
   title: "Dashboard - Lista de desejos",
   description: "Dashboard de lista de desejos...",
 };
 export default async function Page() {
-  const session = await getServerSession(auth);
   const wishlist = await getUserWishlist();
-  const plan = await getUserCurrentPlan(session?.user.id as string);
+  const { plan, status } = await isAvailable();
+  if (!plan || !status) {
+    return (
+      <Card>
+        <CardHeader className="border-b border-border">
+          <CardTitle>Gerenciar assinatura</CardTitle>
+          <CardDescription>
+            Não foi possível carregar as informações da sua assinatura.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
   return (
     <DashboardPage>
       <DashboardPageHeader>
         <DashboardPageHeaderTitle>Metas</DashboardPageHeaderTitle>
-        {plan.name === "free" ? <CtaButtonPro /> : <WishlistUpsertSheet />}
+        {plan.name === "free" || status.status != "active" ? (
+          <CtaButtonPro />
+        ) : (
+          <WishlistUpsertSheet />
+        )}
       </DashboardPageHeader>
 
       <DashboardPageMain>
-        {plan.name === "free" ? <FreeAlert /> : " "}
+        {plan.name === "free" || status.status != "active" ? (
+          <FreeAlert />
+        ) : (
+          " "
+        )}
 
         {wishlist.length > 0 ? (
           <WishlistDataTable data={wishlist} />

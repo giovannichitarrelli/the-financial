@@ -8,18 +8,28 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { createCheckoutSessionAction } from "./actions";
-import { getUserCurrentPlan, getUserCurrentStatus } from "@/services/stripe";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { FreeAlert, ProAlert } from "../../_components/plan-alert";
 import CtaButtonPro from "../../_components/cta-button-pro";
-import { auth } from "@/services/auth";
-import { getServerSession } from "next-auth";
+
+import { isAvailable } from "@/app/_lib/utils";
 
 export default async function Page() {
-  const session = await getServerSession(auth);
-  const plan = await getUserCurrentPlan(session?.user.id as string);
-  const status = await getUserCurrentStatus(session?.user.id as string);
+  const { plan, status } = await isAvailable();
+  if (!plan || !status) {
+    return (
+      <Card>
+        <CardHeader className="border-b border-border">
+          <CardTitle>Gerenciar assinatura</CardTitle>
+          <CardDescription>
+            Não foi possível carregar as informações da sua assinatura.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
   return (
     <Card>
       <CardHeader className="border-b border-border">
@@ -38,13 +48,17 @@ export default async function Page() {
             Status da assinatura:{" "}
             {status.status === "active" ? "Ativo" : status.status}
             <div className="flex">
-              {plan.name === "free" ? <FreeAlert /> : <ProAlert />}
+              {plan.name === "free" || status.status != "active" ? (
+                <FreeAlert />
+              ) : (
+                <ProAlert />
+              )}
             </div>
           </main>
         </div>
       </CardContent>
       <CardFooter className=" border-t border-border pt-6 ">
-        {plan.name === "free" ? (
+        {plan.name === "free" || status.status != "active" ? (
           <form action={createCheckoutSessionAction} className="w-full">
             <div className="flex flex-wrap items-center justify-center gap-2 ">
               <span className="min-w-[250px]">

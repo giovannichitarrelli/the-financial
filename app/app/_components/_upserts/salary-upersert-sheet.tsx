@@ -161,10 +161,6 @@ export function SalaryUpsertSheet() {
                     <FormItem>
                       <FormLabel>Vencimento (Opcional)</FormLabel>
                       <FormControl>
-                        {/* <CalendarDatePicker
-                          value={expiryAt}
-                          onChange={(date) => setExpiryAt(date)}
-                        /> */}
                         <Calendar
                           locale={ptBR}
                           mode="single"

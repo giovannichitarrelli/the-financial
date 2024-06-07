@@ -28,9 +28,10 @@ import {
   DashboardPageHeaderTitle,
   DashboardPageMain,
 } from "../_components/dashboard/dashboard-page";
-import { getUserCurrentPlan } from "@/services/stripe";
-import { getServerSession } from "next-auth";
-import { auth } from "@/services/auth";
+// import { getUserCurrentPlan } from "@/services/stripe";
+// import { getServerSession } from "next-auth";
+// import { auth } from "@/services/auth";
+import { isAvailable } from "@/app/_lib/utils";
 
 export default async function Page() {
   const currentDate = new Date();
@@ -41,19 +42,42 @@ export default async function Page() {
     parseInt(currentMonth),
     parseInt(currentYear),
   );
-  const session = await getServerSession(auth);
-  const plan = await getUserCurrentPlan(session?.user.id as string);
+  // const session = await getServerSession(auth);
+  // const plan = await getUserCurrentPlan(session?.user.id as string);
   const categories = await db.categories.findMany({});
+  const { plan, status } = await isAvailable();
+
+  if (!plan || !status) {
+    return (
+      <Card>
+        <CardHeader className="border-b border-border">
+          <CardTitle>Gerenciar assinatura</CardTitle>
+          <CardDescription>
+            Não foi possível carregar as informações da sua assinatura.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
   return (
     <DashboardPage>
       <DashboardPageHeader>
         <DashboardPageHeaderTitle>Despesas</DashboardPageHeaderTitle>
 
-        {plan.name === "free" ? <CtaButtonPro /> : <ExpensesUpsertSheet />}
+        {plan.name === "free" || status.status != "active" ? (
+          <CtaButtonPro />
+        ) : (
+          <ExpensesUpsertSheet />
+        )}
       </DashboardPageHeader>
 
       <DashboardPageMain>
-        {plan.name === "free" ? <FreeAlert /> : " "}
+        {plan.name === "free" || status.status != "active" ? (
+          <FreeAlert />
+        ) : (
+          " "
+        )}
         <DataFilterExpenses
           initialMonth={currentMonth}
           initialYear={currentYear}

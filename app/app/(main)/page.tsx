@@ -50,10 +50,16 @@ import {
 import ResumeCards from "./_components/resume-cards";
 import ResumeList from "./_components/resume-list";
 import ChartsCards from "./_components/charts-cards";
-import { getUserCurrentPlan } from "@/services/stripe";
 import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
 import { redirect } from "next/navigation";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/app/_components/ui/card";
+import { isAvailable } from "@/app/_lib/utils";
 
 export const metadata: Metadata = {
   title: "DinDin - Dashboard",
@@ -65,7 +71,20 @@ export default async function AppPage() {
   if (!session || !session.user || !session.user.id) {
     redirect("/erro");
   }
-  const plan = await getUserCurrentPlan(session?.user.id);
+  const { plan, status } = await isAvailable();
+
+  if (!plan || !status) {
+    return (
+      <Card>
+        <CardHeader className="border-b border-border">
+          <CardTitle>Gerenciar assinatura</CardTitle>
+          <CardDescription>
+            Não foi possível carregar as informações da sua assinatura.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
 
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
@@ -102,15 +121,27 @@ export default async function AppPage() {
           Olá {formattedFirstName} 👋
         </DashboardPageHeaderTitle>
         <div className="lg:hidden">
-          {plan.name === "free" ? <CtaButtonPro /> : <ExpensesUpsertSheet />}
+          {plan.name === "free" || status.status != "active" ? (
+            <CtaButtonPro />
+          ) : (
+            <ExpensesUpsertSheet />
+          )}
         </div>
         <div className="hidden lg:flex">
-          {plan.name === "free" ? <CtaButtonPro /> : <HeaderAddButtons />}
+          {plan.name === "free" || status.status != "active" ? (
+            <CtaButtonPro />
+          ) : (
+            <HeaderAddButtons />
+          )}
         </div>
       </DashboardPageHeader>
 
       <DashboardPageMain>
-        {plan.name === "free" ? <FreeAlert /> : " "}
+        {plan.name === "free" || status.status != "active" ? (
+          <FreeAlert />
+        ) : (
+          " "
+        )}
 
         <div className="flex-col lg:flex">
           <div className="flex-1 space-y-4 p-3 pt-6">
@@ -183,7 +214,7 @@ export default async function AppPage() {
                 />
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                   <ChartsCards
-                    title="Gastos por categoria / Anual "
+                    title="Gastos por categoria"
                     component={<PizzaChartYear />}
                   />
                   <ChartsCards

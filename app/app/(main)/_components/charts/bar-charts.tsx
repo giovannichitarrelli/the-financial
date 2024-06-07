@@ -30,25 +30,6 @@ export function ComparativeBarCHarts({
   );
 }
 
-interface MonthDataExpenses {
-  name: string;
-  Despesas: number;
-}
-
-export function ExpensesBarCharts({ data }: { data: MonthDataExpenses[] }) {
-  return (
-    <BarChart
-      data={data}
-      index="name"
-      categories={["Despesas"]}
-      colors={["red"]}
-      valueFormatter={formatCurrencyCharts}
-      yAxisWidth={48}
-      noDataText="Sem dados a serem exibidos"
-    />
-  );
-}
-
 interface PizzaChartData {
   name: string;
   value: number;
@@ -123,5 +104,24 @@ export function ProgressChartYear({ progress }: ProgressChartData) {
         </p>
       </div>
     </div>
+  );
+}
+
+interface MonthDataExpenses {
+  name: string;
+  Despesas: number;
+}
+
+export function ExpensesBarCharts({ data }: { data: MonthDataExpenses[] }) {
+  return (
+    <BarChart
+      data={data}
+      index="name"
+      categories={["Despesas"]}
+      colors={["red"]}
+      valueFormatter={formatCurrencyCharts}
+      yAxisWidth={48}
+      noDataText="Sem dados a serem exibidos"
+    />
   );
 }

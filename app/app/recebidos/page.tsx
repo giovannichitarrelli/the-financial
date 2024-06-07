@@ -1,6 +1,5 @@
 import React from "react";
 import { getUserMonthSalary } from "./actions";
-import { getUserCurrentPlan } from "@/services/stripe";
 import {
   Card,
   CardContent,
@@ -19,31 +18,48 @@ import {
 } from "../_components/dashboard/dashboard-page";
 import CtaButtonPro from "../_components/cta-button-pro";
 import { FreeAlert } from "../_components/plan-alert";
-import { getServerSession } from "next-auth";
-import { auth } from "@/services/auth";
+import { isAvailable } from "@/app/_lib/utils";
+
 export default async function Page() {
   const currentDate = new Date();
   const currentMonth = (currentDate.getMonth() + 1).toString();
   const currentYear = currentDate.getFullYear().toString();
-
-  const session = await getServerSession(auth);
-  const plan = await getUserCurrentPlan(session?.user.id as string);
-
   const salary = await getUserMonthSalary(
     parseInt(currentMonth),
     parseInt(currentYear),
   );
+  const { plan, status } = await isAvailable();
+  if (!plan || !status) {
+    return (
+      <Card>
+        <CardHeader className="border-b border-border">
+          <CardTitle>Gerenciar assinatura</CardTitle>
+          <CardDescription>
+            Não foi possível carregar as informações da sua assinatura.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
 
   return (
     <DashboardPage>
       <DashboardPageHeader>
         <DashboardPageHeaderTitle>Recebimentos</DashboardPageHeaderTitle>
 
-        {plan.name === "free" ? <CtaButtonPro /> : <SalaryUpsertSheet />}
+        {plan.name === "free" || status.status != "active" ? (
+          <CtaButtonPro />
+        ) : (
+          <SalaryUpsertSheet />
+        )}
       </DashboardPageHeader>
 
       <DashboardPageMain>
-        {plan.name === "free" ? <FreeAlert /> : " "}
+        {plan.name === "free" || status.status != "active" ? (
+          <FreeAlert />
+        ) : (
+          " "
+        )}
         <ClientComponent
           initialMonth={currentMonth}
           initialYear={currentYear}
