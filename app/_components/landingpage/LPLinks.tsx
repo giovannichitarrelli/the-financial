@@ -5,7 +5,6 @@ import {
 } from "@/app/_components/ui/navigation-menu";
 import { User } from "lucide-react";
 import Link from "next/link";
-import ButtonCta from "./button-cta";
 
 const PageLinks = () => {
   return (
@@ -40,8 +39,6 @@ const PageLinks = () => {
           </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-
-      <ButtonCta cta="Testar gratuitamente" />
     </>
   );
 };

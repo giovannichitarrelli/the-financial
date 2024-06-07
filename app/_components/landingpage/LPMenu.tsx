@@ -5,6 +5,7 @@ import PageLinks from "./LPLinks";
 import Logo from "../logo";
 import Link from "next/link";
 import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";
+import ButtonCta from "./button-cta";
 
 export default function PageMenu() {
   return (
@@ -19,6 +20,7 @@ export default function PageMenu() {
             <PageLinks />
           </NavigationMenuList>
         </NavigationMenu>
+        <ButtonCta cta="Testar gratuitamente" />
       </header>
 
       {/* MOBILE */}
@@ -40,12 +42,12 @@ export default function PageMenu() {
             <div className="border-b border-border pb-4">
               <Logo />
             </div>
-
             <NavigationMenu>
-              <NavigationMenuList className="mt-6 flex flex-col items-start gap-5">
+              <NavigationMenuList className="my-6 flex flex-col items-start gap-5">
                 <PageLinks />
               </NavigationMenuList>
             </NavigationMenu>
+            <ButtonCta cta="Testar gratuitamente" />
           </SheetContent>
         </Sheet>
       </header>

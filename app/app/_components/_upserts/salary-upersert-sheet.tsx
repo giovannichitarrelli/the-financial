@@ -23,20 +23,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { upsertSalarySchema } from "../../recebidos/schema";
 import { upsertSalary } from "../../recebidos/actions";
-import { CalendarIcon, CirclePlus, Loader2 } from "lucide-react";
+import { CirclePlus, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import { toast } from "sonner";
+import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { Calendar } from "@/app/_components/ui/calendar";
 import { ptBR } from "date-fns/locale";
-import { ScrollArea } from "@/app/_components/ui/scroll-area";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/app/_components/ui/popover";
-import { cn } from "@/app/_lib/utils";
-import { format } from "date-fns";
+
+// import { CalendarDatePicker } from "../data-sheet-picker";
 
 export function SalaryUpsertSheet() {
   const ref = useRef<HTMLDivElement>(null);
@@ -166,62 +161,39 @@ export function SalaryUpsertSheet() {
                     <FormItem>
                       <FormLabel>Vencimento (Opcional)</FormLabel>
                       <FormControl>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
-                                !expiryAt && "text-muted-foreground",
-                              )}
-                            >
-                              {expiryAt ? (
-                                format(expiryAt, "PPP")
-                              ) : (
-                                <span>Escollha a data</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              locale={ptBR}
-                              mode="single"
-                              selected={expiryAt}
-                              onSelect={handleDateClick}
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        {/* <Calendar
+                        {/* <CalendarDatePicker
+                          value={expiryAt}
+                          onChange={(date) => setExpiryAt(date)}
+                        /> */}
+                        <Calendar
                           locale={ptBR}
                           mode="single"
                           selected={expiryAt}
                           onSelect={handleDateClick}
                           styles={{
                             head_cell: {
-                                width: '100%',
-                                textTransform: 'capitalize',
+                              width: "100%",
+                              textTransform: "capitalize",
                             },
                             cell: {
-                                width: '100%',
+                              width: "100%",
                             },
-                            button: {
-                                width: '100%',
-                            },
+                            // button: {
+                            //     width: '100%',
+                            // },
                             nav_button_previous: {
-                                width: '32px',
-                                height: '32px',
+                              width: "32px",
+                              height: "32px",
                             },
                             nav_button_next: {
-                                width: '32px',
-                                height: '32px',
+                              width: "32px",
+                              height: "32px",
                             },
                             caption: {
-                                textTransform: 'capitalize'
-                            }
-                        }}
-                        /> */}
+                              textTransform: "capitalize",
+                            },
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
