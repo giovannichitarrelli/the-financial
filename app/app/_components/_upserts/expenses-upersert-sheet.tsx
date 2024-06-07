@@ -227,29 +227,29 @@ export function ExpensesUpsertSheet() {
                           mode="single"
                           selected={expiryAt}
                           onSelect={handleDateClick}
-                          // styles={{
-                          //   head_cell: {
-                          //     width: "100%",
-                          //     textTransform: "capitalize",
-                          //   },
-                          //   cell: {
-                          //     width: "100%",
-                          //   },
-                          //   button: {
-                          //     width: "100%",
-                          //   },
-                          //   nav_button_previous: {
-                          //     width: "32px",
-                          //     height: "32px",
-                          //   },
-                          //   nav_button_next: {
-                          //     width: "32px",
-                          //     height: "32px",
-                          //   },
-                          //   caption: {
-                          //     textTransform: "capitalize",
-                          //   },
-                          // }}
+                          styles={{
+                            head_cell: {
+                              width: "100%",
+                              textTransform: "capitalize",
+                            },
+                            cell: {
+                              width: "100%",
+                            },
+                            button: {
+                              width: "100%",
+                            },
+                            nav_button_previous: {
+                              width: "32px",
+                              height: "32px",
+                            },
+                            nav_button_next: {
+                              width: "32px",
+                              height: "32px",
+                            },
+                            caption: {
+                              textTransform: "capitalize",
+                            },
+                          }}
                         />
                       </FormControl>
                       <FormMessage />
@@ -274,7 +274,7 @@ export function ExpensesUpsertSheet() {
                   )}
                 />
 
-                <SheetFooter className="pt-6">
+                <SheetFooter className="pb-18 pt-6">
                   <Button type="submit" disabled={form.formState.isSubmitting}>
                     {form.formState.isSubmitting ? (
                       <>
