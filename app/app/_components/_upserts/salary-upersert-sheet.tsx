@@ -178,9 +178,9 @@ export function SalaryUpsertSheet() {
                             cell: {
                               width: "100%",
                             },
-                            // button: {
-                            //     width: '100%',
-                            // },
+                            button: {
+                              width: "100%",
+                            },
                             nav_button_previous: {
                               width: "32px",
                               height: "32px",
