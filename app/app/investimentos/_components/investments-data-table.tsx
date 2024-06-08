@@ -5,9 +5,9 @@ import { Investments } from "../../types";
 import { deleteInvestments, upsertInvestments } from "../actions";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { formatCurrency } from "../../_components/_helpers/formatCurrency";
-import DropdownMenuComponent from "../../_components/dropdown-data-table";
 import { StatusPayment } from "../../_components/status";
 import { toast } from "sonner";
+import DropdownInvestments from "./dropdown-investments";
 
 type InvestmentsDataTableProps = {
   data: Investments[];
@@ -60,9 +60,10 @@ export function InvestmentsDataTable({ data }: InvestmentsDataTableProps) {
                     <StatusPayment doneAt={investments.doneAt} />
                   </div>
                 </div>
-                <DropdownMenuComponent
+                <DropdownInvestments
                   onToggleDone={() => handleToggleDoneInvestments(investments)}
                   onDelete={() => handleDeleteInvestments(investments)}
+                  investments={investments}
                 />
               </div>
               <h2 className="font-bold">{investments.title}</h2>

@@ -3,7 +3,7 @@ import { z } from "zod";
 export const upsertInvestmentsSchema = z.object({
   id: z.string().optional(),
   title: z.string().optional(),
-  ammount: z.string().optional(),
+  price: z.string().optional(),
   doneAt: z.date().optional().nullable(),
 });
 export const DeleteInvestmentsSchema = z.object({

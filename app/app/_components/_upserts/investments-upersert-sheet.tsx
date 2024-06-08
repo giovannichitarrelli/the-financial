@@ -89,7 +89,7 @@ export function InvestmentsUpsertSheet() {
               />
               <FormField
                 control={form.control}
-                name="ammount"
+                name="price"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Valor</FormLabel>

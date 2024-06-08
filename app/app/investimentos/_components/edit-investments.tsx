@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-
 import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
@@ -16,40 +15,29 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { upsertExpenses } from "../actions";
-import { upsertExpensesSchema } from "../schema";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/_components/ui/select";
 import { Loader2, Pencil } from "lucide-react";
+import { upsertInvestmentsSchema } from "../schema";
+import { upsertInvestments } from "../actions";
 
 type EditPostProps = {
-  expense: any;
-  categories: any;
+  investments: any;
 };
-export function EditExpense({ expense, categories }: EditPostProps) {
+export function EditInvestments({ investments }: EditPostProps) {
   const router = useRouter();
 
   const form = useForm({
-    resolver: zodResolver(upsertExpensesSchema),
+    resolver: zodResolver(upsertInvestmentsSchema),
     defaultValues: {
-      title: expense.title,
-      price: expense.price,
-      categoriesId: expense.categoriesId,
+      title: investments.title,
+      price: investments.price,
     },
   });
-  const handleChangeCategory = (value: string) => {
-    form.setValue("categoriesId", value);
-  };
+
   const onSubmit = async (data: any) => {
     try {
-      await upsertExpenses({ ...data, id: expense.id });
-      toast.success("Sua despesa foi atualizada com sucesso!", {
-        description: "Suas despesas serão atualizadas...",
+      await upsertInvestments({ ...data, id: investments.id });
+      toast.success("Seu investimento foi atualizado com sucesso!", {
+        description: "Aguarde o carregamento...",
       });
     } catch (error) {
       toast.error("Sua despesa não foi atualizada!", {
@@ -98,27 +86,6 @@ export function EditExpense({ expense, categories }: EditPostProps) {
                 className="col-span-3"
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="categoriesId" className="text-right">
-                Categoria
-              </Label>
-              <Select
-                onValueChange={handleChangeCategory}
-                value={form.watch("categoriesId")}
-              >
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Categorias" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category: any) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
           </div>
           <DialogFooter>
             <Button type="submit" disabled={form.formState.isSubmitting}>
@@ -128,7 +95,7 @@ export function EditExpense({ expense, categories }: EditPostProps) {
                   Cadastrando
                 </>
               ) : (
-                "Salvar mudanças "
+                "Salvar mudanças"
               )}
             </Button>
           </DialogFooter>

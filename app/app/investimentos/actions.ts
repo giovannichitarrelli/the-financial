@@ -72,6 +72,7 @@ export async function upsertInvestments(
       },
       data: {
         title: input.title,
+        price: input.price,
         doneAt: input.doneAt,
       },
     });
@@ -87,7 +88,7 @@ export async function upsertInvestments(
       data: null,
     };
   }
-  if (!input.ammount) {
+  if (!input.price) {
     return {
       error: "Valor é obrigatório",
       data: null,
@@ -97,7 +98,7 @@ export async function upsertInvestments(
   const investments = await db.investments.create({
     data: {
       title: input.title,
-      price: input.ammount,
+      price: input.price,
       userId: session?.user?.id,
       doneAt: new Date(),
     },
