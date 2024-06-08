@@ -16,31 +16,31 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Loader2, Pencil } from "lucide-react";
-import { upsertInvestmentsSchema } from "../schema";
-import { upsertInvestments } from "../actions";
+import { upsertWithdrawsSchema } from "../schema";
+import { upsertWithdraws } from "../actions";
 
 type EditPostProps = {
-  investments: any;
+  withdraws: any;
 };
-export function EditInvestments({ investments }: EditPostProps) {
+export function EditWithdraws({ withdraws }: EditPostProps) {
   const router = useRouter();
 
   const form = useForm({
-    resolver: zodResolver(upsertInvestmentsSchema),
+    resolver: zodResolver(upsertWithdrawsSchema),
     defaultValues: {
-      title: investments.title,
-      price: investments.price,
+      title: withdraws.title,
+      price: withdraws.price,
     },
   });
 
   const onSubmit = async (data: any) => {
     try {
-      await upsertInvestments({ ...data, id: investments.id });
-      toast.success("Seu investimento foi atualizado com sucesso!", {
+      await upsertWithdraws({ ...data, id: withdraws.id });
+      toast.success("Seu saque foi atualizado com sucesso!", {
         description: "Aguarde o carregamento...",
       });
     } catch (error) {
-      toast.error("Seu investimento não foi atualizado!", {
+      toast.error("Seu saque não foi atualizado!", {
         description: "Por favor, tente novamente...",
       });
     }

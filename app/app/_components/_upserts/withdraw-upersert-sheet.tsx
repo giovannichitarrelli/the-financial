@@ -89,7 +89,7 @@ export function WithdrawUpsertSheet() {
               />
               <FormField
                 control={form.control}
-                name="amount"
+                name="price"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Valor</FormLabel>

@@ -5,8 +5,8 @@ import { Card, CardContent } from "@/app/_components/ui/card";
 import { Withdraw } from "../../types";
 import { toast } from "sonner";
 import { StatusPayment } from "../../_components/status";
-import DropdownMenuComponent from "../../_components/dropdown-data-table";
 import { formatCurrency } from "../../_components/_helpers/formatCurrency";
+import DropdownWithdraws from "./dropdown-withdraws";
 
 type WithDrawsDataTableProps = {
   data: Withdraw[];
@@ -61,9 +61,10 @@ export function WithdrawsDataTable({ data }: WithDrawsDataTableProps) {
                   </div>
                 </div>
 
-                <DropdownMenuComponent
+                <DropdownWithdraws
                   onToggleDone={() => handleToggleDoneWithdraws(withdraws)}
                   onDelete={() => handleDeleteWithdraws(withdraws)}
+                  withdraws={withdraws}
                 />
               </div>
               <h2 className="font-bold">{withdraws.title}</h2>

@@ -182,18 +182,19 @@ export async function upsertWithdraws(
 
     if (!updateWithdwaws) {
       return {
-        error: " Não encontrado",
+        error: "Não encontrado",
         data: null,
       };
     }
 
-    const updateWithdraws = await Prisma.withdraw.update({
+    const updateWithdraws = await db.withdraw.update({
       where: {
         id: input.id,
         userId: session?.user?.id,
       },
       data: {
         title: input.title,
+        price: input.price,
         doneAt: input.doneAt,
       },
     });
@@ -209,7 +210,7 @@ export async function upsertWithdraws(
       data: null,
     };
   }
-  if (!input.amount) {
+  if (!input.price) {
     return {
       error: "Valor é obrigatório",
       data: null,
@@ -219,7 +220,7 @@ export async function upsertWithdraws(
   const withdraws = await db.withdraw.create({
     data: {
       title: input.title,
-      price: input.amount,
+      price: input.price,
       userId: session?.user?.id,
       doneAt: new Date(),
     },
@@ -250,7 +251,7 @@ export async function deleteWithdraws(
     };
   }
 
-  const withdraws = await Prisma.withdraw.findUnique({
+  const withdraws = await db.withdraw.findUnique({
     where: {
       id: input.id,
       userId: session?.user?.id,
