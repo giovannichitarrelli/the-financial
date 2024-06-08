@@ -57,7 +57,7 @@ export function WishlistUpsertSheet() {
       <SheetTrigger asChild>
         <Button variant="default" size="sm">
           <CirclePlus className=" mr-3 h-4 w-4" />
-          Desejos
+          Metas
         </Button>
       </SheetTrigger>
 
@@ -65,7 +65,7 @@ export function WishlistUpsertSheet() {
         <Form {...form}>
           <form onSubmit={onSubmit} className="h-screen">
             <SheetHeader className="border-b border-solid border-secondary p-5 text-left">
-              <SheetTitle>Lista de desejos</SheetTitle>
+              <SheetTitle>Metas</SheetTitle>
             </SheetHeader>
             <div className="space-y-2 p-6">
               <FormField
@@ -77,7 +77,7 @@ export function WishlistUpsertSheet() {
                     <FormControl>
                       <Input
                         required
-                        placeholder="Insira o título do seu desejo"
+                        placeholder="Insira o título "
                         {...field}
                         value={field.value || ""}
                       />
@@ -89,14 +89,14 @@ export function WishlistUpsertSheet() {
               />
               <FormField
                 control={form.control}
-                name="ammount"
+                name="price"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Valor</FormLabel>
                     <FormControl>
                       <Input
                         required
-                        placeholder="Insira o valor do seu desejo"
+                        placeholder="Insira o valor "
                         {...field}
                         type="number"
                         value={field.value || ""}
@@ -116,7 +116,7 @@ export function WishlistUpsertSheet() {
                       Cadastrando
                     </>
                   ) : (
-                    "Cadastrar desejo"
+                    "Cadastrar meta"
                   )}
                 </Button>
               </SheetFooter>

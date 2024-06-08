@@ -54,6 +54,7 @@ export async function upsertWishlist(
       },
       data: {
         title: input.title,
+        price: input.price,
         doneAt: input.doneAt,
       },
     });
@@ -69,7 +70,7 @@ export async function upsertWishlist(
       data: null,
     };
   }
-  if (!input.ammount) {
+  if (!input.price) {
     return {
       error: "Valor é obrigatório",
       data: null,
@@ -79,7 +80,7 @@ export async function upsertWishlist(
   const wishlist = await db.wishlist.create({
     data: {
       title: input.title,
-      price: input.ammount,
+      price: input.price,
       userId: session?.user?.id,
     },
   });
@@ -121,7 +122,7 @@ export async function deleteWishlist(
     },
   });
   return {
-    error: "Lista de desejos não foi deletada",
+    error: "Meta não foi deletada",
     data: null,
   };
 }

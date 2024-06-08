@@ -623,11 +623,9 @@ export default function Home() {
                       <Heart className="text-pink-500 " />
                     </span>
                     <div>
-                      <h3 className="text-left text-xl font-bold">
-                        Lista de desejos
-                      </h3>
+                      <h3 className="text-left text-xl font-bold">Metas</h3>
                       <p className="text-left	font-extralight">
-                        Cadastre e mantenha atualizado seus desejos de compras
+                        Cadastre e mantenha atualizado suas metas de compras
                       </p>
                     </div>
                   </CardContent>

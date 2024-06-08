@@ -125,7 +125,7 @@ export function SalaryUpsertSheet() {
                       <FormControl>
                         <Input
                           required
-                          placeholder="Insira o título do seu recebimento"
+                          placeholder="Insira o título"
                           {...field}
                           value={field.value || ""}
                         />
@@ -143,7 +143,7 @@ export function SalaryUpsertSheet() {
                       <FormControl>
                         <Input
                           required
-                          placeholder="Insira o valor do seu recebimento"
+                          placeholder="Insira o valor"
                           {...field}
                           type="number"
                           value={field.value || ""}

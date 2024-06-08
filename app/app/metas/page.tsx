@@ -19,8 +19,8 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 export const metadata: Metadata = {
-  title: "Dashboard - Lista de desejos",
-  description: "Dashboard de lista de desejos...",
+  title: "Dashboard - Metas",
+  description: "Dashboard de metas...",
 };
 export default async function Page() {
   const wishlist = await getUserWishlist();

@@ -5,8 +5,8 @@ import { deleteWishlist, upsertWishlist } from "../actions";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { StatusPayment } from "../../_components/status";
 import { formatCurrency } from "../../_components/_helpers/formatCurrency";
-import DropdownMenuComponent from "../../_components/dropdown-data-table";
 import { toast } from "sonner";
+import DropdownWishlist from "./dropdown-whishlist";
 
 type WishlistDataTableProps = {
   data: Wishlist[];
@@ -57,9 +57,10 @@ export function WishlistDataTable({ data }: WishlistDataTableProps) {
                   </div>
                 </div>
 
-                <DropdownMenuComponent
+                <DropdownWishlist
                   onToggleDone={() => handleToggleDoneWishlist(wishlist)}
                   onDelete={() => handleDeleteWishlist(wishlist)}
+                  wishlist={wishlist}
                 />
               </div>
               <h2 className="font-bold">{wishlist.title}</h2>
