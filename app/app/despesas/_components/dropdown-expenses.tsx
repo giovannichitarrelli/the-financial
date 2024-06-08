@@ -8,15 +8,19 @@ import {
 } from "@/app/_components/ui/dropdown-menu";
 import { MoreHorizontal, CircleCheckBig, ArchiveX } from "lucide-react";
 import * as React from "react";
+import { Expenses } from "../../types";
 import { Categories } from "@prisma/client";
-import { Expenses } from "../types";
-
+import { EditExpense } from "./edit-expense";
 type DropdownMenuProps = {
   onToggleDone?: (item: any) => void;
   onDelete?: (item: any) => void;
+  expense: Expenses;
+  categories: Categories[];
 };
 
-const DropdownMenuComponent: React.FC<DropdownMenuProps> = ({
+const DropdownExpenses: React.FC<DropdownMenuProps> = ({
+  expense,
+  categories,
   onToggleDone,
   onDelete,
 }) => {
@@ -38,6 +42,8 @@ const DropdownMenuComponent: React.FC<DropdownMenuProps> = ({
           </DropdownMenuItem>
         )}
 
+        <EditExpense expense={expense} categories={categories} />
+
         {onDelete && (
           <DropdownMenuItem className="flex items-center" onClick={onDelete}>
             <ArchiveX className="mr-3 h-4 w-4" /> Deletar
@@ -48,4 +54,4 @@ const DropdownMenuComponent: React.FC<DropdownMenuProps> = ({
   );
 };
 
-export default DropdownMenuComponent;
+export default DropdownExpenses;

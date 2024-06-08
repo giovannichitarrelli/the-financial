@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+
 import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
@@ -30,7 +31,7 @@ type EditPostProps = {
   expense: any;
   categories: any;
 };
-export function EditPost({ expense, categories }: EditPostProps) {
+export function EditExpense({ expense, categories }: EditPostProps) {
   const router = useRouter();
 
   const form = useForm({
@@ -46,7 +47,6 @@ export function EditPost({ expense, categories }: EditPostProps) {
   const handleChangeCategory = (value: string) => {
     form.setValue("categoriesId", value);
   };
-
   const onSubmit = async (data: any) => {
     try {
       await upsertExpenses({ ...data, id: expense.id });

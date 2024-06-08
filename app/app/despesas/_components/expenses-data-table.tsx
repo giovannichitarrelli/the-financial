@@ -7,9 +7,9 @@ import { deleteExpenses, upsertExpenses } from "../actions";
 
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { StatusFixed, StatusPayment } from "../../_components/status";
-import DropdownMenuComponent from "../../_components/dropdown-data-table";
 import { formatCurrency } from "../../_components/_helpers/formatCurrency";
 import { toast } from "sonner";
+import DropdownExpenses from "./dropdown-expenses";
 
 type ExpensesDataTableProps = {
   data: Expenses[];
@@ -72,7 +72,7 @@ export function ExpensesDataTable({
                   />
                   <StatusFixed isFixed={expenses.isFixed} />
                 </div>
-                <DropdownMenuComponent
+                <DropdownExpenses
                   onToggleDone={() => handleToggleDoneExpenses(expenses)}
                   onDelete={() => handleDeleteExpenses(expenses)}
                   expense={expenses}
