@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/app/_components/ui/card";
 import { StatusFixed, StatusPayment } from "../../_components/status";
 import { formatCurrency } from "../../_components/_helpers/formatCurrency";
 import { toast } from "sonner";
-import DropdownMenuComponent from "../../_components/dropdown-data-table";
+import DropdownSalary from "./dropdown-salary";
 
 type SalaryDataTableProps = {
   data: Salary[];
@@ -60,9 +60,10 @@ export function SalaryDataTable({ data }: SalaryDataTableProps) {
                   />
                   <StatusFixed isFixed={salary.isFixed} />
                 </div>
-                <DropdownMenuComponent
+                <DropdownSalary
                   onToggleDone={() => handleToggleDoneSalary(salary)}
                   onDelete={() => handleDeleteSalary(salary)}
+                  salary={salary}
                 />
               </div>
               <h2 className="font-bold">{salary.title}</h2>

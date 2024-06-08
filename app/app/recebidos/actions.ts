@@ -70,6 +70,7 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
       },
       data: {
         title: input.title,
+        price: input.price,
         doneAt: input.doneAt,
       },
     });
@@ -85,7 +86,7 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
       data: null,
     };
   }
-  if (!input.ammount) {
+  if (!input.price) {
     return {
       error: "Valor é obrigatório",
       data: null,
@@ -95,7 +96,7 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
   const salary = await db.salary.create({
     data: {
       title: input.title,
-      price: input.ammount,
+      price: input.price,
       isFixed: input.isFixed,
       expiryAt: (input.expiryAt as Date) || null,
       userId: session?.user?.id,

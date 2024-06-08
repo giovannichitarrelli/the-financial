@@ -30,9 +30,6 @@ import { toast } from "sonner";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { Calendar } from "@/app/_components/ui/calendar";
 import { ptBR } from "date-fns/locale";
-
-// import { CalendarDatePicker } from "../data-sheet-picker";
-
 export function SalaryUpsertSheet() {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -53,7 +50,7 @@ export function SalaryUpsertSheet() {
           toast.error("Data de expiração é obrigatório para salário fixo!", {
             description: "Por favor, insira uma data de expiração...",
           });
-          throw new Error("Expiry date is required for fixed salaries");
+          throw new Error("Data de expiração é obrigatório para recebimentos");
         }
 
         const selectedDay = expiryAt.getDate();
@@ -136,7 +133,7 @@ export function SalaryUpsertSheet() {
                 />
                 <FormField
                   control={form.control}
-                  name="ammount"
+                  name="price"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Valor</FormLabel>
