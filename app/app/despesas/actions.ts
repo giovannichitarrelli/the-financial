@@ -89,7 +89,12 @@ export async function upsertExpenses(
       },
       data: {
         title: input.title,
+        price: input.price,
+        expiryAt: input.expiryAt,
+        categoriesId: input.categoriesId,
+        isFixed: input.isFixed,
         doneAt: input.doneAt,
+        userId: session?.user?.id,
       },
     });
     return {

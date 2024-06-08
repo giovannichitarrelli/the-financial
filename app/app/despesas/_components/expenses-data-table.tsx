@@ -75,6 +75,8 @@ export function ExpensesDataTable({
                 <DropdownMenuComponent
                   onToggleDone={() => handleToggleDoneExpenses(expenses)}
                   onDelete={() => handleDeleteExpenses(expenses)}
+                  expense={expenses}
+                  categories={categories}
                 />
               </div>
               <h2 className="font-bold">{expenses.title}</h2>
