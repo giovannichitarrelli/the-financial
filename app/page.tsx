@@ -55,9 +55,9 @@ export default function Home() {
             Controle seus gastos
           </span>
 
-          <div className=" m-auto flex max-w-screen-xl flex-col items-center justify-center gap-3 md:flex-row">
-            <div className="flex w-full flex-col gap-6 text-center md:w-1/2 md:text-left">
-              <h1 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-left md:text-6xl/tight ">
+          <div className=" mx-auto flex max-w-screen-xl flex-col items-center justify-center gap-3 lg:flex-row">
+            <div className="flex w-full flex-col gap-6 text-center md:w-1/2 lg:text-left">
+              <h1 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent lg:text-left lg:text-6xl/tight ">
                 Organize seus gastos de forma prática. Controlador financeiro
                 que você sempre quis!
               </h1>
@@ -65,7 +65,9 @@ export default function Home() {
                 O DinDin é uma solução completa, intuitiva e segura. Com ele,
                 você dará adeus a desorganização financeira da sua família!
               </p>
-              <ButtonCta cta="Testar plataforma" />
+              <div className="mx-auto lg:ml-0">
+                <ButtonCta cta="Testar plataforma" />
+              </div>
             </div>
             <div className="w-full space-y-4 md:w-1/2">
               <Image
@@ -939,16 +941,11 @@ export default function Home() {
                 className="rounded-sm border px-4 py-2"
               >
                 <AccordionTrigger className="text-left">
-                  Preciso cadastrar meu cartão de crédito para poder testar os 7
-                  dias?
+                  O DinDin é uma plataforma ou uma planilha?
                 </AccordionTrigger>
                 <AccordionContent className="text-left">
-                  Não, para aproveitar o período de teste de 7 dias de forma
-                  gratuita, fazendo seu controle pessoal com o DinDin, não será
-                  necessário cadastrar seu cartão de crédito. Nenhum dado de
-                  pagamento será solicitado durante o período de teste. Se optar
-                  por assinar o DinDin após o período de teste, você precisará
-                  cadastrar suas informações.
+                  O DinDin é uma plataforma online acessível por meio de
+                  assinatura mensal ou anual.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem
@@ -959,9 +956,9 @@ export default function Home() {
                   Quanto custa a assinatura do DinDin?
                 </AccordionTrigger>
                 <AccordionContent className="text-left">
-                  A assinatura do DinDin tem um custo mensal de R$19,90, mas
-                  você também pode optar pela assinatura anual que custa 12x de
-                  R$ 9,90 ou R$99,90 à vista.
+                  A assinatura do DinDin tem um custo mensal de R$9,90. Porém
+                  você também pode optar pela assinatura anual que custa R$99,90
+                  à vista.
                   <br />
                   Investir no DinDin é uma decisão inteligente para você que
                   deseja organizar suas finanças pessoais e finalmente ter um
@@ -1014,7 +1011,7 @@ export default function Home() {
                   Posso usar o DinDin no celular e também no computador?
                 </AccordionTrigger>
                 <AccordionContent className="text-left">
-                  Sim, o DinDin está disponível em versões mobile e desktop,
+                  Sim, o DinDin é acessível em dispositivos móveis e desktop,
                   permitindo que você gerencie suas finanças de forma
                   conveniente e acessível em qualquer dispositivo. Essa
                   versatilidade oferece benefícios significativos, pois você
@@ -1033,11 +1030,11 @@ export default function Home() {
                 className="rounded-sm border px-4 py-2"
               >
                 <AccordionTrigger className="text-left">
-                  Existe algum tipo de treinamento?
+                  Existe algum tipo de suporte?
                 </AccordionTrigger>
                 <AccordionContent className="text-left">
-                  Com certeza! Além do app ser prático e superfuncional, você
-                  terá acesso a aulas e suporte personalizado.
+                  Com certeza! Além do app ser prático e super funcional, você
+                  terá acesso a um suporte personalizado.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem
