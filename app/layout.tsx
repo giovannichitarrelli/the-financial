@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./_components/theme-provider";
 import { Toaster } from "sonner";
 import AuthProvider from "./_providers/auth";
-
+import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
+        <Analytics />
         <AuthProvider>
           <ThemeProvider
             attribute="class"
