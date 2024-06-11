@@ -11,10 +11,7 @@ import { createCheckoutSessionAction } from "./actions";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { FreeAlert, ProAlert } from "../../_components/plan-alert";
-import CtaButtonPro from "../../_components/cta-button-pro";
-
 import { isAvailable } from "@/app/_lib/utils";
-
 export default async function Page() {
   const { plan, status } = await isAvailable();
   if (!plan || !status) {
@@ -64,7 +61,6 @@ export default async function Page() {
               <span className="min-w-[250px]">
                 Seja PRO e tenha acesso a todos os recursos agora mesmo! 😉
               </span>
-              <CtaButtonPro />
             </div>
           </form>
         ) : (
@@ -73,7 +69,7 @@ export default async function Page() {
               Parabéns! Você é PRO. Esperamos que esteja controlando bem os seus
               gastos! 😉
             </span>
-            <Link
+            {/* <Link
               href="mailto:suporte@meudindin.online"
               target="_blank"
               rel="noopener noreferrer"
@@ -83,6 +79,18 @@ export default async function Page() {
                 <>
                   <Pencil className="mr-2 h-4 w-4" />
                   Solicitar cancelamento
+                </>
+              </Button>
+            </Link> */}
+            <Link
+              href="https://billing.stripe.com/p/login/7sI6pQ1qx3PU7xm6oo"
+              target="_blank"
+            >
+              <Button variant="outline">
+                {" "}
+                <>
+                  <Pencil className="mr-2 h-4 w-4" />
+                  Gerenciar assinatura
                 </>
               </Button>
             </Link>

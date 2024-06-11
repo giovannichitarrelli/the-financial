@@ -40,7 +40,6 @@ export const createStripeCustomer = async (input: {
       stripePriceId: config.stripe.plans.free.priceId,
     },
   });
-
   return createdCustomer;
 };
 
@@ -61,8 +60,8 @@ export const createCheckoutSession = async (
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customer.id,
-      return_url: "https://meudindin.online/app/settings/billing",
       // return_url: "http://localhost:3000/app/settings/billing",
+      return_url: "https://meudindin.online/app/settings/billing",
       flow_data: {
         type: "subscription_update_confirm",
         after_completion: {
@@ -78,6 +77,7 @@ export const createCheckoutSession = async (
           items: [
             {
               id: subscription.data[0].id,
+
               price: config.stripe.plans.pro.priceId,
               quantity: 1,
             },
@@ -203,6 +203,9 @@ export const getUserCurrentStatus = async (userId: string) => {
   };
 };
 
+// "https://meudindin.online/app/settings/billing?success=true",
+// return_url: "https://meudindin.online/app/settings/billing",
+
 // stripe checkout
 
 // const session = await stripe.checkout.sessions.create({
@@ -224,7 +227,7 @@ export const getUserCurrentStatus = async (userId: string) => {
 //         missing_payment_method: "cancel",
 //       },
 //     },
-//     trial_period_days: 0,
+//     trial_period_days: 7,
 //   },
 //   // payment_method_collection: 'if_required',
 // });
