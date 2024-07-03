@@ -17,13 +17,13 @@ const ResumeLists = async () => {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       <ResumeList
-        title="Receitas no mês"
+        title="Receitas no mês (5)"
         description={`  Você tem ${formatCurrency(totalSalary)} previstos para
                           receber esse mês.`}
         component={<MonthReceived />}
       />
       <ResumeList
-        title="Despesas no mês"
+        title="Despesas no mês (5)"
         description={`Você tem ${formatCurrency(totalExpenses)} de despesas
                       previstas esse mês.`}
         component={<MonthExpenses />}

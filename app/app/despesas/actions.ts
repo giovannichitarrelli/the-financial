@@ -17,7 +17,7 @@ export async function getUserExpenses() {
       userId: session?.user?.id,
     },
     orderBy: {
-      createAt: "desc",
+      expiryAt: "desc",
     },
   });
   return expenses;
@@ -34,7 +34,7 @@ export async function getUserMonthExpenses(month: number, year: number) {
       },
     },
     orderBy: {
-      createAt: "desc",
+      expiryAt: "desc",
     },
   });
   return monthExpenses;

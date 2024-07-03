@@ -16,7 +16,7 @@ const ResumeList = ({ title, component, description }: CardsProps) => {
   return (
     <Card>
       <CardHeader className="bg-muted/40">
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-lg">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="py-4">{component}</CardContent>

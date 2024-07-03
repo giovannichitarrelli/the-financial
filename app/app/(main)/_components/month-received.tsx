@@ -18,7 +18,6 @@ export async function MonthReceived() {
             className=" flex items-center justify-between py-3 md:grid  md:grid-cols-4"
           >
             <p className="text-md font-bold  md:col-span-2">{received.title}</p>
-
             <div>{formatCurrency(Number(received.price))}</div>
             <div className="text-right">
               <StatusPayment

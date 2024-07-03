@@ -13,7 +13,7 @@ export async function getUserSalary() {
       userId: session?.user?.id,
     },
     orderBy: {
-      createAt: "desc",
+      expiryAt: "desc",
     },
   });
   return salary;
@@ -30,7 +30,7 @@ export async function getUserMonthSalary(month: number, year: number) {
       },
     },
     orderBy: {
-      createAt: "desc",
+      expiryAt: "desc",
     },
   });
   return monthSalary;
