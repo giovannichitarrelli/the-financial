@@ -1,5 +1,5 @@
 import React from "react";
-import { getUserMonthExpenses } from "./actions";
+import { getUserExpenses } from "./actions";
 import {
   Card,
   CardContent,
@@ -19,8 +19,6 @@ import {
 import CtaButtonPro from "../_components/cta-button-pro";
 import { ExpensesUpsertSheet } from "../_components/_upserts/expenses-upersert-sheet";
 import { FreeAlert } from "../_components/plan-alert";
-import DataFilterExpenses from "./_components/filter-component-expenses";
-
 import { db } from "@/services/database";
 import {
   DashboardPage,
@@ -28,22 +26,14 @@ import {
   DashboardPageHeaderTitle,
   DashboardPageMain,
 } from "../_components/dashboard/dashboard-page";
-// import { getUserCurrentPlan } from "@/services/stripe";
-// import { getServerSession } from "next-auth";
-// import { auth } from "@/services/auth";
+
 import { isAvailable } from "@/app/_lib/utils";
+import { ExpensesDataTable } from "./_components/expenses-data-table";
+import { Filters } from "../_components/filters";
 
 export default async function Page() {
-  const currentDate = new Date();
+  const expenses = await getUserExpenses();
 
-  const currentMonth = (currentDate.getMonth() + 1).toString();
-  const currentYear = currentDate.getFullYear().toString();
-  const expenses = await getUserMonthExpenses(
-    parseInt(currentMonth),
-    parseInt(currentYear),
-  );
-  // const session = await getServerSession(auth);
-  // const plan = await getUserCurrentPlan(session?.user.id as string);
   const categories = await db.categories.findMany({});
   const { plan, status } = await isAvailable();
 
@@ -80,12 +70,11 @@ export default async function Page() {
         ) : (
           " "
         )}
-        <DataFilterExpenses
-          initialMonth={currentMonth}
-          initialYear={currentYear}
-          initialExpenses={expenses}
-          categories={categories}
-        />
+
+        <Filters />
+
+        <ExpensesDataTable data={expenses} categories={categories} />
+
         <Card className="mt-auto">
           <CardHeader className="mb-4 border-b border-border ">
             <CardTitle className="text-md flex items-center justify-between">

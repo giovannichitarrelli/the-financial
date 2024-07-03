@@ -1,15 +1,15 @@
 "use client";
-
 import { Categories } from "@prisma/client";
 import { Expenses } from "../../types";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { deleteExpenses, upsertExpenses } from "../actions";
-
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { StatusFixed, StatusPayment } from "../../_components/status";
 import { formatCurrency } from "../../_components/_helpers/formatCurrency";
 import { toast } from "sonner";
 import DropdownExpenses from "./dropdown-expenses";
+import { addMonths, startOfDay } from "date-fns";
+import MsgNoData from "../../_components/no-data-table";
 
 type ExpensesDataTableProps = {
   data: Expenses[];
@@ -21,6 +21,14 @@ export function ExpensesDataTable({
   categories,
 }: ExpensesDataTableProps) {
   const router = useRouter();
+  const params = useSearchParams();
+
+  const from = params.get("from")
+    ? new Date(params.get("from")!)
+    : startOfDay(new Date());
+  const to = params.get("to")
+    ? new Date(params.get("to")!)
+    : startOfDay(addMonths(new Date(), 1));
 
   const categoryMap = Object.fromEntries(
     categories.map((category: Categories) => [category.id, category.title]),
@@ -38,9 +46,7 @@ export function ExpensesDataTable({
       });
     }
     router.refresh();
-    location.reload();
   };
-
   const handleToggleDoneExpenses = async (expenses: Expenses) => {
     const doneAt = expenses.doneAt ? null : new Date();
 
@@ -55,13 +61,23 @@ export function ExpensesDataTable({
       });
     }
     router.refresh();
-    location.reload();
   };
+
+  const filteredData = data.filter((expense) => {
+    const expenseDate = expense.expiryAt
+      ? new Date(expense.expiryAt)
+      : new Date(expense.createAt);
+
+    return (
+      (!from || (expenseDate && expenseDate >= from)) &&
+      (!to || (expenseDate && expenseDate <= to))
+    );
+  });
 
   return (
     <div className="flex flex-col gap-3">
-      {data.map((expenses) => {
-        return (
+      {filteredData.length > 0 ? (
+        filteredData.map((expenses) => (
           <Card key={expenses.id}>
             <CardContent className="flex flex-col gap-2 p-3">
               <div className="flex items-center justify-between ">
@@ -86,21 +102,21 @@ export function ExpensesDataTable({
                   ? categoryMap[expenses.categoriesId]
                   : "Sem categoria"}
               </p>
-
               <p className="text-sm">
                 Vencimento:{" "}
                 {expenses.expiryAt
                   ? expenses.expiryAt.toLocaleDateString("pt-br")
                   : "Sem vencimento"}
               </p>
-
               <p className="text-sm font-bold text-primary">
                 {formatCurrency(Number(expenses.price))}
               </p>
             </CardContent>
           </Card>
-        );
-      })}
+        ))
+      ) : (
+        <MsgNoData />
+      )}
     </div>
   );
 }

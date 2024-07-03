@@ -37,10 +37,8 @@ export function SalaryUpsertSheet() {
     resolver: zodResolver(upsertSalarySchema),
   });
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
-  const [expiryAt, setExpiryAt] = useState<Date | undefined>(new Date());
-  // const handleDateClick = (date: Date | undefined) => {
-  //   setExpiryAt(date);
-  // };
+  const [expiryAt, setExpiryAt] = useState<Date | undefined>(undefined);
+
   async function onSubmit(data: z.infer<typeof upsertSalarySchema>) {
     setSheetIsOpen(true);
     try {

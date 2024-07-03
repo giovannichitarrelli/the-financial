@@ -13,9 +13,11 @@ type Props = {
 
 const BillingAlert = ({ description, icon, title }: Props) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   setTimeout(() => {
     setIsLoading(false);
   }, 3000);
+
   async function handleSubmit() {
     setIsLoading(true);
     await createCheckoutSessionAction();

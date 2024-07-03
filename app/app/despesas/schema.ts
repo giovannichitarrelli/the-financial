@@ -5,7 +5,7 @@ export const upsertExpensesSchema = z.object({
   title: z.string().optional(),
   price: z.string().optional(),
   categoriesId: z.string().optional(),
-  expiryAt: z.date().optional(),
+  expiryAt: z.date().optional().nullable(),
   isFixed: z.boolean().optional(),
   doneAt: z.date().optional().nullable(),
 });

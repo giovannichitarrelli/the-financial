@@ -34,7 +34,7 @@ export async function getUserMonthExpenses(month: number, year: number) {
       },
     },
     orderBy: {
-      expiryAt: "desc",
+      createAt: "desc",
     },
   });
   return monthExpenses;
@@ -90,7 +90,7 @@ export async function upsertExpenses(
       data: {
         title: input.title,
         price: input.price,
-        expiryAt: input.expiryAt,
+        expiryAt: input.expiryAt || null,
         categoriesId: input.categoriesId,
         isFixed: input.isFixed,
         doneAt: input.doneAt,
@@ -119,7 +119,7 @@ export async function upsertExpenses(
     data: {
       title: input.title,
       price: input.price,
-      expiryAt: input.expiryAt,
+      expiryAt: input.expiryAt || null,
       categoriesId: input.categoriesId,
       isFixed: input.isFixed,
       userId: session?.user?.id,
