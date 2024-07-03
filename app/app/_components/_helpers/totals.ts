@@ -6,7 +6,7 @@ import {
   getUserWithdraws,
 } from "../../investimentos/actions";
 import { getUserWishlist } from "../../metas/actions";
-import { getUserMonthSalary } from "../../re/actions";
+import { getUserMonthSalary } from "../../receitas/actions";
 import { formatCurrency } from "./formatCurrency";
 
 export async function getTotalExpenses(month: number, year: number) {

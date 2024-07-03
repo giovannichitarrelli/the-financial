@@ -35,9 +35,8 @@ import { z } from "zod";
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import { Categories } from "@prisma/client";
 import { toast } from "sonner";
-import { Calendar } from "@/app/_components/ui/calendar";
-import { ptBR } from "date-fns/locale";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
+import { CalendarDatePicker } from "../data-sheet-picker";
 
 export function ExpensesUpsertSheet() {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,9 +49,9 @@ export function ExpensesUpsertSheet() {
   const [categories, setCategories] = useState<Categories[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  const handleDateClick = (date: Date | undefined) => {
-    setExpiryAt(date);
-  };
+  // const handleDateClick = (date: Date | undefined) => {
+  //   setExpiryAt(date);
+  // };
 
   function handleChangeCategory(value: string) {
     const selectedIndex = parseInt(value, 10);
@@ -222,7 +221,12 @@ export function ExpensesUpsertSheet() {
                     <FormItem>
                       <FormLabel>Vencimento (Opcional)</FormLabel>
                       <FormControl>
-                        <Calendar
+                        <CalendarDatePicker
+                          value={expiryAt}
+                          onChange={(date) => setExpiryAt(date)}
+                        />
+
+                        {/* <Calendar
                           locale={ptBR}
                           mode="single"
                           selected={expiryAt}
@@ -250,7 +254,7 @@ export function ExpensesUpsertSheet() {
                               textTransform: "capitalize",
                             },
                           }}
-                        />
+                        /> */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -274,7 +278,7 @@ export function ExpensesUpsertSheet() {
                   )}
                 />
 
-                <SheetFooter className="pb-16 pt-6">
+                <SheetFooter className=" pt-6">
                   <Button type="submit" disabled={form.formState.isSubmitting}>
                     {form.formState.isSubmitting ? (
                       <>

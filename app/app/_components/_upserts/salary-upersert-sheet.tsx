@@ -28,8 +28,8 @@ import { z } from "zod";
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import { toast } from "sonner";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
-import { Calendar } from "@/app/_components/ui/calendar";
-import { ptBR } from "date-fns/locale";
+import { CalendarDatePicker } from "../data-sheet-picker";
+
 export function SalaryUpsertSheet() {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -38,9 +38,9 @@ export function SalaryUpsertSheet() {
   });
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
   const [expiryAt, setExpiryAt] = useState<Date | undefined>(new Date());
-  const handleDateClick = (date: Date | undefined) => {
-    setExpiryAt(date);
-  };
+  // const handleDateClick = (date: Date | undefined) => {
+  //   setExpiryAt(date);
+  // };
   async function onSubmit(data: z.infer<typeof upsertSalarySchema>) {
     setSheetIsOpen(true);
     try {
@@ -158,34 +158,9 @@ export function SalaryUpsertSheet() {
                     <FormItem>
                       <FormLabel>Vencimento (Opcional)</FormLabel>
                       <FormControl>
-                        <Calendar
-                          locale={ptBR}
-                          mode="single"
-                          selected={expiryAt}
-                          onSelect={handleDateClick}
-                          styles={{
-                            head_cell: {
-                              width: "100%",
-                              textTransform: "capitalize",
-                            },
-                            cell: {
-                              width: "100%",
-                            },
-                            button: {
-                              width: "100%",
-                            },
-                            nav_button_previous: {
-                              width: "32px",
-                              height: "32px",
-                            },
-                            nav_button_next: {
-                              width: "32px",
-                              height: "32px",
-                            },
-                            caption: {
-                              textTransform: "capitalize",
-                            },
-                          }}
+                        <CalendarDatePicker
+                          value={expiryAt}
+                          onChange={(date) => setExpiryAt(date)}
                         />
                       </FormControl>
                       <FormMessage />
@@ -212,7 +187,7 @@ export function SalaryUpsertSheet() {
                   )}
                 />
 
-                <SheetFooter className="pb-16 pt-6">
+                <SheetFooter className="  pt-6">
                   <Button type="submit" disabled={form.formState.isSubmitting}>
                     {form.formState.isSubmitting ? (
                       <>

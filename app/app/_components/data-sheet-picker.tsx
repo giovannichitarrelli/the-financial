@@ -23,7 +23,7 @@ export function CalendarDatePicker({
   onChange,
 }: CalendarDatePickerProps) {
   const formattedDate = value
-    ? format(value, "dd '-' LLLL '-' yyyy", { locale: ptBR })
+    ? format(value, "dd LLLL '/' yyyy", { locale: ptBR })
     : "Escolha a data";
 
   return (
