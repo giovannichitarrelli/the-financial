@@ -50,10 +50,9 @@ export function MainSideBar({ user }: MainSideBarProps) {
 
           <SheetContent
             side="right"
-            className="flex min-h-[80vh] flex-col justify-between pb-0"
+            className="flex flex-col justify-between pb-0"
           >
             <Logo />
-
             <SideBarNavLinks user={user} />
           </SheetContent>
         </Sheet>
