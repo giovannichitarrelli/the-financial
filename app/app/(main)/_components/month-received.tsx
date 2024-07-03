@@ -1,6 +1,6 @@
 import { StatusPayment } from "../../_components/status";
 import { formatCurrency } from "../../_components/_helpers/formatCurrency";
-import { getUserMonthSalary } from "../../recebidos/actions";
+import { getUserMonthSalary } from "../../receitas/actions";
 import MsgNoData from "../../_components/no-data-table";
 
 export async function MonthReceived() {

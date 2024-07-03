@@ -4,7 +4,7 @@ import { DashboardPageHeaderNav } from "../../_components/dashboard/dashboard-pa
 
 export function HeaderAddButtons() {
   return (
-    <DashboardPageHeaderNav className="hidden items-center space-x-2 lg:flex">
+    <DashboardPageHeaderNav className="space-x-2">
       <ExpensesUpsertSheet />
       <SalaryUpsertSheet />
     </DashboardPageHeaderNav>

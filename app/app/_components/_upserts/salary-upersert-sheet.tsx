@@ -21,8 +21,8 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { upsertSalarySchema } from "../../recebidos/schema";
-import { upsertSalary } from "../../recebidos/actions";
+import { upsertSalarySchema } from "../../receitas/schema";
+import { upsertSalary } from "../../receitas/actions";
 import { CirclePlus, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { Checkbox } from "@/app/_components/ui/checkbox";
@@ -50,7 +50,7 @@ export function SalaryUpsertSheet() {
           toast.error("Data de expiração é obrigatório para salário fixo!", {
             description: "Por favor, insira uma data de expiração...",
           });
-          throw new Error("Data de expiração é obrigatório para recebimentos");
+          throw new Error("Data de expiração é obrigatório para receitas");
         }
 
         const selectedDay = expiryAt.getDate();
@@ -82,11 +82,11 @@ export function SalaryUpsertSheet() {
           expiryAt,
         });
       }
-      toast.success("Seu recebimento foi criado com sucesso!", {
-        description: "Seus recebimentos serão atualizados...",
+      toast.success("Sua receita foi criada com sucesso!", {
+        description: "Suas receitas serão atualizados...",
       });
     } catch (error) {
-      toast.error("Seu recebimento não foi cadastrado!", {
+      toast.error("Sua receita não foi cadastrada!", {
         description: "Por favor, tente novamente...",
       });
     }
@@ -100,7 +100,7 @@ export function SalaryUpsertSheet() {
       <SheetTrigger asChild>
         <Button variant="default" size="sm">
           <CirclePlus className=" mr-3 h-4 w-4" />
-          Recebimentos
+          Receitas
         </Button>
       </SheetTrigger>
 
@@ -109,7 +109,7 @@ export function SalaryUpsertSheet() {
           <ScrollArea>
             <form onSubmit={form.handleSubmit(onSubmit)} className=" h-screen">
               <SheetHeader className="border-b border-solid border-secondary p-5 text-left">
-                <SheetTitle>Criar Recebimento</SheetTitle>
+                <SheetTitle>Criar Receita</SheetTitle>
               </SheetHeader>
 
               <div className="space-y-2 p-6">
@@ -220,7 +220,7 @@ export function SalaryUpsertSheet() {
                         Cadastrando
                       </>
                     ) : (
-                      "Cadastrar Recebimento"
+                      "Cadastrar Receita"
                     )}
                   </Button>
                 </SheetFooter>

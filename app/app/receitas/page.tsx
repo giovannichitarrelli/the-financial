@@ -45,7 +45,7 @@ export default async function Page() {
   return (
     <DashboardPage>
       <DashboardPageHeader>
-        <DashboardPageHeaderTitle>Recebimentos</DashboardPageHeaderTitle>
+        <DashboardPageHeaderTitle>Receitas</DashboardPageHeaderTitle>
 
         {plan.name === "free" ||
         (status.status !== "active" && status.status !== "trialing") ? (
@@ -71,12 +71,12 @@ export default async function Page() {
         <Card className="mt-auto">
           <CardHeader className="mb-4 border-b border-border ">
             <CardTitle className="text-md flex items-center justify-between">
-              Confira exemplos de recebimentos{" "}
+              Confira exemplos de Receitas{" "}
               <BadgeAlert className="mr-2 h-5 w-5 text-red-500 " />
             </CardTitle>
             <CardDescription>
-              Veja abaixo alguns exemplos de recebimentos para auxiliar na
-              criação dos seus recebimentos.
+              Veja abaixo alguns exemplos de receitas para auxiliar na criação
+              das suas receitas.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4 md:grid-cols-2  lg:grid-cols-4">

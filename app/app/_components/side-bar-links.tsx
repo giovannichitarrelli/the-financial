@@ -56,11 +56,11 @@ export function SideBarNavLinks({ user }: MainSideBarProps) {
             </DashboardSideBarNavLink>
 
             <DashboardSideBarNavLink
-              href="/app/recebidos"
-              active={isActive("/app/recebidos")}
+              href="/app/receitas"
+              active={isActive("/app/receitas")}
             >
               <CircleFadingPlus className="h-4 w-4" />
-              Recebimentos
+              Receitas
             </DashboardSideBarNavLink>
             <DashboardSideBarNavLink
               href="/app/investimentos"

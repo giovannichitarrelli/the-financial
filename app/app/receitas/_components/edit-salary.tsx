@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Loader2, Pencil } from "lucide-react";
+import { Loader2, Edit } from "lucide-react";
 import { upsertSalarySchema } from "../schema";
 import { upsertSalary } from "../actions";
 
@@ -36,11 +36,11 @@ export function EditSalary({ salary }: EditPostProps) {
   const onSubmit = async (data: any) => {
     try {
       await upsertSalary({ ...data, id: salary.id });
-      toast.success("Seu recebimento foi atualizado com sucesso!", {
+      toast.success("Sua receita foi atualizada com sucesso!", {
         description: "Aguarde o carregamento...",
       });
     } catch (error) {
-      toast.error("Seu recebimento não foi atualizado!", {
+      toast.error("Sua receita não foi atualizada!", {
         description: "Por favor, tente novamente...",
       });
     }
@@ -52,7 +52,7 @@ export function EditSalary({ salary }: EditPostProps) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" className="h-0 w-full justify-start px-2 py-4">
-          <Pencil className="mr-3 h-4 w-4" /> Editar
+          <Edit className="mr-3 h-4 w-4" /> Editar
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

@@ -41,7 +41,7 @@ export async function MonthComparative() {
     return {
       name: monthName,
       Despesas: totalExpenses || 0,
-      Recebimentos: totalSalary || 0,
+      R: totalSalary || 0,
       Investimentos: totalInvestments || 0,
     };
   });

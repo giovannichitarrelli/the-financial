@@ -9,7 +9,7 @@ import React from "react";
 interface MonthDataComparative {
   name: string;
   Despesas: number;
-  Recebimentos: number;
+  Receitas: number;
   Investimentos: number;
 }
 export function ComparativeBarCHarts({
@@ -21,7 +21,7 @@ export function ComparativeBarCHarts({
     <BarChart
       data={data}
       index="name"
-      categories={["Despesas", "Recebimentos", "Investimentos"]}
+      categories={["Despesas", "Receitas", "Investimentos"]}
       colors={["red", "green", "blue"]}
       valueFormatter={formatCurrencyCharts}
       yAxisWidth={48}

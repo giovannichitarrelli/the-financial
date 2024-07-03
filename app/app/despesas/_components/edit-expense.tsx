@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/_components/ui/select";
-import { Loader2, Pencil } from "lucide-react";
+import { Loader2, Edit } from "lucide-react";
 
 type EditPostProps = {
   expense: any;
@@ -64,7 +64,7 @@ export function EditExpense({ expense, categories }: EditPostProps) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" className="h-0 w-full justify-start px-2 py-4">
-          <Pencil className="mr-3 h-4 w-4" /> Editar
+          <Edit className="mr-3 h-4 w-4" /> Editar
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

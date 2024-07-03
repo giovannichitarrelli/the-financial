@@ -1,5 +1,5 @@
 import { ReturnTypeWithoutPromise } from "@/types/return-type-without-promise";
-import { getUserSalary } from "./recebidos/actions";
+import { getUserSalary } from "./receitas/actions";
 import { getUserExpenses } from "./despesas/actions";
 import { getUserInvestments, getUserWithdraws } from "./investimentos/actions";
 import { getUserWishlist } from "./metas/actions";

@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Loader2, Pencil } from "lucide-react";
+import { Loader2, Edit } from "lucide-react";
 import { upsertInvestmentsSchema } from "../schema";
 import { upsertInvestments } from "../actions";
 
@@ -52,7 +52,7 @@ export function EditInvestments({ investments }: EditPostProps) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" className="h-0 w-full justify-start px-2 py-4">
-          <Pencil className="mr-3 h-4 w-4" /> Editar
+          <Edit className="mr-3 h-4 w-4" /> Editar
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

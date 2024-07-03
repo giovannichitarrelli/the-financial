@@ -160,9 +160,7 @@ export default function Home() {
                     <Badge className="max-w-fit">Passo 2</Badge>
                     <CircleFadingPlus className="h-4 w-4" />
                   </div>
-                  <h3 className="text-xl font-bold">
-                    Cadastre seus recebimentos
-                  </h3>
+                  <h3 className="text-xl font-bold">Cadastre suas receitas</h3>
                   <p className="font-extralight	">
                     Fixos e variáveis com data de expiração para você ficar
                     alerta
@@ -216,7 +214,7 @@ export default function Home() {
               <ul className="flex flex-col gap-3">
                 <li className="flex items-center font-extralight">
                   <CircleCheck className="mr-2 h-4 w-4 text-green-500" />{" "}
-                  Facilidade na inserção de gastos e recebidos
+                  Facilidade na inserção de gastos e receitas
                 </li>
                 <li className="flex items-center font-extralight">
                   <CircleCheck className="mr-2 h-4 w-4 text-green-500" />
@@ -232,7 +230,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-center font-extralight">
                   <CircleCheck className="mr-2 h-4 w-4 text-green-500" />{" "}
-                  Alertas de contas a pagar e recebimentos em atraso
+                  Alertas de contas a pagar e receitas em atraso
                 </li>
                 <li className="flex items-center font-extralight">
                   <CircleCheck className="mr-2 h-4 w-4 text-green-500" />
@@ -639,10 +637,10 @@ export default function Home() {
                     </span>
                     <div>
                       <h3 className="text-left text-xl font-bold">
-                        Cadastre seus recebimentos
+                        Cadastre suas receitas
                       </h3>
                       <p className="text-left font-extralight">
-                        Recebimentos fixos e variáveis com data de expiração
+                        Receitas fixas e variáveis com data de expiração
                       </p>
                     </div>
                   </CardContent>

@@ -18,11 +18,11 @@ export function SalaryDataTable({ data }: SalaryDataTableProps) {
   const handleDeleteSalary = async (salary: Salary) => {
     try {
       await deleteSalary({ id: salary.id });
-      toast.success("Seu recebimento foi atualizado com sucesso!", {
-        description: "Seus recebimentos serão atualizados...",
+      toast.success("Sua receita foi atualizada com sucesso!", {
+        description: "Suas receitas serão atualizadas...",
       });
     } catch (error) {
-      toast.error("Seu recebimento não foi deletado!", {
+      toast.error("Sua receita não foi deletada!", {
         description: "Por favor, tente novamente...",
       });
     }
@@ -34,11 +34,11 @@ export function SalaryDataTable({ data }: SalaryDataTableProps) {
     const doneAt = salary.doneAt ? null : new Date();
     try {
       await upsertSalary({ id: salary.id, doneAt });
-      toast.success("Seu recebimento foi atualizado com sucesso!", {
-        description: "Seus recebimentos serão atualizados...",
+      toast.success("Sua receita foi atualizada com sucesso!", {
+        description: "Suas receitas serão atualizadas...",
       });
     } catch (error) {
-      toast.error("Seu recebimento não foi atualizado!", {
+      toast.error("Sua receita não foi atualizada!", {
         description: "Por favor, tente novamente...",
       });
     }

@@ -1,24 +1,33 @@
 import { Badge } from "@/app/_components/ui/badge";
 import { isAvailable } from "@/app/_lib/utils";
 import { auth } from "@/services/auth";
-import { getUserCurrentPlan } from "@/services/stripe";
+import { getUserCurrentPlan, getUserCurrentStatus } from "@/services/stripe";
 import { getServerSession } from "next-auth";
 
 export const FreeAlert = async () => {
   const session = await getServerSession(auth);
   const plan = await getUserCurrentPlan(session?.user.id as string);
+  const status = await getUserCurrentStatus(session?.user.id as string);
   return (
-    <Badge
-      variant="destructive"
-      className="mx-auto block text-center text-sm md:flex "
-    >
-      Plano atual:
-      <span className="ml-1 text-sm font-semibold uppercase text-slate-200">
-        {plan.name}
-      </span>
-      . Seja <span className="text-md mx-1 font-bold text-slate-200">PRO</span>{" "}
-      e tenha uma experiência completa!
-    </Badge>
+    <div>
+      {plan.name === "free" ||
+      (status.status !== "active" && status.status !== "trialing") ? (
+        <Badge
+          variant="destructive"
+          className="mx-auto block text-center text-sm md:flex "
+        >
+          Plano atual:
+          <span className="ml-1 text-sm font-semibold uppercase text-slate-200">
+            {plan.name}
+          </span>
+          . Seja{" "}
+          <span className="text-md mx-1 font-bold text-slate-200">PRO</span> e
+          tenha uma experiência completa!
+        </Badge>
+      ) : (
+        " "
+      )}
+    </div>
   );
 };
 
