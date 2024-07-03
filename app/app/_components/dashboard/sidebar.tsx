@@ -13,7 +13,7 @@ export default function DashboardSideBar({
   return (
     <aside
       className={cn(
-        "hidden min-h-[100vh]  flex-col justify-between border-r lg:flex  ",
+        "hidden   flex-col justify-between border-r lg:flex  ",
         className,
       )}
     >
@@ -42,14 +42,14 @@ export function DashboardSideBarMain({
   className,
   children,
 }: SideBarGenericProps) {
-  return <main className={cn(" ", className)}>{children}</main>;
+  return <main className={cn("   ", className)}>{children}</main>;
 }
 
 export function DashboardSideBarNav({
   className,
   children,
 }: SideBarGenericProps) {
-  return <header className={cn("pb-6 ", className)}>{children}</header>;
+  return <header className={cn("pb-2  ", className)}>{children}</header>;
 }
 
 export function DashboardSideBarNavMain({
@@ -59,7 +59,7 @@ export function DashboardSideBarNavMain({
   return (
     <main
       className={cn(
-        "flex flex-col justify-between px-0 py-4 md:p-3",
+        "flex min-h-[80vh] flex-col justify-between px-0 py-8 md:px-3  ",
         className,
       )}
     >
