@@ -42,7 +42,8 @@ export default async function Page() {
     <DashboardPage>
       <DashboardPageHeader>
         <DashboardPageHeaderTitle>Metas</DashboardPageHeaderTitle>
-        {plan.name === "free" || status.status != "active" ? (
+        {plan.name === "free" ||
+        (status.status !== "active" && status.status !== "trialing") ? (
           <CtaButtonPro />
         ) : (
           <WishlistUpsertSheet />
@@ -50,7 +51,8 @@ export default async function Page() {
       </DashboardPageHeader>
 
       <DashboardPageMain>
-        {plan.name === "free" || status.status != "active" ? (
+        {plan.name === "free" ||
+        (status.status !== "active" && status.status !== "trialing") ? (
           <FreeAlert />
         ) : (
           " "

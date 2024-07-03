@@ -70,7 +70,8 @@ export default async function Page() {
         <DashboardPageHeaderTitle>Investimentos</DashboardPageHeaderTitle>
 
         <div className="lg:hidden ">
-          {plan.name === "free" || status.status != "active" ? (
+          {plan.name === "free" ||
+          (status.status !== "active" && status.status !== "trialing") ? (
             <CtaButtonPro />
           ) : (
             <div className="flex gap-2">
@@ -81,7 +82,8 @@ export default async function Page() {
         </div>
 
         <div className="hidden lg:block">
-          {plan.name === "free" || status.status != "active" ? (
+          {plan.name === "free" ||
+          (status.status !== "active" && status.status !== "trialing") ? (
             <CtaButtonPro />
           ) : (
             <div className="flex gap-2">
@@ -93,7 +95,8 @@ export default async function Page() {
       </DashboardPageHeader>
 
       <DashboardPageMain>
-        {plan.name === "free" || status.status != "active" ? (
+        {plan.name === "free" ||
+        (status.status !== "active" && status.status !== "trialing") ? (
           <FreeAlert />
         ) : (
           " "

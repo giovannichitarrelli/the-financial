@@ -121,14 +121,16 @@ export default async function AppPage() {
           Olá {formattedFirstName} 👋
         </DashboardPageHeaderTitle>
         <div className="lg:hidden">
-          {plan.name === "free" || status.status != "active" ? (
+          {plan.name === "free" ||
+          (status.status !== "active" && status.status !== "trialing") ? (
             <CtaButtonPro />
           ) : (
             <ExpensesUpsertSheet />
           )}
         </div>
         <div className="hidden lg:flex">
-          {plan.name === "free" || status.status != "active" ? (
+          {plan.name === "free" ||
+          (status.status !== "active" && status.status !== "trialing") ? (
             <CtaButtonPro />
           ) : (
             <HeaderAddButtons />
@@ -137,7 +139,8 @@ export default async function AppPage() {
       </DashboardPageHeader>
 
       <DashboardPageMain>
-        {plan.name === "free" || status.status != "active" ? (
+        {plan.name === "free" ||
+        (status.status !== "active" && status.status !== "trialing") ? (
           <FreeAlert />
         ) : (
           " "

@@ -13,13 +13,12 @@ const CtaButtonPro = () => {
     setIsLoading(true);
     await createCheckoutSessionAction();
   }
-
   return (
     <Button variant="outline" disabled={isLoading} onClick={handleSubmit}>
       {isLoading ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Assine por R$9,90/ mês
+          Assine por R$9,90
         </>
       ) : (
         <>

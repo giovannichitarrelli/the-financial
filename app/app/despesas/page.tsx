@@ -65,7 +65,8 @@ export default async function Page() {
       <DashboardPageHeader>
         <DashboardPageHeaderTitle>Despesas</DashboardPageHeaderTitle>
 
-        {plan.name === "free" || status.status != "active" ? (
+        {plan.name === "free" ||
+        (status.status !== "active" && status.status !== "trialing") ? (
           <CtaButtonPro />
         ) : (
           <ExpensesUpsertSheet />
@@ -73,7 +74,8 @@ export default async function Page() {
       </DashboardPageHeader>
 
       <DashboardPageMain>
-        {plan.name === "free" || status.status != "active" ? (
+        {plan.name === "free" ||
+        (status.status !== "active" && status.status !== "trialing") ? (
           <FreeAlert />
         ) : (
           " "
