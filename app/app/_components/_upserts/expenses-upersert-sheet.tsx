@@ -49,10 +49,6 @@ export function ExpensesUpsertSheet() {
   const [categories, setCategories] = useState<Categories[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  // const handleDateClick = (date: Date | undefined) => {
-  //   setExpiryAt(date);
-  // };
-
   function handleChangeCategory(value: string) {
     const selectedIndex = parseInt(value, 10);
     const selectedCategoryId = categories[selectedIndex]?.id || "";
@@ -225,36 +221,6 @@ export function ExpensesUpsertSheet() {
                           value={expiryAt}
                           onChange={(date) => setExpiryAt(date)}
                         />
-
-                        {/* <Calendar
-                          locale={ptBR}
-                          mode="single"
-                          selected={expiryAt}
-                          onSelect={handleDateClick}
-                          styles={{
-                            head_cell: {
-                              width: "100%",
-                              textTransform: "capitalize",
-                            },
-                            cell: {
-                              width: "100%",
-                            },
-                            button: {
-                              width: "100%",
-                            },
-                            nav_button_previous: {
-                              width: "32px",
-                              height: "32px",
-                            },
-                            nav_button_next: {
-                              width: "32px",
-                              height: "32px",
-                            },
-                            caption: {
-                              textTransform: "capitalize",
-                            },
-                          }}
-                        /> */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>

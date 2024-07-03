@@ -39,7 +39,7 @@ interface PizzaChartData {
 export function PizzaCharts({ data }: { data: PizzaChartData[] }) {
   return (
     <>
-      <div className="flex flex-col items-center justify-center  ">
+      <div className="flex flex-col items-center justify-center">
         <DonutChart
           className="mb-6 "
           variant="pie"
