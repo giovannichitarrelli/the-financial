@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { config } from "@/config";
 import { db } from "../database";
+import { getUrl } from "@/app/_lib/get-url";
 
 export const stripe = new Stripe(config.stripe.secretKey || "", {
   apiVersion: "2024-04-10",
@@ -48,49 +49,81 @@ export const createCheckoutSession = async (
   userEmail: string,
   userStripeSubscriptionId: string,
 ) => {
-  try {
-    const customer = await createStripeCustomer({
-      email: userEmail,
-    });
+  const customer = await createStripeCustomer({
+    email: userEmail,
+  });
 
-    const subscription = await stripe.subscriptionItems.list({
-      subscription: userStripeSubscriptionId,
-      limit: 1,
-    });
+  const subscription = await stripe.subscriptionItems.list({
+    subscription: userStripeSubscriptionId,
+    limit: 1,
+  });
 
-    const session = await stripe.billingPortal.sessions.create({
-      customer: customer.id,
-      // return_url: "http://localhost:3000/app/settings/billing",
-      return_url: "https://meudindin.online/app/settings/billing",
-      flow_data: {
-        type: "subscription_update_confirm",
-        after_completion: {
-          type: "redirect",
-          redirect: {
-            return_url:
-              "https://meudindin.online/app/settings/billing?success=true",
-            // "http://localhost:3000/app/settings/billing?success=true",
+  if (subscription.data[0].plan.id === config.stripe.plans.free.priceId) {
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "subscription",
+        client_reference_id: userId,
+        customer: customer.id,
+        success_url: "http://localhost:3000/app/settings/billing?success=true",
+        cancel_url: "http://localhost:3000/app/settings/billing?success=false",
+
+        line_items: [
+          {
+            price: config.stripe.plans.pro.priceId,
+            quantity: 1,
           },
-        },
-        subscription_update_confirm: {
-          subscription: userStripeSubscriptionId,
-          items: [
-            {
-              id: subscription.data[0].id,
-
-              price: config.stripe.plans.pro.priceId,
-              quantity: 1,
+        ],
+        subscription_data: {
+          trial_settings: {
+            end_behavior: {
+              missing_payment_method: "cancel",
             },
-          ],
+          },
+          trial_period_days: 7,
         },
-      },
-    });
-    return {
-      url: session.url,
-    };
-  } catch (error) {
-    console.error(error);
-    throw new Error("Error to create checkout session");
+        // payment_method_collection: 'if_required',
+      });
+      return {
+        url: session.url,
+      };
+    } catch (error) {
+      console.error(error);
+      throw new Error("Error to create checkout session");
+    }
+  } else {
+    try {
+      const session = await stripe.billingPortal.sessions.create({
+        customer: customer.id,
+        return_url: getUrl("app/settings/billing"),
+        // flow_data: {
+        //   type: "subscription_update_confirm",
+        //   after_completion: {
+        //     type: "redirect",
+        //     redirect: {
+        //       return_url: getUrl("app/settings/billing?success=true"),
+        //     },
+        //   },
+        //   subscription_update_confirm: {
+        //     subscription: userStripeSubscriptionId,
+        //     items: [
+        //       {
+        //         id: subscription.data[0].id,
+        //         price: config.stripe.plans.proYear.priceId,
+        //         quantity: 1,
+        //       },
+        //     ],
+        //   },
+        // },
+      });
+
+      return {
+        url: session.url,
+      };
+    } catch (error) {
+      console.error(error);
+      throw new Error("Error to create billing portal session");
+    }
   }
 };
 
@@ -168,19 +201,27 @@ export const getUserCurrentPlan = async (userId: string) => {
     },
     select: {
       stripePriceId: true,
-      stripeSubscriptionStatus: true, //adicionado
     },
   });
 
-  if (!user || !user.stripePriceId) {
-    throw new Error("User or user stripePriceId not found");
+  // if (!user || !user.stripePriceId) {
+  //   throw new Error("User or user stripePriceId not found");
+  //   // console.log("User or user stripePriceId not found" )
+  // }
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (!user.stripePriceId) {
+    return {
+      name: null, // ou um valor padrão, se preferir
+    };
   }
 
   const plan = getPlanByPrice(user.stripePriceId);
-  const status = user.stripeSubscriptionStatus;
   return {
     name: plan.name,
-    status: status,
   };
 };
 
@@ -190,21 +231,101 @@ export const getUserCurrentStatus = async (userId: string) => {
       id: userId,
     },
     select: {
-      stripeSubscriptionStatus: true, //adicionado
+      stripeSubscriptionStatus: true,
     },
   });
 
-  if (!user || !user.stripeSubscriptionStatus) {
-    throw new Error("User or user stripeSubscriptionStatus not found");
+  if (!user) {
+    throw new Error("User not found");
   }
+
+  if (!user.stripeSubscriptionStatus) {
+    return {
+      status: null, // ou um valor padrão, se preferir
+    };
+  }
+
   const status = user.stripeSubscriptionStatus;
   return {
     status: status,
   };
 };
 
-// "https://meudindin.online/app/settings/billing?success=true",
-// return_url: "https://meudindin.online/app/settings/billing",
+// export const createBillingPortal = async (
+//   userId: string,
+//   userEmail: string,
+//   userStripeSubscriptionId: string,
+// ) => {
+//   try {
+//     const customer = await createStripeCustomer({
+//       email: userEmail,
+//     });
+
+//     const subscription = await stripe.subscriptionItems.list({
+//       subscription: userStripeSubscriptionId,
+//       limit: 1,
+//     });
+
+//     const session = await stripe.billingPortal.sessions.create({
+//       customer: customer.id,
+//       return_url: getUrl("app/settings/billing"),
+//       flow_data: {
+//         type: "subscription_update_confirm",
+//         after_completion: {
+//           type: "redirect",
+//           redirect: {
+//             return_url: getUrl("app/settings/billing?success=true"),
+//           },
+//         },
+//         subscription_update_confirm: {
+//           subscription: userStripeSubscriptionId,
+//           items: [
+//             {
+//               id: subscription.data[0].id,
+//               // price: config.stripe.plans.proYear.priceId,
+//               // quantity: 1,
+//             },
+//           ],
+//         },
+//       },
+//     });
+
+//     return {
+//       url: session.url,
+//     };
+//   } catch (error) {
+//     console.error(error);
+//     throw new Error("Error to create billing portal session");
+//   }
+// };
+
+// const session = await stripe.billingPortal.sessions.create({
+//   customer: customer.id,
+//   return_url: getUrl("app/settings/billing"),
+//   flow_data: {
+//     type: "subscription_update_confirm",
+//     after_completion: {
+//       type: "redirect",
+//       redirect: {
+//         return_url: getUrl("app/settings/billing?success=true"),
+//       },
+//     },
+//     subscription_update_confirm: {
+//       subscription: userStripeSubscriptionId,
+//       items: [
+//         {
+//           id: subscription.data[0].id,
+//           price: config.stripe.plans.pro.priceId,
+//           quantity: 1,
+//         },
+//       ],
+//     },
+//   },
+// });
+
+// return {
+//   url: session.url,
+// };
 
 // stripe checkout
 
