@@ -32,6 +32,7 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
 model User {
   id                     String    @id @default(cuid())
   name                   String?
@@ -58,6 +59,7 @@ model User {
   wishlist    Wishlist[]
   withdraw    Withdraw[]
 }
+
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -96,7 +98,7 @@ model Salary {
   createAt DateTime  @default(now())
   isFixed  Boolean   @default(false)
   doneAt   DateTime?
-  expiryAt DateTime
+  expiryAt DateTime?
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -107,6 +109,7 @@ model Investments {
   price    String
   createAt DateTime  @default(now())
   doneAt   DateTime?
+  expiryAt DateTime?
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -117,6 +120,7 @@ model Withdraw {
   price    String
   createAt DateTime  @default(now())
   doneAt   DateTime?
+  expiryAt DateTime?
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -127,5 +131,6 @@ model Wishlist {
   price    String
   createAt DateTime  @default(now())
   doneAt   DateTime?
+  expiryAt DateTime?
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

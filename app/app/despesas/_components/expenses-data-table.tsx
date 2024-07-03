@@ -15,7 +15,6 @@ type ExpensesDataTableProps = {
   data: Expenses[];
   categories: Categories[];
 };
-
 export function ExpensesDataTable({
   data,
   categories,

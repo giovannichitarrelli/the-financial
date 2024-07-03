@@ -101,9 +101,8 @@ export function ExpensesUpsertSheet() {
         await upsertExpenses({
           ...data,
           categoriesId: selectedCategory,
-          expiryAt: expiryAt || null, // Permitir expiryAt ser null
+          expiryAt: expiryAt || null,
         });
-        console.log(data);
       }
       setSheetIsOpen(false);
       toast.success("Despesa criada com sucesso!", {
@@ -115,7 +114,6 @@ export function ExpensesUpsertSheet() {
       });
     }
     router.refresh();
-    // location.reload();
     ref.current?.click();
   }
 
@@ -227,6 +225,7 @@ export function ExpensesUpsertSheet() {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="isFixed"

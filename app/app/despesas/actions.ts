@@ -110,7 +110,7 @@ export async function upsertExpenses(
   }
   if (!input.price) {
     return {
-      error: "Valore é obrigatório",
+      error: "Valor é obrigatório",
       data: null,
     };
   }

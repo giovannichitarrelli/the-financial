@@ -77,18 +77,18 @@ export function SalaryUpsertSheet() {
       } else {
         await upsertSalary({
           ...data,
-          expiryAt,
+          expiryAt: expiryAt || null,
         });
       }
       toast.success("Sua receita foi criada com sucesso!", {
         description: "Suas receitas serão atualizados...",
       });
     } catch (error) {
+      console.log(error, "erro apresentado");
       toast.error("Sua receita não foi cadastrada!", {
         description: "Por favor, tente novamente...",
       });
     }
-    location.reload();
     router.refresh();
     ref.current?.click();
   }

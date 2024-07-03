@@ -44,7 +44,6 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
       data: null,
     };
   }
-
   if (input.id) {
     const salary = await db.salary.findUnique({
       where: {
@@ -58,7 +57,7 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
 
     if (!salary) {
       return {
-        error: "Not Não encontrado",
+        error: " Não encontrado",
         data: null,
       };
     }
@@ -71,7 +70,10 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
       data: {
         title: input.title,
         price: input.price,
+        expiryAt: (input.expiryAt as Date) || null,
+        isFixed: input.isFixed,
         doneAt: input.doneAt,
+        userId: session?.user?.id,
       },
     });
     return {
@@ -79,7 +81,6 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
       data: updateSalary,
     };
   }
-
   if (!input.title) {
     return {
       error: "Título é obrigatório",
@@ -93,16 +94,15 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
     };
   }
 
-  const salary = await db.salary.create({
+  await db.salary.create({
     data: {
       title: input.title,
       price: input.price,
       isFixed: input.isFixed,
-      expiryAt: (input.expiryAt as Date) || null,
       userId: session?.user?.id,
+      expiryAt: input.expiryAt || null,
     },
   });
-  return salary;
 }
 
 export async function deleteSalary(input: z.infer<typeof DeleteSalarySchema>) {

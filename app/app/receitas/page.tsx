@@ -1,5 +1,5 @@
 import React from "react";
-import { getUserMonthSalary } from "./actions";
+import { getUserSalary } from "./actions";
 import {
   Card,
   CardContent,
@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { SalaryUpsertSheet } from "../_components/_upserts/salary-upersert-sheet";
-import ClientComponent from "./_components/filter-component";
 import { BadgeAlert, CircleDollarSign } from "lucide-react";
 import {
   DashboardPage,
@@ -19,15 +18,11 @@ import {
 import CtaButtonPro from "../_components/cta-button-pro";
 import { FreeAlert } from "../_components/plan-alert";
 import { isAvailable } from "@/app/_lib/utils";
+import { SalaryDataTable } from "./_components/salary-data-table";
+import { Filters } from "../_components/filters";
 
 export default async function Page() {
-  const currentDate = new Date();
-  const currentMonth = (currentDate.getMonth() + 1).toString();
-  const currentYear = currentDate.getFullYear().toString();
-  const salary = await getUserMonthSalary(
-    parseInt(currentMonth),
-    parseInt(currentYear),
-  );
+  const salary = await getUserSalary();
   const { plan, status } = await isAvailable();
   if (!plan || !status) {
     return (
@@ -62,11 +57,8 @@ export default async function Page() {
         ) : (
           " "
         )}
-        <ClientComponent
-          initialMonth={currentMonth}
-          initialYear={currentYear}
-          initialSalary={salary}
-        />
+        <Filters />
+        <SalaryDataTable data={salary} />
 
         <Card className="mt-auto">
           <CardHeader className="mb-4 border-b border-border ">
