@@ -47,7 +47,6 @@ export function WithdrawUpsertSheet() {
         description: "Por favor, tente novamente...",
       });
     }
-    location.reload();
     router.refresh();
     ref.current?.click();
   });

@@ -45,7 +45,6 @@ export function EditWithdraws({ withdraws }: EditPostProps) {
       });
     }
     router.refresh();
-    location.reload();
   };
 
   return (

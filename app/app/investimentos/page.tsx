@@ -1,5 +1,5 @@
 import React from "react";
-import { getUserMonthInvestments, getUserMonthWithdraws } from "./actions";
+import { getUserInvestments, getUserWithdraws } from "./actions";
 import {
   Card,
   CardContent,
@@ -13,14 +13,9 @@ import {
   CandlestickChart,
   ShieldPlus,
   PieChart,
+  ArrowRightCircle,
 } from "lucide-react";
-import {
-  getTotalMonthSaved,
-  getTotalSaved,
-} from "../_components/_helpers/totals";
-import { WithdrawUpsertSheet } from "../_components/_upserts/withdraw-upersert-sheet";
-import { InvestmentsUpsertSheet } from "../_components/_upserts/investments-upersert-sheet";
-import FilterComponentInvestments from "./_components/filter-component-investments";
+
 import {
   DashboardPage,
   DashboardPageHeader,
@@ -30,8 +25,19 @@ import {
 import CtaButtonPro from "../_components/cta-button-pro";
 import { FreeAlert } from "../_components/plan-alert";
 import { isAvailable } from "@/app/_lib/utils";
+import { InvestmentsDataTable } from "./_components/investments-data-table";
+import { WithdrawsDataTable } from "./_components/withdraw-data-table";
+import { Filters } from "../_components/filters";
+import { InvestmentsUpsertSheet } from "../_components/_upserts/investments-upersert-sheet";
+import { WithdrawUpsertSheet } from "../_components/_upserts/withdraw-upersert-sheet";
+import {
+  getTotalMonthSaved,
+  getTotalSaved,
+} from "../_components/_helpers/totals";
 
 export default async function Page() {
+  const investments = await getUserInvestments();
+  const withdraws = await getUserWithdraws();
   const currentDate = new Date();
   const currentMonth = (currentDate.getMonth() + 1).toString();
   const currentYear = currentDate.getFullYear().toString();
@@ -50,14 +56,6 @@ export default async function Page() {
     );
   }
 
-  const investments = await getUserMonthInvestments(
-    parseInt(currentMonth),
-    parseInt(currentYear),
-  );
-  const withdraws = await getUserMonthWithdraws(
-    parseInt(currentMonth),
-    parseInt(currentYear),
-  );
   const initialTotalSaved = await getTotalSaved();
   const initialTotalMonthSaved = await getTotalMonthSaved(
     parseInt(currentMonth),
@@ -101,14 +99,37 @@ export default async function Page() {
         ) : (
           " "
         )}
-        <FilterComponentInvestments
-          initialMonth={currentMonth}
-          initialYear={currentYear}
-          initialInvestments={investments}
-          initialWithdraws={withdraws}
-          initialTotalSaved={initialTotalSaved}
-          initialTotalMonthSaved={initialTotalMonthSaved}
-        />
+
+        <Filters />
+
+        <Card>
+          <CardContent className="flex flex-col items-center justify-between gap-2 py-2 md:flex-row">
+            <p className="flex items-center">
+              <HandCoins className="mr-2 h-4 w-4" /> Saldo total:
+              <span className="ml-2 font-bold text-blue-500">
+                {initialTotalSaved}
+              </span>
+            </p>
+            <p className="flex items-center">
+              <HandCoins className="mr-2 h-4 w-4" /> Saldo mensal:
+              <span className="ml-2 font-bold text-blue-500">
+                {initialTotalMonthSaved}
+              </span>
+            </p>
+          </CardContent>
+        </Card>
+
+        <InvestmentsDataTable data={investments} />
+
+        <Card className="border-red-500 shadow-red-500">
+          <CardHeader>
+            <div className="flex items-center">
+              <h3 className="text-lg font-bold"> Saques / Prejuízos</h3>
+              <ArrowRightCircle className="ml-2 h-4 w-4 text-red-500" />
+            </div>
+          </CardHeader>
+          <WithdrawsDataTable data={withdraws} />
+        </Card>
 
         <Card className="mt-auto">
           <CardHeader className="mb-4 border-b border-border">

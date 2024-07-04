@@ -45,7 +45,6 @@ export function EditInvestments({ investments }: EditPostProps) {
       });
     }
     router.refresh();
-    location.reload();
   };
 
   return (
