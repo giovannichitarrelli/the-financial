@@ -44,7 +44,7 @@ export function ExpensesUpsertSheet() {
   const form = useForm({
     resolver: zodResolver(upsertExpensesSchema),
   });
-  const [expiryAt, setExpiryAt] = useState<Date | undefined>(undefined);
+  const [expiryAt, setExpiryAt] = useState<Date | undefined>(new Date());
 
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
   const [categories, setCategories] = useState<Categories[]>([]);
@@ -65,13 +65,13 @@ export function ExpensesUpsertSheet() {
 
   async function onSubmit(data: z.infer<typeof upsertExpensesSchema>) {
     try {
+      if (!expiryAt) {
+        toast.error("Data de vencimento ou realização é obrigatória!", {
+          description: "Por favor, insira uma data de expiração...",
+        });
+        return null;
+      }
       if (data.isFixed) {
-        if (!expiryAt) {
-          toast.error("Data de expiração é obrigatória para despesa fixa!", {
-            description: "Por favor, insira uma data de expiração...",
-          });
-          return null;
-        }
         const selectedDay = expiryAt.getDate();
         const selectedMonth = expiryAt.getMonth();
         const selectedYear = expiryAt.getFullYear();
@@ -101,7 +101,7 @@ export function ExpensesUpsertSheet() {
         await upsertExpenses({
           ...data,
           categoriesId: selectedCategory,
-          expiryAt: expiryAt || null,
+          expiryAt: expiryAt,
         });
       }
       setSheetIsOpen(false);

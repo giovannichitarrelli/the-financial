@@ -100,7 +100,7 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
       price: input.price,
       isFixed: input.isFixed,
       userId: session?.user?.id,
-      expiryAt: input.expiryAt || null,
+      expiryAt: input.expiryAt,
     },
   });
 }

@@ -37,20 +37,17 @@ export function SalaryUpsertSheet() {
     resolver: zodResolver(upsertSalarySchema),
   });
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
-  const [expiryAt, setExpiryAt] = useState<Date | undefined>(undefined);
-
+  const [expiryAt, setExpiryAt] = useState<Date | undefined>(new Date());
   async function onSubmit(data: z.infer<typeof upsertSalarySchema>) {
     setSheetIsOpen(true);
     try {
-      setSheetIsOpen(false);
+      if (!expiryAt) {
+        toast.error("Data de vencimento ou realização é obrigatória!", {
+          description: "Por favor, insira uma data de vencimento...",
+        });
+        return null;
+      }
       if (data.isFixed) {
-        if (!expiryAt) {
-          toast.error("Data de expiração é obrigatório para salário fixo!", {
-            description: "Por favor, insira uma data de expiração...",
-          });
-          throw new Error("Data de expiração é obrigatório para receitas");
-        }
-
         const selectedDay = expiryAt.getDate();
         const selectedMonth = expiryAt.getMonth();
         const selectedYear = expiryAt.getFullYear();
@@ -77,7 +74,7 @@ export function SalaryUpsertSheet() {
       } else {
         await upsertSalary({
           ...data,
-          expiryAt: expiryAt || null,
+          expiryAt: expiryAt,
         });
       }
       toast.success("Sua receita foi criada com sucesso!", {
@@ -89,6 +86,7 @@ export function SalaryUpsertSheet() {
         description: "Por favor, tente novamente...",
       });
     }
+    setSheetIsOpen(false);
     router.refresh();
     ref.current?.click();
   }

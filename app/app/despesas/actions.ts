@@ -119,7 +119,7 @@ export async function upsertExpenses(
     data: {
       title: input.title,
       price: input.price,
-      expiryAt: input.expiryAt || null,
+      expiryAt: input.expiryAt,
       categoriesId: input.categoriesId,
       isFixed: input.isFixed,
       userId: session?.user?.id,
