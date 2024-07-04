@@ -66,11 +66,15 @@ export function ExpensesDataTable({
     const expenseDate = expense.expiryAt
       ? new Date(expense.expiryAt)
       : new Date(expense.createAt);
-
-    return (
+    const matchesDateFilter =
       (!from || (expenseDate && expenseDate >= from)) &&
-      (!to || (expenseDate && expenseDate <= to))
-    );
+      (!to || (expenseDate && expenseDate <= to));
+    const matchesCategoryFilter =
+      !params.get("categoriesId") ||
+      params.get("categoriesId") === "all" ||
+      expense.categoriesId === params.get("categoriesId");
+
+    return matchesDateFilter && matchesCategoryFilter;
   });
 
   return (

@@ -33,11 +33,15 @@ const DateFilter = () => {
     to: to ? new Date(to) : defaultTo,
   };
   const [date, setDate] = useState<DateRange | undefined>(paramState);
+
   const pushToUrl = (dateRange: DateRange | undefined) => {
     const query = {
-      from: format(dateRange?.from || defaultFrom, "dd LLL, yyyy"),
-      to: format(dateRange?.to || defaultTo, "dd LLL, yyyy"),
+      from: dateRange?.from
+        ? format(dateRange.from, "dd LLL, yyyy")
+        : undefined,
+      to: dateRange?.to ? format(dateRange.to, "dd LLL, yyyy") : undefined,
     };
+
     const url = qs.stringifyUrl(
       {
         url: pathname,
@@ -49,8 +53,7 @@ const DateFilter = () => {
   };
 
   const onReset = () => {
-    setDate({ from: defaultFrom, to: defaultTo });
-    pushToUrl({ from: defaultFrom, to: defaultTo });
+    pushToUrl({ from: undefined, to: undefined });
   };
 
   return (
