@@ -70,7 +70,7 @@ export async function upsertSalary(input: z.infer<typeof upsertSalarySchema>) {
       data: {
         title: input.title,
         price: input.price,
-        expiryAt: (input.expiryAt as Date) || null,
+        expiryAt: input.expiryAt,
         isFixed: input.isFixed,
         doneAt: input.doneAt,
         userId: session?.user?.id,

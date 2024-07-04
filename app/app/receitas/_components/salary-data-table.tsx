@@ -28,7 +28,7 @@ export function SalaryDataTable({ data }: SalaryDataTableProps) {
   const handleDeleteSalary = async (salary: Salary) => {
     try {
       await deleteSalary({ id: salary.id });
-      toast.success("Sua receita foi atualizada com sucesso!", {
+      toast.success("Sua receita foi deletada com sucesso!", {
         description: "Suas receitas serão atualizadas...",
       });
     } catch (error) {
