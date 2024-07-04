@@ -45,7 +45,6 @@ export function EditWishlist({ wishlist }: EditPostProps) {
       });
     }
     router.refresh();
-    location.reload();
   };
 
   return (

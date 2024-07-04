@@ -10,7 +10,6 @@ import {
 } from "../_components/dashboard/dashboard-page";
 import CtaButtonPro from "../_components/cta-button-pro";
 import { FreeAlert } from "../_components/plan-alert";
-import MsgNoData from "../_components/no-data-table";
 import { isAvailable } from "@/app/_lib/utils";
 import {
   Card,
@@ -18,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
+import { Filters } from "../_components/filters";
 export const metadata: Metadata = {
   title: "Dashboard - Metas",
   description: "Dashboard de metas...",
@@ -57,12 +57,8 @@ export default async function Page() {
         ) : (
           " "
         )}
-
-        {wishlist.length > 0 ? (
-          <WishlistDataTable data={wishlist} />
-        ) : (
-          <MsgNoData />
-        )}
+        <Filters />
+        <WishlistDataTable data={wishlist} />
       </DashboardPageMain>
     </DashboardPage>
   );
