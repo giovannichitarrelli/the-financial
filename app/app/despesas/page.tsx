@@ -72,8 +72,10 @@ export default async function Page() {
           " "
         )}
 
-        <Filters />
-        <CategoriesFilter />
+        <div className="flex flex-col items-center gap-y-2 lg:flex-row lg:gap-x-2">
+          <Filters />
+          <CategoriesFilter />
+        </div>
 
         <ExpensesDataTable data={expenses} categories={categories} />
 
