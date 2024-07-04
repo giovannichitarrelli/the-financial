@@ -30,6 +30,7 @@ import {
 import { isAvailable } from "@/app/_lib/utils";
 import { ExpensesDataTable } from "./_components/expenses-data-table";
 import { Filters } from "../_components/filters";
+import CategoriesFilter from "../_components/categories-filter";
 
 export default async function Page() {
   const expenses = await getUserExpenses();
@@ -72,6 +73,7 @@ export default async function Page() {
         )}
 
         <Filters />
+        <CategoriesFilter />
 
         <ExpensesDataTable data={expenses} categories={categories} />
 

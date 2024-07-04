@@ -59,7 +59,7 @@ export function DashboardSideBarNavMain({
   return (
     <main
       className={cn(
-        "flex min-h-[70vh] flex-col justify-between px-0 md:px-3  lg:min-h-[80vh] lg:py-8  ",
+        "flex min-h-[60vh] flex-col justify-between px-0 md:px-3  lg:min-h-[80vh] lg:py-8  ",
         className,
       )}
     >
