@@ -65,8 +65,8 @@ export const createCheckoutSession = async (
         mode: "subscription",
         client_reference_id: userId,
         customer: customer.id,
-        success_url: "http://localhost:3000/app/settings/billing?success=true",
-        cancel_url: "http://localhost:3000/app/settings/billing?success=false",
+        success_url: getUrl("app/settings/billing?success=true"),
+        cancel_url: getUrl("app/settings/billing?success=false"),
 
         line_items: [
           {

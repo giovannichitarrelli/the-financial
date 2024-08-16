@@ -11,13 +11,8 @@ import {
 import CtaButtonPro from "../_components/cta-button-pro";
 import { FreeAlert } from "../_components/plan-alert";
 import { isAvailable } from "@/app/_lib/utils";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/app/_components/ui/card";
 import { Filters } from "../_components/filters";
+import BillingError from "../_components/billing-error";
 export const metadata: Metadata = {
   title: "Dashboard - Metas",
   description: "Dashboard de metas...",
@@ -26,16 +21,7 @@ export default async function Page() {
   const wishlist = await getUserWishlist();
   const { plan, status } = await isAvailable();
   if (!plan || !status) {
-    return (
-      <Card>
-        <CardHeader className="border-b border-border">
-          <CardTitle>Gerenciar assinatura</CardTitle>
-          <CardDescription>
-            Não foi possível carregar as informações da sua assinatura.
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    );
+    return <BillingError />;
   }
 
   return (

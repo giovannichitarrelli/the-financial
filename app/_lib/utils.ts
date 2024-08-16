@@ -25,6 +25,7 @@ type Period = {
   from: string | Date | undefined;
   to: string | Date | undefined;
 };
+
 export function formatDateRange(period?: Period) {
   const defaultTo = addMonths(new Date(), 1);
   const defaultFrom = new Date();

@@ -23,7 +23,7 @@ export function StatusPayment({ doneAt, expiryAt }: StatusBadgeProps) {
   if (doneAt) {
     badgeContent = (
       <>
-        <Check className="mr-2 h-3 w-3" />
+        <Check className="mr-2  size-3" />
         Concluído
       </>
     );
@@ -31,7 +31,7 @@ export function StatusPayment({ doneAt, expiryAt }: StatusBadgeProps) {
   } else if (expiryAt && expiryAt < pastDate) {
     badgeContent = (
       <>
-        <Clock className="mr-2 h-3 w-3" />
+        <Clock className="mr-2  size-3" />
         Atrasado
       </>
     );
@@ -39,7 +39,7 @@ export function StatusPayment({ doneAt, expiryAt }: StatusBadgeProps) {
   } else {
     badgeContent = (
       <>
-        <Check className="mr-2 h-3 w-3" />
+        <Check className="mr-2  size-3" />
         Pendente
       </>
     );
@@ -70,7 +70,7 @@ export function StatusFixed({ isFixed }: StatusBadgeFixedProps) {
   if (fixed === true) {
     badgeContent = (
       <>
-        <Pin className="mr-2 h-3 w-3" />
+        <Pin className="mr-2  size-3" />
         Fixo
       </>
     );
@@ -78,7 +78,7 @@ export function StatusFixed({ isFixed }: StatusBadgeFixedProps) {
   } else {
     badgeContent = (
       <>
-        <PinOff className="mr-2 h-3 w-3" />
+        <PinOff className="mr-2  size-3" />
         Não fixo
       </>
     );

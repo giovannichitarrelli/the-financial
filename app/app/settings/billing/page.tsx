@@ -11,21 +11,13 @@ import { Edit, Rocket } from "lucide-react";
 import { AlertMsg, StatusAlert } from "../../_components/plan-alert";
 import { isAvailable } from "@/app/_lib/utils";
 import BillingAlert from "../../_components/billing-alert";
+import BillingError from "../../_components/billing-error";
 
 export default async function Page() {
   const { plan, status } = await isAvailable();
 
   if (!plan || !status) {
-    return (
-      <Card>
-        <CardHeader className="border-b border-border">
-          <CardTitle>Gerenciar assinatura</CardTitle>
-          <CardDescription>
-            Não foi possível carregar as informações da sua assinatura.
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    );
+    return <BillingError />;
   }
 
   return (

@@ -34,6 +34,7 @@ import {
   getTotalMonthSaved,
   getTotalSaved,
 } from "../_components/_helpers/totals";
+import BillingError from "../_components/billing-error";
 
 export default async function Page() {
   const investments = await getUserInvestments();
@@ -44,16 +45,7 @@ export default async function Page() {
 
   const { plan, status } = await isAvailable();
   if (!plan || !status) {
-    return (
-      <Card>
-        <CardHeader className="border-b border-border">
-          <CardTitle>Gerenciar assinatura</CardTitle>
-          <CardDescription>
-            Não foi possível carregar as informações da sua assinatura.
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    );
+    return <BillingError />;
   }
 
   const initialTotalSaved = await getTotalSaved();
@@ -145,7 +137,7 @@ export default async function Page() {
           <CardContent className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card className="bg-background p-3">
               <CardTitle className="flex items-center text-sm">
-                <HandCoins className="mr-2 h-3 w-3" /> Renda Fixa
+                <HandCoins className="mr-2  size-3" /> Renda Fixa
               </CardTitle>
               <CardDescription className="text-sm font-light">
                 Poupança, Tesouro Direto, CDB, LCI, LCA...
@@ -153,7 +145,7 @@ export default async function Page() {
             </Card>
             <Card className="bg-background p-3">
               <CardTitle className="flex items-center text-sm">
-                <CandlestickChart className="mr-2 h-3 w-3" /> Renda Variável
+                <CandlestickChart className="mr-2  size-3" /> Renda Variável
               </CardTitle>
               <CardDescription className="text-sm font-light">
                 Futuros, Ações, Criptomoedas...
@@ -161,7 +153,7 @@ export default async function Page() {
             </Card>
             <Card className="bg-background p-3">
               <CardTitle className="flex items-center text-sm">
-                <ShieldPlus className="mr-2 h-3 w-3" /> Reserva de emergência
+                <ShieldPlus className="mr-2  size-3" /> Reserva de emergência
               </CardTitle>
               <CardDescription className="text-sm font-light">
                 Para eventuais problemas inesperados...
@@ -169,7 +161,7 @@ export default async function Page() {
             </Card>
             <Card className="bg-background p-3">
               <CardTitle className="flex items-center text-sm">
-                <PieChart className="mr-2 h-3 w-3" /> Previdência privada
+                <PieChart className="mr-2  size-3" /> Previdência privada
               </CardTitle>
               <CardDescription className="text-sm font-light">
                 Para sua aposentadoria de sucesso...

@@ -55,6 +55,7 @@ export function ExpensesUpsertSheet() {
     const selectedCategoryId = categories[selectedIndex]?.id || "";
     setSelectedCategory(selectedCategoryId);
   }
+
   useEffect(() => {
     async function fetchCategories() {
       const data = await getCategories();

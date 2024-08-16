@@ -102,6 +102,7 @@ export async function upsertExpenses(
       data: updateExpenses,
     };
   }
+
   if (!input.title) {
     return {
       error: "Título é obrigatório",

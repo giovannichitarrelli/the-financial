@@ -19,16 +19,11 @@ import { CurrentMonthName } from "./_components/current-month-name";
 import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
 import { redirect } from "next/navigation";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/app/_components/ui/card";
 import { isAvailable } from "@/app/_lib/utils";
 import Resume from "./_components/Resume";
 import ResumeLists from "./_components/resume.lists";
 import Charts from "./_components/charts";
+import BillingError from "../_components/billing-error";
 
 export const metadata: Metadata = {
   title: "DinDin - Dashboard",
@@ -43,16 +38,7 @@ export default async function AppPage() {
   const { plan, status } = await isAvailable();
 
   if (!plan || !status) {
-    return (
-      <Card>
-        <CardHeader className="border-b border-border">
-          <CardTitle>Gerenciar assinatura</CardTitle>
-          <CardDescription>
-            Não foi possível carregar as informações da sua assinatura.
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    );
+    return <BillingError />;
   }
 
   const capitalizeFirstLetter = (string: string): string => {

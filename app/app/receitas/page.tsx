@@ -20,21 +20,13 @@ import { FreeAlert } from "../_components/plan-alert";
 import { isAvailable } from "@/app/_lib/utils";
 import { SalaryDataTable } from "./_components/salary-data-table";
 import { Filters } from "../_components/filters";
+import BillingError from "../_components/billing-error";
 
 export default async function Page() {
   const salary = await getUserSalary();
   const { plan, status } = await isAvailable();
   if (!plan || !status) {
-    return (
-      <Card>
-        <CardHeader className="border-b border-border">
-          <CardTitle>Gerenciar assinatura</CardTitle>
-          <CardDescription>
-            Não foi possível carregar as informações da sua assinatura.
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    );
+    return <BillingError />;
   }
 
   return (
@@ -74,24 +66,24 @@ export default async function Page() {
           <CardContent className="grid grid-cols-2 gap-4 md:grid-cols-2  lg:grid-cols-4">
             <Card className="bg-background p-3  ">
               <CardTitle className="flex items-center text-sm">
-                <CircleDollarSign className="mr-2 h-3 w-3" /> Salário fixo
+                <CircleDollarSign className="mr-2  size-3" /> Salário fixo
               </CardTitle>
             </Card>
             <Card className="bg-background p-3  ">
               {" "}
               <CardTitle className="flex items-center text-sm">
-                <CircleDollarSign className="mr-2 h-3 w-3" /> Renda extra
+                <CircleDollarSign className="mr-2  size-3" /> Renda extra
               </CardTitle>
             </Card>
             <Card className="bg-background p-3  ">
               <CardTitle className="flex items-center text-sm">
-                <CircleDollarSign className="mr-2 h-3 w-3" /> Rendimentos
+                <CircleDollarSign className="mr-2  size-3" /> Rendimentos
               </CardTitle>
             </Card>
             <Card className="bg-background p-3  ">
               {" "}
               <CardTitle className="flex items-center text-sm">
-                <CircleDollarSign className="mr-2 h-3 w-3" /> Benefícios
+                <CircleDollarSign className="mr-2  size-3" /> Benefícios
               </CardTitle>
             </Card>
           </CardContent>

@@ -81,7 +81,6 @@ export function SalaryUpsertSheet() {
         description: "Suas receitas serão atualizados...",
       });
     } catch (error) {
-      console.log(error, "erro apresentado");
       toast.error("Sua receita não foi cadastrada!", {
         description: "Por favor, tente novamente...",
       });

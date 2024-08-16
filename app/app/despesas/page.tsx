@@ -31,6 +31,7 @@ import { isAvailable } from "@/app/_lib/utils";
 import { ExpensesDataTable } from "./_components/expenses-data-table";
 import { Filters } from "../_components/filters";
 import CategoriesFilter from "../_components/categories-filter";
+import BillingError from "../_components/billing-error";
 
 export default async function Page() {
   const expenses = await getUserExpenses();
@@ -39,16 +40,7 @@ export default async function Page() {
   const { plan, status } = await isAvailable();
 
   if (!plan || !status) {
-    return (
-      <Card>
-        <CardHeader className="border-b border-border">
-          <CardTitle>Gerenciar assinatura</CardTitle>
-          <CardDescription>
-            Não foi possível carregar as informações da sua assinatura.
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    );
+    return <BillingError />;
   }
 
   return (
@@ -93,32 +85,32 @@ export default async function Page() {
           <CardContent className="grid grid-cols-2  gap-4 md:grid-cols-3 lg:grid-cols-6">
             <Card className="bg-background p-3  ">
               <CardTitle className="flex items-center text-sm">
-                <ShoppingBasket className="mr-2 h-3 w-3" /> Mercado
+                <ShoppingBasket className="mr-2  size-3" /> Mercado
               </CardTitle>
             </Card>
             <Card className="bg-background p-3  ">
               <CardTitle className="flex items-center text-sm">
-                <ShoppingBag className="mr-2 h-3 w-3" /> Shopping
+                <ShoppingBag className="mr-2  size-3" /> Shopping
               </CardTitle>
             </Card>
             <Card className="bg-background p-3  ">
               <CardTitle className="flex items-center text-sm">
-                <CarFront className="mr-2 h-3 w-3" /> Gasolina
+                <CarFront className="mr-2  size-3" /> Gasolina
               </CardTitle>
             </Card>
             <Card className="bg-background p-3  ">
               <CardTitle className="flex items-center text-sm">
-                <Pizza className="mr-2 h-3 w-3" /> Lanches
+                <Pizza className="mr-2  size-3" /> Lanches
               </CardTitle>
             </Card>
             <Card className="bg-background p-3  ">
               <CardTitle className="flex items-center text-sm">
-                <Sun className="mr-2 h-3 w-3" /> Praia
+                <Sun className="mr-2  size-3" /> Praia
               </CardTitle>
             </Card>
             <Card className="bg-background p-3  ">
               <CardTitle className="flex items-center text-sm">
-                <Gift className="mr-2 h-3 w-3" /> Presentes
+                <Gift className="mr-2  size-3" /> Presentes
               </CardTitle>
             </Card>
           </CardContent>

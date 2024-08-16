@@ -13,7 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/_components/ui/form";
-import { SheetFooter } from "@/app/_components/ui/sheet";
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Session } from "next-auth";
@@ -129,12 +128,12 @@ export function ProfileForm({ defaultValues }: ProfileFormProps) {
           </CardContent>
         </Card>
 
-        <SheetFooter className="mt-auto">
+        <div className="mt-auto">
           <Button disabled={form.formState.isLoading} type="submit">
             {form.formState.isSubmitting && "Salvando..."}
             {!form.formState.isSubmitting && "Salvar alterações"}
           </Button>
-        </SheetFooter>
+        </div>
       </form>
     </Form>
   );

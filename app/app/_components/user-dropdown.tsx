@@ -71,14 +71,14 @@ export function UserDropdown({ user }: UserDropdownProps) {
         <DropdownMenuGroup>
           <Link href="/app/settings">
             <DropdownMenuItem>
-              <Settings className="mr-3 h-3 w-3" />
+              <Settings className="mr-3  size-3" />
               Configurações
             </DropdownMenuItem>
           </Link>
 
           <Link href="/app/settings/billing">
             <DropdownMenuItem>
-              <Rocket className="mr-3 h-3 w-3" />
+              <Rocket className="mr-3  size-3" />
               Assinatura
             </DropdownMenuItem>
           </Link>
@@ -87,7 +87,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem onClick={() => signOut()}>
-          <LogOut className="mr-3 h-3 w-3" />
+          <LogOut className="mr-3  size-3" />
           Sair
         </DropdownMenuItem>
       </DropdownMenuContent>
