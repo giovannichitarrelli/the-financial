@@ -8,6 +8,13 @@ import { wishlistColumns } from "./_columns";
 import AddWishlistButton from "./_components/add-wishlist-button";
 import MsgNoData from "../_components/no-data-table";
 import CardsWishlist from "./_components/cards-wishlist";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/app/_components/ui/tabs";
+import { AppWindowMac, Table } from "lucide-react";
 
 const WishlistPage = async () => {
   const session = await getServerSession(auth);
@@ -32,20 +39,36 @@ const WishlistPage = async () => {
         <AddWishlistButton userCanAddTransaction={userCanAddTransaction} />
       </div>
 
-      {wishlist.length > 0 ? (
-        wishlist.map((wishlist) => (
-          <>
-            <CardsWishlist wishlist={wishlist} />
-          </>
-        ))
-      ) : (
-        <MsgNoData />
-      )}
+      <Tabs defaultValue="cards">
+        <div className="flex items-center justify-between gap-2">
+          <TabsList className="grid max-w-[200px] grid-cols-2">
+            <TabsTrigger value="cards">
+              <AppWindowMac className="h-4 w-4" />
+            </TabsTrigger>
+            <TabsTrigger value="table">
+              <Table className="h-4 w-4" />
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
-      <DataTable
-        columns={wishlistColumns}
-        data={JSON.parse(JSON.stringify(wishlist))}
-      />
+        <TabsContent value="cards" className="space-y-2">
+          {wishlist.length > 0 ? (
+            wishlist.map((wishlist) => (
+              <>
+                <CardsWishlist wishlist={wishlist} />
+              </>
+            ))
+          ) : (
+            <MsgNoData />
+          )}
+        </TabsContent>
+        <TabsContent value="table">
+          <DataTable
+            columns={wishlistColumns}
+            data={JSON.parse(JSON.stringify(wishlist))}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
