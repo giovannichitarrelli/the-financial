@@ -2,11 +2,10 @@
 
 import { Pie, PieChart } from "recharts";
 import { Card, CardContent } from "@/app/_components/ui/card";
-
-import { TransactionType } from "@prisma/client";
+import { TransactionEssentialType } from "@prisma/client";
 import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import PercentageItem from "./percentage-item";
-import { TransactionPercentagePerType } from "../../_data/get-dashboard/types";
+import { TransactionEssentialPercentagePerType } from "../../_data/get-dashboard/types";
 import {
   ChartConfig,
   ChartContainer,
@@ -15,36 +14,36 @@ import {
 } from "@/app/_components/ui/chart";
 
 const chartConfig = {
-  [TransactionType.DEPOSIT]: {
-    label: "Receita",
+  [TransactionEssentialType.ESSENTIAL]: {
+    label: "Essencial",
     color: "#00CC66",
   },
-  [TransactionType.EXPENSE]: {
-    label: "Despesas",
+  [TransactionEssentialType.NOT_ESSENTIAL]: {
+    label: "Não essencial",
     color: "#E93030",
   },
 } satisfies ChartConfig;
 
 interface TransactionsPieChartProps {
-  typesPercentage: TransactionPercentagePerType;
-  depositsTotal: number;
-  expensesTotal: number;
+  essentialTypesPercentage: TransactionEssentialPercentagePerType;
+  essentialsTotal: number;
+  notEssentialsTotal: number;
 }
 
-const TransactionsPieChart = ({
-  depositsTotal,
-  expensesTotal,
-  typesPercentage,
+const TransactionsEssentialsPieChart = ({
+  essentialsTotal,
+  notEssentialsTotal,
+  essentialTypesPercentage,
 }: TransactionsPieChartProps) => {
   const chartData = [
     {
-      type: TransactionType.DEPOSIT,
-      amount: depositsTotal,
+      type: TransactionEssentialType.ESSENTIAL,
+      amount: essentialsTotal,
       fill: "#00CC66",
     },
     {
-      type: TransactionType.EXPENSE,
-      amount: expensesTotal,
+      type: TransactionEssentialType.NOT_ESSENTIAL,
+      amount: notEssentialsTotal,
       fill: "#E93030",
     },
   ];
@@ -72,13 +71,15 @@ const TransactionsPieChart = ({
         <div className="space-y-3">
           <PercentageItem
             icon={<TrendingUpIcon size={16} className="text-primary" />}
-            title="Receita"
-            value={typesPercentage[TransactionType.DEPOSIT]}
+            title="Essencial"
+            value={essentialTypesPercentage[TransactionEssentialType.ESSENTIAL]}
           />
           <PercentageItem
             icon={<TrendingDownIcon size={16} className="text-red-500" />}
-            title="Despesas"
-            value={typesPercentage[TransactionType.EXPENSE]}
+            title="Não essencial"
+            value={
+              essentialTypesPercentage[TransactionEssentialType.NOT_ESSENTIAL]
+            }
           />
         </div>
       </CardContent>
@@ -86,4 +87,4 @@ const TransactionsPieChart = ({
   );
 };
 
-export default TransactionsPieChart;
+export default TransactionsEssentialsPieChart;

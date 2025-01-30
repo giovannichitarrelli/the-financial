@@ -88,6 +88,7 @@ enum TransactionType {
 enum TransactionEssentialType {
   ESSENTIAL
   NOT_ESSENTIAL
+  SALARY
 }
 
 enum TransactionCategory {
@@ -113,7 +114,6 @@ enum TransactionCategory {
 
 enum TransactionPaymentMethod {
   CREDIT_CARD
-  DEBIT_CARD
   BANK_TRANSFER
   CRIPTO
   BANK_SLIP

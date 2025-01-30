@@ -9,12 +9,11 @@ import {
 
 export const TRANSACTION_PAYMENT_METHOD_ICONS = {
   [TransactionPaymentMethod.CREDIT_CARD]: "credit-card.svg",
-  [TransactionPaymentMethod.DEBIT_CARD]: "debit-card.svg",
   [TransactionPaymentMethod.BANK_TRANSFER]: "bank-transfer.svg",
   [TransactionPaymentMethod.BANK_SLIP]: "bank-slip.svg",
   [TransactionPaymentMethod.CASH]: "money.svg",
   [TransactionPaymentMethod.PIX]: "pix.svg",
-  [TransactionPaymentMethod.CRIPTO]: "money.svg",
+  [TransactionPaymentMethod.CRIPTO]: "debit-card.svg",
   [TransactionPaymentMethod.OTHER]: "other.svg",
 };
 
@@ -36,7 +35,6 @@ export const TRANSACTION_CATEGORY_LABELS = {
   HOME_RENOVATION: "Reformas domésticas",
   HEALTH: "Saúde",
   DONATIONS_AND_PRESENTS: "Doações e Presentes",
-
   OTHER: "Outros",
 };
 
@@ -70,6 +68,10 @@ export const TRANSACTION_ESSENTIAL_TYPE_OPTIONS = [
   {
     value: TransactionEssentialType.NOT_ESSENTIAL,
     label: "Não essencial",
+  },
+  {
+    value: TransactionEssentialType.SALARY,
+    label: "Salário",
   },
 ];
 
@@ -108,11 +110,6 @@ export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
     value: TransactionPaymentMethod.CREDIT_CARD,
     label:
       TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CREDIT_CARD],
-  },
-  {
-    value: TransactionPaymentMethod.DEBIT_CARD,
-    label:
-      TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.DEBIT_CARD],
   },
   {
     value: TransactionPaymentMethod.BANK_TRANSFER,

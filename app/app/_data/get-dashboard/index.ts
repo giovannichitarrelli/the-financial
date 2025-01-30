@@ -1,5 +1,9 @@
-import { TransactionType } from "@prisma/client";
-import { TotalExpensePerCategory, TransactionPercentagePerType } from "./types";
+import { TransactionEssentialType, TransactionType } from "@prisma/client";
+import {
+  TotalExpensePerCategory,
+  TransactionEssentialPercentagePerType,
+  TransactionPercentagePerType,
+} from "./types";
 import { db } from "@/services/database";
 import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
@@ -53,6 +57,24 @@ export const getDashboard = async (month: string) => {
     )?._sum?.amount,
   );
 
+  const essentialsTotal = Number(
+    (
+      await db.transactions.aggregate({
+        where: { ...where, essentialType: "ESSENTIAL" },
+        _sum: { amount: true },
+      })
+    )?._sum?.amount,
+  );
+
+  const notEssentialsTotal = Number(
+    (
+      await db.transactions.aggregate({
+        where: { ...where, essentialType: "NOT_ESSENTIAL" },
+        _sum: { amount: true },
+      })
+    )?._sum?.amount,
+  );
+
   const balance = depositsTotal - expensesTotal;
   const transactionsTotal = Number(
     (
@@ -62,6 +84,20 @@ export const getDashboard = async (month: string) => {
       })
     )._sum.amount,
   );
+
+  const transactionsTotalWithoutSalary = Number(
+    (
+      await db.transactions.aggregate({
+        where: {
+          ...where,
+          essentialType: { in: ["ESSENTIAL", "NOT_ESSENTIAL"] },
+        },
+
+        _sum: { amount: true },
+      })
+    )._sum.amount,
+  );
+
   const typesPercentage: TransactionPercentagePerType = {
     [TransactionType.DEPOSIT]: Math.round(
       (Number(depositsTotal || 0) / Number(transactionsTotal)) * 100,
@@ -70,6 +106,18 @@ export const getDashboard = async (month: string) => {
       (Number(expensesTotal || 0) / Number(transactionsTotal)) * 100,
     ),
   };
+  const essentialTypesPercentage: TransactionEssentialPercentagePerType = {
+    [TransactionEssentialType.ESSENTIAL]: Math.round(
+      (Number(essentialsTotal || 0) / Number(transactionsTotalWithoutSalary)) *
+        100,
+    ),
+    [TransactionEssentialType.NOT_ESSENTIAL]: Math.round(
+      (Number(notEssentialsTotal || 0) /
+        Number(transactionsTotalWithoutSalary)) *
+        100,
+    ),
+  };
+
   const totalExpensePerCategory: TotalExpensePerCategory[] = (
     await db.transactions.groupBy({
       by: ["category"],
@@ -101,6 +149,9 @@ export const getDashboard = async (month: string) => {
     investmentsTotal,
     typesPercentage,
     totalExpensePerCategory,
+    essentialTypesPercentage,
+    notEssentialsTotal,
+    essentialsTotal,
     lastTransactions: JSON.parse(JSON.stringify(lastTransactions)),
   };
 };

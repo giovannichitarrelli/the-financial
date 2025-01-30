@@ -9,6 +9,7 @@ import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
 import SummaryCards from "./_components/summary-cards";
 import TransactionsPieChart from "./_components/transactions-pie-chart";
+import TransactionsEssentialsPieChart from "./_components/essentials-pie-chart";
 
 interface HomeProps {
   searchParams: {
@@ -45,7 +46,11 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
               userCanAddTransaction={userCanAddTransaction}
             />
             <div className="grid-cols- grid h-full gap-6 overflow-hidden lg:grid-cols-2">
-              <TransactionsPieChart {...dashboard} />
+              <div className="space-y-6">
+                <TransactionsPieChart {...dashboard} />
+                <TransactionsEssentialsPieChart {...dashboard} />
+              </div>
+
               <ExpensesPerCategory
                 expensesPerCategory={dashboard.totalExpensePerCategory}
               />

@@ -49,7 +49,7 @@ import { Checkbox } from "@/app/_components/ui/checkbox";
 import { Switch } from "@/app/_components/ui/switch";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { toast } from "sonner";
 
 interface UpsertTransactionDialogProps {
   isOpen: boolean;
@@ -75,6 +75,7 @@ const formSchema = z.object({
   essentialType: z.nativeEnum(TransactionEssentialType, {
     required_error: "O tipo da necessidade é obrigatório.",
   }),
+
   category: z.nativeEnum(TransactionCategory, {
     required_error: "A categoria é obrigatória.",
   }),
@@ -140,6 +141,7 @@ const UpsertTransactionDialog = ({
       setIsOpen(false);
       form.reset();
     } catch (error) {
+      toast.error("Ops... Algo inesperado aconteceu!");
       console.error(error);
     }
   };
@@ -166,7 +168,7 @@ const UpsertTransactionDialog = ({
         </DialogHeader>
         <ScrollArea className="max-h-[80vh] px-6">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
               <FormField
                 control={form.control}
                 name="name"
@@ -213,7 +215,7 @@ const UpsertTransactionDialog = ({
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a verified email to display" />
+                          <SelectValue placeholder="Selecionar" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -240,7 +242,7 @@ const UpsertTransactionDialog = ({
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a verified email to display" />
+                          <SelectValue placeholder="Selecionar" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
