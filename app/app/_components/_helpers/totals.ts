@@ -1,85 +1,105 @@
-import { getUserMonthExpenses } from "../../despesas/actions";
+import { db } from "@/services/database";
+import { formatCurrency } from "./formatCurrency";
+import { InvestmentsType, TransactionType } from "@prisma/client";
 import {
   getUserInvestments,
   getUserMonthInvestments,
   getUserMonthWithdraws,
   getUserWithdraws,
-} from "../../investimentos/actions";
-import { getUserWishlist } from "../../metas/actions";
-import { getUserMonthSalary } from "../../receitas/actions";
-import { formatCurrency } from "./formatCurrency";
-
-export async function getTotalExpenses(month: number, year: number) {
-  const expenses = await getUserMonthExpenses(month, year);
-
-  let totalExpenses = 0;
-  expenses.forEach((expense) => {
-    totalExpenses += Number(expense.price);
-  });
-
-  return totalExpenses;
-}
+} from "../../investments/_actions/resume-totals";
 
 export async function getTotalPendingExpenses(month: number, year: number) {
-  const expenses = await getUserMonthExpenses(month, year);
-
-  const pendingExpenses = expenses.filter((expense) => expense.doneAt === null);
-
-  let totalPending = 0;
-  pendingExpenses.forEach((expense) => {
-    totalPending += Number(expense.price);
+  const expenses = await db.transactions.findMany({
+    where: {
+      type: TransactionType.EXPENSE,
+      done: false,
+      date: {
+        gte: new Date(year, month - 1, 1),
+        lt: new Date(year, month, 1),
+      },
+    },
   });
 
+  const totalPending = expenses.reduce(
+    (total, expense) => total + expense.amount,
+    0,
+  );
   return totalPending;
 }
 
 export async function getTotalPaidExpenses(month: number, year: number) {
-  const expenses = await getUserMonthExpenses(month, year);
-
-  const paidExpenses = expenses.filter((expense) => expense.doneAt);
-
-  let totalPaid = 0;
-  paidExpenses.forEach((expense) => {
-    totalPaid += Number(expense.price);
+  const expenses = await db.transactions.findMany({
+    where: {
+      type: TransactionType.EXPENSE,
+      done: true,
+      date: {
+        gte: new Date(year, month - 1, 1),
+        lt: new Date(year, month, 1),
+      },
+    },
   });
 
+  const totalPaid = expenses.reduce(
+    (total, expense) => total + expense.amount,
+    0,
+  );
   return totalPaid;
 }
 
 export async function getTotalSalary(month: number, year: number) {
-  const salary = await getUserMonthSalary(month, year);
-
-  let totalSalary = 0;
-  salary.forEach((salaryItem) => {
-    totalSalary += Number(salaryItem.price);
+  const salary = await db.transactions.findMany({
+    where: {
+      type: TransactionType.DEPOSIT,
+      date: {
+        gte: new Date(year, month - 1, 1),
+        lt: new Date(year, month, 1),
+      },
+    },
   });
 
+  const totalSalary = salary.reduce(
+    (total, salaryItem) => total + salaryItem.amount,
+    0,
+  );
   return totalSalary;
 }
 
 export async function getTotalReceived(month: number, year: number) {
-  const salary = await getUserMonthSalary(month, year);
-
-  const receivedSalary = salary.filter((salaryItem) => salaryItem.doneAt);
-
-  let totalReceived = 0;
-  receivedSalary.forEach((salaryItem) => {
-    totalReceived += Number(salaryItem.price);
+  const receivedSalary = await db.transactions.findMany({
+    where: {
+      type: TransactionType.DEPOSIT,
+      done: true,
+      date: {
+        gte: new Date(year, month - 1, 1),
+        lt: new Date(year, month, 1),
+      },
+    },
   });
 
+  const totalReceived = receivedSalary.reduce(
+    (total, salaryItem) => total + salaryItem.amount,
+    0,
+  );
   return totalReceived;
 }
 
 export async function getTotalInvestments(month: number, year: number) {
-  const investments = await getUserMonthInvestments(month, year);
+  const investments = await db.investments.findMany({
+    where: {
+      type: InvestmentsType.DEPOSIT,
 
-  const invested = investments.filter((investment) => investment.doneAt);
-
-  let totalInvestments = 0;
-  invested.forEach((investment) => {
-    totalInvestments += Number(investment.price);
+      done: true,
+      createAt: {
+        gte: new Date(year, month - 1, 1),
+        lt: new Date(year, month, 1),
+      },
+    },
   });
 
+  const totalInvestments = investments.reduce(
+    (total, investment) => total + investment.amount,
+    0,
+  );
   return totalInvestments;
 }
 
@@ -111,29 +131,30 @@ export async function getPercentSalary(
 export async function getTotalMonthSaved(month: number, year: number) {
   const investments = await getUserMonthInvestments(month, year);
   const withdraws = await getUserMonthWithdraws(month, year);
+
   const totalInvestments = investments.reduce(
-    (total, investment) => total + parseFloat(investment.price),
+    (total, investment) => total + investment.amount,
     0,
   );
   const totalWithdraws = withdraws.reduce(
-    (total, withdraw) => total + parseFloat(withdraw.price),
+    (total, withdraw) => total + withdraw.amount,
     0,
   );
 
   const totalMonthSaved = formatCurrency(totalInvestments - totalWithdraws);
-
   return totalMonthSaved;
 }
 
 export async function getTotalSaved() {
   const investments = await getUserInvestments();
   const withdraws = await getUserWithdraws();
+
   const totalInvestments = investments.reduce(
-    (total, investment) => total + parseFloat(investment.price),
+    (total, investment) => total + investment.amount,
     0,
   );
   const totalWithdraws = withdraws.reduce(
-    (total, withdraw) => total + parseFloat(withdraw.price),
+    (total, withdraw) => total + withdraw.amount,
     0,
   );
 
@@ -143,24 +164,27 @@ export async function getTotalSaved() {
 }
 
 export async function calculateGoalsProgress() {
-  const investments = await getUserInvestments();
-  const withdraws = await getUserWithdraws();
+  const transactions = await db.transactions.findMany();
 
-  const totalInvestments = investments.reduce(
-    (total, investment) => total + parseFloat(investment.price),
+  const totalInvestments = transactions.reduce(
+    (total, transaction) =>
+      total +
+      (transaction.type === InvestmentsType.DEPOSIT ? transaction.amount : 0),
     0,
   );
 
-  const totalWithdraws = withdraws.reduce(
-    (total, withdraw) => total + parseFloat(withdraw.price),
+  const totalWithdraws = transactions.reduce(
+    (total, transaction) =>
+      total +
+      (transaction.type === TransactionType.EXPENSE ? transaction.amount : 0),
     0,
   );
 
   const totalSaved = totalInvestments - totalWithdraws;
-  const wishlist = await getUserWishlist();
+  const wishlist = await db.wishlist.findMany();
 
   const totalWishlist = wishlist.reduce(
-    (total, item) => total + parseFloat(item.price),
+    (total, item) => total + item.amount,
     0,
   );
 

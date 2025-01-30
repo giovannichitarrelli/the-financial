@@ -1,0 +1,58 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/_components/ui/alert-dialog";
+import { Button } from "@/app/_components/ui/button";
+import { TrashIcon } from "lucide-react";
+import { deleteInvestment } from "../_actions/delete-investment";
+import { toast } from "sonner";
+
+interface Props {
+  investmentId: string;
+}
+
+const DeleteInvestmentButton = ({ investmentId }: Props) => {
+  const handleConfirmDeleteClick = async () => {
+    try {
+      await deleteInvestment({ investmentId });
+      toast.success("Transação deletada com sucesso!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Ocorreu um erro ao deletar a transação.");
+    }
+  };
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="ghost" size="icon" className="text-muted-foreground">
+          <TrashIcon className="ml-1 size-4" />
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Você deseja realmente deletar essa transação?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            Essa ação não pode ser desfeita.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogAction onClick={handleConfirmDeleteClick}>
+            Continuar
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default DeleteInvestmentButton;

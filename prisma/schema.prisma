@@ -34,30 +34,24 @@ model Session {
 }
 
 model User {
-  id                     String    @id @default(cuid())
-  name                   String?
-  email                  String?   @unique
-  emailVerified          DateTime?
-  image                  String?
-  createAt               DateTime  @default(now())
-  updatedAt              DateTime  @updatedAt
-  password               String?
-  username               String?   @unique
-  isTwoFactorAuthEnabled Boolean   @default(false)
-  twoFactorAuthVerified  DateTime?
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createAt      DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   stripeCustomerId         String?
   stripeSubscriptionId     String?
   stripeSubscriptionStatus String?
   stripePriceId            String?
 
-  accounts    Account[]
-  sessions    Session[]
-  expenses    Expenses[]
-  salary      Salary[]
-  investments Investments[]
-  wishlist    Wishlist[]
-  withdraw    Withdraw[]
+  accounts     Account[]
+  sessions     Session[]
+  transactions Transactions[]
+  investments  Investments[]
+  wishlist     Wishlist[]
 }
 
 model VerificationToken {
@@ -68,69 +62,96 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Expenses {
-  id           String       @id @default(cuid())
-  title        String
-  userId       String
-  price        String?
-  createAt     DateTime     @default(now())
-  updateAt     DateTime     @updatedAt
-  doneAt       DateTime?
-  isFixed      Boolean      @default(false)
-  expiryAt     DateTime?
-  categoriesId String?
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  categories   Categories[] @relation("CategoriesToExpenses")
-}
-
-model Categories {
-  id       String     @id @default(uuid())
-  title    String
-  color    String
-  expenses Expenses[] @relation("CategoriesToExpenses")
-}
-
-model Salary {
-  id       String    @id @default(cuid())
-  title    String
+model Transactions {
+  id       String   @id @default(cuid())
+  name     String
   userId   String
-  price    String
-  createAt DateTime  @default(now())
-  isFixed  Boolean   @default(false)
-  doneAt   DateTime?
-  expiryAt DateTime?
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount   Float
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  date     DateTime
+  done     Boolean  @default(false)
+  isFixed  Boolean  @default(false)
+
+  user          User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      TransactionCategory
+  paymentMethod TransactionPaymentMethod
+  type          TransactionType
+  essentialType TransactionEssentialType
+}
+
+enum TransactionType {
+  DEPOSIT
+  EXPENSE
+}
+
+enum TransactionEssentialType {
+  ESSENTIAL
+  NOT_ESSENTIAL
+}
+
+enum TransactionCategory {
+  HOUSING
+  TRANSPORTATION
+  FOOD
+  FAST_FOOD
+  ENTERTAINMENT
+  PUBLIC_SERVICES
+  COMMUNICATIONS
+  PERSONAL_CARE
+  SHOPPING
+  SALARY
+  EDUCATION
+  DONATIONS_AND_PRESENTS
+  SECURITIES
+  SUBSCRIPTIONS
+  PET
+  HEALTH
+  HOME_RENOVATION
+  OTHER
+}
+
+enum TransactionPaymentMethod {
+  CREDIT_CARD
+  DEBIT_CARD
+  BANK_TRANSFER
+  CRIPTO
+  BANK_SLIP
+  CASH
+  PIX
+  OTHER
 }
 
 model Investments {
-  id       String    @id @default(cuid())
+  id       String                 @id @default(cuid())
   title    String
   userId   String
-  price    String
-  createAt DateTime  @default(now())
-  doneAt   DateTime?
-  expiryAt DateTime?
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount   Float
+  createAt DateTime               @default(now())
+  done     Boolean                @default(false)
+  user     User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type     InvestmentsType
+  object   InvestmentsObjectType
 }
 
-model Withdraw {
-  id       String    @id @default(cuid())
-  title    String
-  userId   String
-  price    String
-  createAt DateTime  @default(now())
-  doneAt   DateTime?
-  expiryAt DateTime?
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+enum InvestmentsType {
+  DEPOSIT
+  WITHDRAW
+}
+
+enum InvestmentsObjectType {
+  EMERGENCY_RESERVE
+  RETIREMENT
+  GOALS
+  OTHER
 }
 
 model Wishlist {
-  id       String    @id @default(cuid())
+  id       String   @id @default(cuid())
   title    String
   userId   String
-  price    String
-  createAt DateTime  @default(now())
-  doneAt   DateTime?
-  expiryAt DateTime?
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount   Float
+  createAt DateTime @default(now())
+  done     Boolean  @default(false)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

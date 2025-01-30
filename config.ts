@@ -12,9 +12,9 @@ export const config = {
         // priceId: "price_1PJOuLJPcepMZEYbLVLqjY4j",
         priceId: "price_1PJLgyJPcepMZEYbOr69KWfF",
       },
-      proYear: {
-        priceId: "price_1PP715JPcepMZEYb2oRHvYEx",
-      },
+      // proYear: {
+      //   priceId: "price_1PP715JPcepMZEYb2oRHvYEx",
+      // },
     },
   },
 };
