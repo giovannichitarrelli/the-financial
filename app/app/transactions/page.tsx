@@ -17,14 +17,19 @@ import MsgNoData from "../_components/no-data-table";
 import CardsTransactions from "./_components/cards-transactions";
 import { isMatch } from "date-fns";
 import TransactionsTimeSelect from "./_components/transactions-time-select";
+import TransactionsCategorySelect from "./_components/transactions-category-select";
+import { TransactionCategory } from "@prisma/client";
 
 interface Props {
   searchParams: {
     month: string;
+    category: string;
   };
 }
 
-const TransactionsPage = async ({ searchParams: { month } }: Props) => {
+const TransactionsPage = async ({
+  searchParams: { month, category },
+}: Props) => {
   const session = await getServerSession(auth);
   const userId = session?.user.id;
 
@@ -37,15 +42,15 @@ const TransactionsPage = async ({ searchParams: { month } }: Props) => {
     redirect(`/app/transactions?month=0${new Date().getMonth() + 1}`);
   }
 
-  const where = {
-    userId,
-    date: {
-      gte: new Date(`2025-${month}-01`),
-      lt: new Date(`2025-${month}-31`),
-    },
-  };
   const transactions = await db.transactions.findMany({
-    where: { ...where },
+    where: {
+      userId,
+      date: {
+        gte: new Date(`2025-${month}-01`),
+        lt: new Date(`2025-${month}-31`),
+      },
+      ...(category ? { category: category as TransactionCategory } : {}),
+    },
 
     orderBy: {
       date: "desc",
@@ -72,7 +77,10 @@ const TransactionsPage = async ({ searchParams: { month } }: Props) => {
               </TabsTrigger>
             </TabsList>
 
-            <TransactionsTimeSelect />
+            <div className="flex items-center gap-2">
+              <TransactionsTimeSelect />
+              <TransactionsCategorySelect />
+            </div>
           </div>
 
           <TabsContent value="cards" className="space-y-2">
