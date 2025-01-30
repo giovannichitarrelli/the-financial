@@ -31,24 +31,26 @@ const TransactionsPage = async ({ searchParams: { month } }: Props) => {
   if (!userId) {
     redirect("/auth");
   }
-  const transactions = await db.transactions.findMany({
-    where: {
-      userId,
-      date: {
-        gte: new Date(`2025-${month}-01`),
-        lt: new Date(`2025-${month}-31`),
-      },
-    },
-
-    orderBy: {
-      date: "desc",
-    },
-  });
 
   const monthIsInvalid = !month || !isMatch(month, "MM");
   if (monthIsInvalid) {
     redirect(`/app/transactions?month=0${new Date().getMonth() + 1}`);
   }
+
+  const where = {
+    userId,
+    date: {
+      gte: new Date(`2025-${month}-01`),
+      lt: new Date(`2025-${month}-31`),
+    },
+  };
+  const transactions = await db.transactions.findMany({
+    where: { ...where },
+
+    orderBy: {
+      date: "desc",
+    },
+  });
 
   const userCanAddTransaction = await canUserAddTransaction();
   return (
