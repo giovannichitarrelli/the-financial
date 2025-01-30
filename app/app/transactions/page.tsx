@@ -15,8 +15,16 @@ import {
 import { AppWindowMac, Table } from "lucide-react";
 import MsgNoData from "../_components/no-data-table";
 import CardsTransactions from "./_components/cards-transactions";
+import { isMatch } from "date-fns";
+import TransactionsTimeSelect from "./_components/transactions-time-select";
 
-const TransactionsPage = async () => {
+interface Props {
+  searchParams: {
+    month: string;
+  };
+}
+
+const TransactionsPage = async ({ searchParams: { month } }: Props) => {
   const session = await getServerSession(auth);
   const userId = session?.user.id;
 
@@ -26,11 +34,22 @@ const TransactionsPage = async () => {
   const transactions = await db.transactions.findMany({
     where: {
       userId,
+      date: {
+        gte: new Date(`2025-${month}-01`),
+        lt: new Date(`2025-${month}-31`),
+      },
     },
+
     orderBy: {
       date: "desc",
     },
   });
+
+  const monthIsInvalid = !month || !isMatch(month, "MM");
+  if (monthIsInvalid) {
+    redirect(`/app/transactions?month=0${new Date().getMonth() + 1}`);
+  }
+
   const userCanAddTransaction = await canUserAddTransaction();
   return (
     <>
@@ -50,6 +69,8 @@ const TransactionsPage = async () => {
                 <Table className="h-4 w-4" />
               </TabsTrigger>
             </TabsList>
+
+            <TransactionsTimeSelect />
           </div>
 
           <TabsContent value="cards" className="space-y-2">
