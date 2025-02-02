@@ -12,7 +12,7 @@ const DoneBadge = ({ transaction }: DoneBadgeProps) => {
 
   if (transaction.done === true) {
     return (
-      <Badge variant="success">
+      <Badge className="border-blue-500" variant="outline">
         <Check className="mr-2  size-3" />
         Concluído
       </Badge>
@@ -20,7 +20,7 @@ const DoneBadge = ({ transaction }: DoneBadgeProps) => {
   }
   if (transaction.done === false && transaction.date < pastDate) {
     return (
-      <Badge variant="destructive">
+      <Badge className="border-orange-500" variant="outline">
         <Clock className="mr-2  size-3" />
         Atrasado
       </Badge>

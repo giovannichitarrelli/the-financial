@@ -32,7 +32,7 @@ const TransactionsCategorySelect = () => {
       onValueChange={(value) => handleCategoryChange(value)}
       defaultValue={category ?? ""}
     >
-      <SelectTrigger className="w-[150px] rounded-full bg-muted">
+      <SelectTrigger className="w-max rounded-full bg-muted">
         <SelectValue placeholder="Categoria" />
       </SelectTrigger>
 

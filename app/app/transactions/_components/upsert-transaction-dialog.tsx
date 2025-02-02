@@ -104,7 +104,7 @@ const UpsertTransactionDialog = ({
       category: TransactionCategory.OTHER,
       date: new Date(),
       name: "",
-      paymentMethod: TransactionPaymentMethod.CASH,
+      paymentMethod: TransactionPaymentMethod.PIX,
       type: TransactionType.EXPENSE,
       essentialType: TransactionEssentialType.ESSENTIAL,
       done: false,
@@ -114,30 +114,30 @@ const UpsertTransactionDialog = ({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      // if (data.isFixed) {
-      //   const selectedDay = data.date.getDate();
-      //   const selectedMonth = data.date.getMonth();
-      //   const selectedYear = data.date.getFullYear();
+      if (data.isFixed) {
+        const selectedDay = data.date.getDate();
+        const selectedMonth = data.date.getMonth();
+        const selectedYear = data.date.getFullYear();
 
-      //   for (let i = 0; i < 6; i++) {
-      //     const newDate = new Date(
-      //       selectedYear,
-      //       selectedMonth + i,
-      //       selectedDay,
-      //     );
-      //     await upsertTransaction({
-      //       ...data,
-      //       id: transactionId,
-      //       date: newDate,
-      //     });
-      //     if (newDate.getFullYear() > selectedYear) {
-      //       break;
-      //     }
-      //   }
-      // } else {
-      //   await upsertTransaction({ ...data, id: transactionId });
-      // }
-      await upsertTransaction({ ...data, id: transactionId });
+        for (let i = 0; i < 12; i++) {
+          const newDate = new Date(
+            selectedYear,
+            selectedMonth + i,
+            selectedDay,
+          );
+          await upsertTransaction({
+            ...data,
+            id: transactionId,
+            date: newDate,
+          });
+          if (newDate.getFullYear() > selectedYear) {
+            break;
+          }
+        }
+      } else {
+        await upsertTransaction({ ...data, id: transactionId });
+      }
+      // await upsertTransaction({ ...data, id: transactionId });
       setIsOpen(false);
       form.reset();
     } catch (error) {
