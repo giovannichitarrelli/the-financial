@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "./table";
+import { DataTableToolbar } from "@/app/app/transactions/_components/data-table-toobar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -33,6 +34,10 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="rounded-md border">
+      <div className="p-4">
+        <DataTableToolbar table={table} />
+      </div>
+
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

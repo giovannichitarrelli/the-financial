@@ -45,11 +45,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { upsertTransaction } from "../_actions/upsert-transaction";
 import { Button } from "@/app/_components/ui/button";
-import { Checkbox } from "@/app/_components/ui/checkbox";
 import { Switch } from "@/app/_components/ui/switch";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { Checkbox } from "@/app/_components/ui/checkbox";
 
 interface UpsertTransactionDialogProps {
   isOpen: boolean;
@@ -113,6 +113,16 @@ const UpsertTransactionDialog = ({
   });
 
   const onSubmit = async (data: FormSchema) => {
+    if (isUpdate) {
+      try {
+        await upsertTransaction({ ...data, id: transactionId });
+        setIsOpen(false);
+        return;
+      } catch {
+        toast.error("Ops... Algo inesperado aconteceu!");
+      }
+    }
+
     try {
       if (data.isFixed) {
         const selectedDay = data.date.getDate();
@@ -137,12 +147,10 @@ const UpsertTransactionDialog = ({
       } else {
         await upsertTransaction({ ...data, id: transactionId });
       }
-      // await upsertTransaction({ ...data, id: transactionId });
       setIsOpen(false);
       form.reset();
     } catch (error) {
       toast.error("Ops... Algo inesperado aconteceu!");
-      console.error(error);
     }
   };
 
@@ -322,21 +330,27 @@ const UpsertTransactionDialog = ({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="isFixed"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 ">
-                    <FormLabel>Transação fixa</FormLabel>
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+
+              {!isUpdate ? (
+                <FormField
+                  control={form.control}
+                  name="isFixed"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-2">
+                      <FormLabel>Transação fixa</FormLabel>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              ) : (
+                ""
+              )}
+
               <FormField
                 control={form.control}
                 name="done"
