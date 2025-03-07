@@ -75,7 +75,6 @@ model Transactions {
 
   user          User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   category      TransactionCategory
-  paymentMethod TransactionPaymentMethod
   type          TransactionType
   essentialType TransactionEssentialType
 }
@@ -112,24 +111,14 @@ enum TransactionCategory {
   OTHER
 }
 
-enum TransactionPaymentMethod {
-  CREDIT_CARD
-  BANK_TRANSFER
-  CRIPTO
-  BANK_SLIP
-  CASH
-  PIX
-  OTHER
-}
-
 model Investments {
-  id       String                 @id @default(cuid())
+  id       String                @id @default(cuid())
   title    String
   userId   String
   amount   Float
-  createAt DateTime               @default(now())
-  done     Boolean                @default(false)
-  user     User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createAt DateTime              @default(now())
+  done     Boolean               @default(false)
+  user     User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   type     InvestmentsType
   object   InvestmentsObjectType
 }

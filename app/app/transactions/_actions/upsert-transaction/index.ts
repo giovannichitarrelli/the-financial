@@ -3,7 +3,6 @@
 import {
   TransactionCategory,
   TransactionEssentialType,
-  TransactionPaymentMethod,
   TransactionType,
 } from "@prisma/client";
 import { upsertTransactionSchema } from "./schema";
@@ -21,7 +20,6 @@ interface UpsertTransactionParams {
   category: TransactionCategory;
   done: boolean;
   isFixed: boolean;
-  paymentMethod: TransactionPaymentMethod;
   date: Date;
 }
 

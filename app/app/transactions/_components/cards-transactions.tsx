@@ -10,10 +10,7 @@ import FixedBadge from "./fixed-badge";
 import DoneBadge from "./done-badge";
 import TransactionTypeBadge from "./type-badge";
 import TransactionEssentialTypeBadge from "./type-essential-badge";
-import {
-  TRANSACTION_CATEGORY_LABELS,
-  TRANSACTION_PAYMENT_METHOD_LABELS,
-} from "@/app/_constants/transactions";
+import { TRANSACTION_CATEGORY_LABELS } from "@/app/_constants/transactions";
 
 interface Props {
   transactions: Transactions;
@@ -46,17 +43,6 @@ const CardsTransactions = ({ transactions }: Props) => {
           <p className="text-sm font-bold text-primary">
             {formatCurrency(Number(transactions.amount))}
           </p>
-        </div>
-
-        <div className="text-sm ">
-          <span className="mr-1 font-semibold text-muted-foreground">
-            {" "}
-            Método de pagamento:
-          </span>
-          <span className="text-primary">
-            {" "}
-            {TRANSACTION_PAYMENT_METHOD_LABELS[transactions.paymentMethod]}{" "}
-          </span>
         </div>
 
         <div className="text-sm">

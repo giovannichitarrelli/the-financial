@@ -29,7 +29,6 @@ import {
 } from "@/app/_components/ui/select";
 import {
   TRANSACTION_CATEGORY_OPTIONS,
-  TRANSACTION_PAYMENT_METHOD_OPTIONS,
   TRANSACTION_TYPE_OPTIONS,
   TRANSACTION_ESSENTIAL_TYPE_OPTIONS,
 } from "../../../_constants/transactions";
@@ -38,7 +37,6 @@ import { z } from "zod";
 import {
   TransactionType,
   TransactionCategory,
-  TransactionPaymentMethod,
   TransactionEssentialType,
 } from "@prisma/client";
 import { useForm } from "react-hook-form";
@@ -79,9 +77,7 @@ const formSchema = z.object({
   category: z.nativeEnum(TransactionCategory, {
     required_error: "A categoria é obrigatória.",
   }),
-  paymentMethod: z.nativeEnum(TransactionPaymentMethod, {
-    required_error: "O método de pagamento é obrigatório.",
-  }),
+
   date: z.date({
     required_error: "A data é obrigatória.",
   }),
@@ -104,7 +100,6 @@ const UpsertTransactionDialog = ({
       category: TransactionCategory.OTHER,
       date: new Date(),
       name: "",
-      paymentMethod: TransactionPaymentMethod.PIX,
       type: TransactionType.EXPENSE,
       essentialType: TransactionEssentialType.ESSENTIAL,
       done: false,
@@ -177,19 +172,38 @@ const UpsertTransactionDialog = ({
         <ScrollArea className="max-h-[80vh] px-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nome</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Digite o nome..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="flex items-end gap-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Nome</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite o nome..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="done"
+                  render={({ field }) => (
+                    <FormItem className="pb-1">
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <FormField
                 control={form.control}
                 name="amount"
@@ -211,60 +225,62 @@ const UpsertTransactionDialog = ({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tipo</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecionar" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {TRANSACTION_TYPE_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="essentialType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Necessidade</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecionar" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {TRANSACTION_ESSENTIAL_TYPE_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="flex w-full items-center justify-center gap-2">
+                <FormField
+                  control={form.control}
+                  name="type"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Tipo</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecionar" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {TRANSACTION_TYPE_OPTIONS.map((option) => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="essentialType"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Necessidade</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecionar" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {TRANSACTION_ESSENTIAL_TYPE_OPTIONS.map((option) => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="category"
@@ -292,33 +308,7 @@ const UpsertTransactionDialog = ({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="paymentMethod"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Método de pagamento</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione um método de pagamento..." />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {TRANSACTION_PAYMENT_METHOD_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <FormField
                 control={form.control}
                 name="date"
@@ -351,24 +341,6 @@ const UpsertTransactionDialog = ({
                 ""
               )}
 
-              <FormField
-                control={form.control}
-                name="done"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                    <div className="space-y-0.5">
-                      <FormLabel>Status</FormLabel>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <DialogFooter>
                 <DialogClose asChild>
                   <Button type="button" variant="outline">

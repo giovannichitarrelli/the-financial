@@ -3,19 +3,8 @@ import {
   InvestmentsType,
   TransactionCategory,
   TransactionEssentialType,
-  TransactionPaymentMethod,
   TransactionType,
 } from "@prisma/client";
-
-export const TRANSACTION_PAYMENT_METHOD_ICONS = {
-  [TransactionPaymentMethod.CREDIT_CARD]: "credit-card.svg",
-  [TransactionPaymentMethod.BANK_TRANSFER]: "bank-transfer.svg",
-  [TransactionPaymentMethod.BANK_SLIP]: "bank-slip.svg",
-  [TransactionPaymentMethod.CASH]: "money.svg",
-  [TransactionPaymentMethod.PIX]: "pix.svg",
-  [TransactionPaymentMethod.CRIPTO]: "debit-card.svg",
-  [TransactionPaymentMethod.OTHER]: "other.svg",
-};
 
 export const TRANSACTION_CATEGORY_LABELS = {
   HOUSING: "Moradia",
@@ -35,17 +24,6 @@ export const TRANSACTION_CATEGORY_LABELS = {
   HOME_RENOVATION: "Reformas domésticas",
   HEALTH: "Saúde",
   DONATIONS_AND_PRESENTS: "Doações e Presentes",
-  OTHER: "Outros",
-};
-
-export const TRANSACTION_PAYMENT_METHOD_LABELS = {
-  CREDIT_CARD: "Cartão de Crédito",
-  DEBIT_CARD: "Cartão de Débito",
-  BANK_TRANSFER: "Transferência Bancária",
-  CRIPTO: "Criptomoeda",
-  BANK_SLIP: "Boleto Bancário",
-  CASH: "Dinheiro",
-  PIX: "Pix",
   OTHER: "Outros",
 };
 
@@ -102,40 +80,6 @@ export const INVESTMENT_OBJECT_TYPE_OPTIONS = [
   {
     value: InvestmentsObjectType.OTHER,
     label: "Outros",
-  },
-];
-
-export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
-  {
-    value: TransactionPaymentMethod.CREDIT_CARD,
-    label:
-      TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CREDIT_CARD],
-  },
-  {
-    value: TransactionPaymentMethod.BANK_TRANSFER,
-    label:
-      TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.BANK_TRANSFER],
-  },
-  {
-    value: TransactionPaymentMethod.CRIPTO,
-    label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CRIPTO],
-  },
-  {
-    value: TransactionPaymentMethod.BANK_SLIP,
-    label:
-      TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.BANK_SLIP],
-  },
-  {
-    value: TransactionPaymentMethod.CASH,
-    label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CASH],
-  },
-  {
-    value: TransactionPaymentMethod.PIX,
-    label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.PIX],
-  },
-  {
-    value: TransactionPaymentMethod.OTHER,
-    label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.OTHER],
   },
 ];
 
