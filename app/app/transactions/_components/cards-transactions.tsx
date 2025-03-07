@@ -47,11 +47,9 @@ const CardsTransactions = ({ transactions }: Props) => {
 
         <div className="text-sm">
           <span className="mr-1 font-semibold  text-muted-foreground ">
-            {" "}
             Categoria:{" "}
           </span>
-          <span className="text-primary">
-            {" "}
+          <span className="text-muted-foreground">
             {TRANSACTION_CATEGORY_LABELS[transactions.category]}
           </span>
         </div>
