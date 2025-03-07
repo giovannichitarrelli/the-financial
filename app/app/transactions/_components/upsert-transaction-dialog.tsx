@@ -134,6 +134,7 @@ const UpsertTransactionDialog = ({
             ...data,
             id: transactionId,
             date: newDate,
+            done: i === 0 ? data.done : false, // Ensure only the first transaction retains the 'done' status
           });
           if (newDate.getFullYear() > selectedYear) {
             break;
