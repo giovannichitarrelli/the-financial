@@ -10,6 +10,7 @@ import { auth } from "@/services/auth";
 import SummaryCards from "./_components/summary-cards";
 import TransactionsPieChart from "./_components/transactions-pie-chart";
 import TransactionsEssentialsPieChart from "./_components/essentials-pie-chart";
+import AiReportButton from "./_components/ai-report-button";
 
 interface HomeProps {
   searchParams: {
@@ -35,6 +36,7 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <div className="flex items-center gap-3">
+            <AiReportButton month={month} />
             <TimeSelect />
           </div>
         </div>
