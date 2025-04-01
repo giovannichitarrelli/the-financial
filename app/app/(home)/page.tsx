@@ -33,13 +33,11 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
   return (
     <>
       <div className="flex h-full flex-col space-y-6 overflow-hidden p-6">
-        <div className="flex justify-between">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
-          <div className="flex items-center gap-3">
-            <AiReportButton month={month} />
-            <TimeSelect />
-          </div>
+        <div className="flex items-center justify-between gap-3">
+          <AiReportButton month={month} />
+          <TimeSelect />
         </div>
+
         <div className="grid h-full grid-cols-1 gap-6 overflow-hidden lg:grid-cols-[2fr,1fr]">
           <div className="flex flex-col gap-6 overflow-hidden">
             <SummaryCards

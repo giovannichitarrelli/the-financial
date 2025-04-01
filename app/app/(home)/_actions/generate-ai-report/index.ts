@@ -21,15 +21,19 @@ export const generateAiReport = async ({ month }: GenerateAiReportSchema) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return DUMMY_REPORT;
   }
+  // const openAi = new OpenAI({
+  //   apiKey: process.env.OPENAI_API_KEY,
+  // });
   const openAi = new OpenAI({
+    baseURL: "https://api.deepseek.com",
     apiKey: process.env.OPENAI_API_KEY,
   });
   // pegar as transações do mês recebido
   const transactions = await db.transactions.findMany({
     where: {
       date: {
-        gte: new Date(`2024-${month}-01`),
-        lt: new Date(`2024-${month}-31`),
+        gte: new Date(`2025-${month}-01`),
+        lt: new Date(`2025-${month}-31`),
       },
     },
   });
@@ -42,7 +46,8 @@ export const generateAiReport = async ({ month }: GenerateAiReportSchema) => {
     )
     .join(";")}`;
   const completion = await openAi.chat.completions.create({
-    model: "gpt-4o-mini",
+    // model: "gpt-4o-mini",
+    model: "deepseek-chat",
     messages: [
       {
         role: "system",
