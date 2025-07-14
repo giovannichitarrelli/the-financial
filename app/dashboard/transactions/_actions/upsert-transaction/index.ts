@@ -37,5 +37,5 @@ export const upsertTransaction = async (params: UpsertTransactionParams) => {
       id: params?.id ?? "",
     },
   });
-  revalidatePath("/app/transactions");
+  revalidatePath("/dashboard/transactions");
 };

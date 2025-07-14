@@ -12,6 +12,6 @@ export const deleteTransaction = async ({
       id: transactionId,
     },
   });
-  revalidatePath("/app/transactions");
-  revalidatePath("/app");
+  revalidatePath("/dashboard/transactions");
+  revalidatePath("/dashboard");
 };

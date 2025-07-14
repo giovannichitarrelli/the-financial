@@ -11,7 +11,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/app/_components/ui/chart";
-import { TransactionEssentialPercentagePerType } from "@/app/dashboard/_data/get-dashboard/types";
+import { TransactionEssentialPercentagePerType } from "@/app/dashboard/_actions/_data/get-dashboard/typesard/types";
 import PercentageItem from "../percentage-item";
 
 const chartConfig = {

@@ -27,5 +27,5 @@ export const upsertWishlist = async (params: UpsertWishlistParams) => {
       id: params?.id ?? "",
     },
   });
-  revalidatePath("/app/wishlist");
+  revalidatePath("/dashboard/wishlist");
 };

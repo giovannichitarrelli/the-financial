@@ -10,6 +10,6 @@ export const deleteWishlist = async ({ wishlistId }: DeleteWishlistSchema) => {
       id: wishlistId,
     },
   });
-  revalidatePath("/app/wishlist");
-  revalidatePath("/app");
+  revalidatePath("/dashboard/wishlist");
+  revalidatePath("/dashboard");
 };

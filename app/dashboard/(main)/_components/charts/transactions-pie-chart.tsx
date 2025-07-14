@@ -12,7 +12,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/app/_components/ui/chart";
-import { TransactionPercentagePerType } from "@/app/dashboard/_data/get-dashboard/types";
+import { TransactionPercentagePerType } from "@/app/dashboard/_actions/_data/get-dashboard/typesard/types";
 import PercentageItem from "../percentage-item";
 
 const chartConfig = {

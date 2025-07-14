@@ -30,5 +30,5 @@ export const upsertInvestment = async (params: Props) => {
       id: params?.id ?? "",
     },
   });
-  revalidatePath("/app/investments");
+  revalidatePath("/dashboard/investments");
 };

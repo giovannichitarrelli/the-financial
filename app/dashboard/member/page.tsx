@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/services/auth";
 import { db } from "@/services/database";
 import { getServerSession } from "next-auth";
-import { canUserAddTransaction } from "../_data/can-user-add-transaction";
+import { canUserAddTransaction } from "../_actions/data/can-user-add-transaction";
 import { DataTable } from "@/app/_components/ui/data-table";
 import { MemberColumns } from "./_columns";
 import AddMemberButton from "./_components/add-member-button";

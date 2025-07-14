@@ -4,7 +4,7 @@ import { AppSidebar } from "./_components/app-sidebar";
 import { SiteHeader } from "./_components/site-header";
 import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
-import { canUserAddTransaction } from "./_data/can-user-add-transaction";
+import { canUserAddTransaction } from "./_actions/data/can-user-add-transaction";
 
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await getServerSession(auth);

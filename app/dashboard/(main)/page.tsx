@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import TimeSelect from "./_components/time-select";
 import { isMatch } from "date-fns";
-import { getDashboard, getYearDashboard } from "../_data/get-dashboard";
+
 import ExpensesPerCategory from "./_components/charts/expenses-per-category";
 import PaymentPending from "./_components/payment-pending";
 import { getServerSession } from "next-auth";
@@ -13,6 +13,7 @@ import AiReportButton from "./_components/ai-report-button";
 import DepositsPending from "./_components/deposits-pending";
 import { ChartAreaInteractive } from "@/app/dashboard/(main)/_components/charts/chart-area-interactive";
 import TransactionsEssentialsPieChart from "./_components/charts/essentials-pie-chart";
+import { getDashboard, getYearDashboard } from "../_actions/data/get-dashboard";
 interface HomeProps {
   searchParams: {
     month: string;

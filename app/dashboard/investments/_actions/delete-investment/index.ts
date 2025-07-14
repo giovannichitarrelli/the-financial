@@ -12,6 +12,6 @@ export const deleteInvestment = async ({
       id: investmentId,
     },
   });
-  revalidatePath("/app/investment");
-  revalidatePath("/app");
+  revalidatePath("/dashboard/investment");
+  revalidatePath("/dashboard");
 };
