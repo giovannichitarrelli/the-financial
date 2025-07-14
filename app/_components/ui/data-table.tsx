@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "./table";
-import { DataTableToolbar } from "@/app/app/transactions/_components/data-table-toobar";
+import { DataTableToolbar } from "@/app/dashboard/transactions/_components/data-table-toobar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

@@ -34,7 +34,7 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
               year: "numeric",
             })
           ) : (
-            <span>Selecione uma data...</span>
+            <span>Pick a date...</span>
           )}
         </Button>
       </PopoverTrigger>

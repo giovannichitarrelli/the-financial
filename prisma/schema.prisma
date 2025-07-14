@@ -52,6 +52,7 @@ model User {
   transactions Transactions[]
   investments  Investments[]
   wishlist     Wishlist[]
+  Member       Member[]
 }
 
 model VerificationToken {
@@ -73,10 +74,13 @@ model Transactions {
   done     Boolean  @default(false)
   isFixed  Boolean  @default(false)
 
+  members       Member[]
   user          User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   category      TransactionCategory
   type          TransactionType
   essentialType TransactionEssentialType
+  Wishlist      Wishlist?                @relation(fields: [wishlistId], references: [id])
+  wishlistId    String?
 }
 
 enum TransactionType {
@@ -136,11 +140,22 @@ enum InvestmentsObjectType {
 }
 
 model Wishlist {
-  id       String   @id @default(cuid())
-  title    String
-  userId   String
-  amount   Float
-  createAt DateTime @default(now())
-  done     Boolean  @default(false)
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String         @id @default(cuid())
+  title        String
+  userId       String
+  amount       Float
+  createAt     DateTime       @default(now())
+  done         Boolean        @default(false)
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Transactions Transactions[]
+}
+
+model Member {
+  id             String        @id @default(cuid())
+  name           String
+  userId         String
+  createAt       DateTime      @default(now())
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Transactions   Transactions? @relation(fields: [transactionsId], references: [id])
+  transactionsId String?
 }

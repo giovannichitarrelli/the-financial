@@ -1,0 +1,64 @@
+import { redirect } from "next/navigation";
+import TimeSelect from "./_components/time-select";
+import { isMatch } from "date-fns";
+import { getDashboard, getYearDashboard } from "../_data/get-dashboard";
+import ExpensesPerCategory from "./_components/charts/expenses-per-category";
+import PaymentPending from "./_components/payment-pending";
+import { getServerSession } from "next-auth";
+import { auth } from "@/services/auth";
+import SummaryCards from "./_components/summary-cards";
+import TransactionsPieChart from "./_components/charts/transactions-pie-chart";
+
+import AiReportButton from "./_components/ai-report-button";
+import DepositsPending from "./_components/deposits-pending";
+import { ChartAreaInteractive } from "@/app/dashboard/(main)/_components/charts/chart-area-interactive";
+import TransactionsEssentialsPieChart from "./_components/charts/essentials-pie-chart";
+interface HomeProps {
+  searchParams: {
+    month: string;
+  };
+}
+
+const Home = async ({ searchParams: { month } }: HomeProps) => {
+  const session = await getServerSession(auth);
+  if (!session) {
+    redirect("/auth");
+  }
+  const monthIsInvalid = !month || !isMatch(month, "MM");
+  if (monthIsInvalid) {
+    redirect(`/dashboard?month=0${new Date().getMonth() + 1}`);
+  }
+  const dashboard = await getDashboard(month);
+
+  const yearDashboard = await getYearDashboard("2025");
+
+  return (
+    <>
+      <div className="@container/main flex flex-1 flex-col gap-4 p-4 lg:px-6">
+        <div className="flex items-center justify-between gap-4  ">
+          <AiReportButton month={month} />
+          <TimeSelect />
+        </div>
+
+        <SummaryCards month={month} {...dashboard} />
+
+        <ChartAreaInteractive yearlyData={yearDashboard.yearlyData} />
+
+        <div className="grid  grid-cols-1 gap-4 lg:grid-cols-3">
+          <TransactionsPieChart {...dashboard} />
+          <TransactionsEssentialsPieChart {...dashboard} />
+          <ExpensesPerCategory
+            totalExpensePerCategory={dashboard.totalExpensePerCategory}
+          />
+        </div>
+
+        <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-2">
+          <PaymentPending transactions={dashboard.paymentPending} />
+          <DepositsPending transactions={dashboard.depositsPending} />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Home;

@@ -21,7 +21,7 @@ const AuthForm = () => {
   async function handleLoginGoogle() {
     setIsLoading(true);
     signIn("google", {
-      callbackUrl: "/app",
+      callbackUrl: "/dashboard",
     });
     toast.success("Você será redirecionado para o login!", {
       description: "Por favor, aguarde...",

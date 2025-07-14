@@ -12,7 +12,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(getUrl("/app")));
   }
 
-  if (pathname.includes("/app") && !token) {
+  if (pathname.includes("/dashboard") && !token) {
     return NextResponse.redirect(new URL(getUrl("/auth")));
   }
 }

@@ -293,7 +293,7 @@ export default function Home() {
                   <div className="p-6">
                     <div className="flex items-center justify-center gap-2">
                       <p className="text-xl">Assinatura mensal</p>
-                      <Badge variant="gold">50%OFF</Badge>
+                      <Badge>50%OFF</Badge>
                     </div>
                     <div className="flex items-center justify-center gap-2 py-6">
                       <span className="text-lg text-red-500 line-through	lg:text-xl">
@@ -376,7 +376,7 @@ export default function Home() {
               Controle total
             </span>
 
-            <h2 className="z-10 mx-auto  bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-center text-4xl/tight font-extrabold text-transparent md:text-left md:text-6xl/tight ">
+            <h2 className="z-10 mx-auto bg-gradient-to-br from-foreground via-foreground to-zinc-600 bg-clip-text text-left   text-4xl/tight font-extrabold text-transparent md:text-center md:text-6xl/tight ">
               Por que controlar seus gastos diários
             </h2>
             <div className="mx-auto mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

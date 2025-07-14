@@ -9,8 +9,8 @@ declare module "next-auth" {
 
   interface User extends DefaultUser {
     id: string;
-    name: string | null;
-    email: string | null;
+    name: string;
+    email: string;
     emailVerified: Date | null;
     image: string | null;
     createAt: Date;
