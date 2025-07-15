@@ -1,6 +1,10 @@
 import { Badge } from "@/app/_components/ui/badge";
-import { CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card";
-import { ScrollArea } from "@/app/_components/ui/scroll-area";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/_components/ui/card";
 import { formatCurrency } from "@/app/_utils/currency";
 import { Transactions, TransactionType } from "@prisma/client";
 import { AlertCircleIcon } from "lucide-react";
@@ -18,7 +22,7 @@ const PaymentPending = ({ transactions }: Props) => {
   };
 
   return (
-    <ScrollArea className="rounded-md border">
+    <Card className="rounded-md border">
       <CardHeader className="flex-row items-center justify-between">
         <CardTitle className="text-sm font-bold">Payment Pending</CardTitle>
         <Badge variant="outline" className="bg-red-400">
@@ -55,7 +59,7 @@ const PaymentPending = ({ transactions }: Props) => {
           </div>
         ))}
       </CardContent>
-    </ScrollArea>
+    </Card>
   );
 };
 

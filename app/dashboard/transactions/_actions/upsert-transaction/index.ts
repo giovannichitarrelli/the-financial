@@ -4,6 +4,7 @@ import {
   TransactionCategory,
   TransactionEssentialType,
   TransactionType,
+  TransactionDepositCategory,
 } from "@prisma/client";
 import { upsertTransactionSchema } from "./schema";
 import { revalidatePath } from "next/cache";
@@ -16,11 +17,13 @@ interface UpsertTransactionParams {
   name: string;
   amount: number;
   type: TransactionType;
-  essentialType: TransactionEssentialType;
-  category: TransactionCategory;
+  essentialType?: TransactionEssentialType | null;
+  category?: TransactionCategory | null;
+  depositCategory?: TransactionDepositCategory | null;
   done: boolean;
   isFixed: boolean;
   date: Date;
+  memberId: string;
 }
 
 export const upsertTransaction = async (params: UpsertTransactionParams) => {
@@ -38,4 +41,5 @@ export const upsertTransaction = async (params: UpsertTransactionParams) => {
     },
   });
   revalidatePath("/dashboard/transactions");
+  revalidatePath("/dashboard");
 };

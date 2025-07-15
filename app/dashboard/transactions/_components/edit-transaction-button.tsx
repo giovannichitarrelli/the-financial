@@ -8,9 +8,13 @@ import UpsertTransactionDialog from "./upsert-transaction-dialog";
 
 interface EditTransactionButtonProps {
   transaction: Transactions;
+  members: Array<{ id: string; name: string }>;
 }
 
-const EditTransactionButton = ({ transaction }: EditTransactionButtonProps) => {
+const EditTransactionButton = ({
+  transaction,
+  members,
+}: EditTransactionButtonProps) => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   return (
@@ -29,8 +33,11 @@ const EditTransactionButton = ({ transaction }: EditTransactionButtonProps) => {
         defaultValues={{
           ...transaction,
           amount: Number(transaction.amount),
+          memberId: transaction.memberId ?? "",
+          type: transaction.type ?? "EXPENSE",
         }}
         transactionId={transaction.id}
+        members={members}
       />
     </>
   );

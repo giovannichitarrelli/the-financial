@@ -1,4 +1,8 @@
-import { TransactionEssentialType, TransactionType } from "@prisma/client";
+import {
+  TransactionCategory,
+  TransactionEssentialType,
+  TransactionType,
+} from "@prisma/client";
 import {
   TotalExpensePerCategory,
   TransactionEssentialPercentagePerType,
@@ -143,7 +147,7 @@ export const getDashboard = async (month: string) => {
       },
     })
   ).map((category) => ({
-    category: category.category,
+    category: category.category as TransactionCategory,
     totalAmount: Number(category._sum.amount),
     percentageOfTotal: Math.round(
       (Number(category._sum.amount) / Number(expensesTotal)) * 100,
@@ -198,8 +202,8 @@ export const getYearDashboard = async (year: string) => {
   // Gerar dados para cada mês do ano
   for (let month = 1; month <= 12; month++) {
     const monthStr = month.toString().padStart(2, "0");
-    const startDate = new Date(parseInt(year), month - 1, 1); // month - 1 porque JavaScript usa 0-11
-    const endDate = new Date(parseInt(year), month, 0); // Último dia do mês
+    const startDate = new Date(parseInt(year), month - 1, 1);
+    const endDate = new Date(parseInt(year), month, 0);
 
     // Buscar depósitos do mês
     const depositsTotal = Number(
@@ -210,7 +214,7 @@ export const getYearDashboard = async (year: string) => {
             type: "DEPOSIT",
             date: {
               gte: startDate,
-              lte: endDate,
+              lt: endDate,
             },
           },
           _sum: { amount: true },
@@ -227,7 +231,7 @@ export const getYearDashboard = async (year: string) => {
             type: "EXPENSE",
             date: {
               gte: startDate,
-              lte: endDate,
+              lt: endDate,
             },
           },
           _sum: { amount: true },

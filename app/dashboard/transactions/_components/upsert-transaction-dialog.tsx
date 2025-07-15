@@ -28,6 +28,7 @@ import {
 } from "@/app/_components/ui/select";
 import {
   TRANSACTION_CATEGORY_OPTIONS,
+  TRANSACTION_DEPOSIT_CATEGORY_OPTIONS,
   TRANSACTION_TYPE_OPTIONS,
   TRANSACTION_ESSENTIAL_TYPE_OPTIONS,
 } from "../../../_constants/transactions";
@@ -37,6 +38,7 @@ import {
   TransactionType,
   TransactionCategory,
   TransactionEssentialType,
+  TransactionDepositCategory,
 } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,36 +55,52 @@ interface UpsertTransactionDialogProps {
   defaultValues?: FormSchema;
   transactionId?: string;
   setIsOpen: (isOpen: boolean) => void;
+  members: Array<{ id: string; name: string }>;
 }
 
-const formSchema = z.object({
-  name: z.string().trim().min(1, {
-    message: "O nome é obrigatório.",
-  }),
-  amount: z
-    .number({
-      required_error: "O valor é obrigatório.",
-    })
-    .positive({
-      message: "O valor deve ser positivo.",
+const formSchema = z
+  .object({
+    name: z.string().trim().min(1, {
+      message: "O nome é obrigatório.",
     }),
-  type: z.nativeEnum(TransactionType, {
-    required_error: "O tipo é obrigatório.",
-  }),
-  essentialType: z.nativeEnum(TransactionEssentialType, {
-    required_error: "O tipo da necessidade é obrigatório.",
-  }),
-
-  category: z.nativeEnum(TransactionCategory, {
-    required_error: "A categoria é obrigatória.",
-  }),
-
-  date: z.date({
-    required_error: "A data é obrigatória.",
-  }),
-  isFixed: z.boolean(),
-  done: z.boolean(),
-});
+    amount: z
+      .number({
+        required_error: "O valor é obrigatório.",
+      })
+      .positive({
+        message: "O valor deve ser positivo.",
+      }),
+    memberId: z.string({
+      required_error: "Responsável é obrigatório.",
+    }),
+    date: z.date({
+      required_error: "A data é obrigatória.",
+    }),
+    isFixed: z.boolean(),
+    done: z.boolean(),
+    type: z.nativeEnum(TransactionType),
+    category: z.nativeEnum(TransactionCategory).nullable().optional(),
+    depositCategory: z
+      .nativeEnum(TransactionDepositCategory)
+      .nullable()
+      .optional(),
+    essentialType: z.nativeEnum(TransactionEssentialType).nullable().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.type === TransactionType.EXPENSE) {
+        return !!data.category && !!data.essentialType;
+      }
+      if (data.type === TransactionType.DEPOSIT) {
+        return !!data.depositCategory;
+      }
+      return true;
+    },
+    // {
+    //   message: "Preencha todos os campos obrigatórios de acordo com o tipo.",
+    //   path: ["category"],
+    // },
+  );
 
 type FormSchema = z.infer<typeof formSchema>;
 
@@ -91,16 +109,19 @@ const UpsertTransactionDialog = ({
   defaultValues,
   transactionId,
   setIsOpen,
+  members,
 }: UpsertTransactionDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues ?? {
       amount: 0,
-      category: TransactionCategory.OTHER,
+      category: undefined,
+      depositCategory: undefined,
+      essentialType: undefined,
       date: new Date(),
       name: "",
+      memberId: "",
       type: TransactionType.EXPENSE,
-      essentialType: TransactionEssentialType.ESSENTIAL,
       done: false,
       isFixed: false,
     },
@@ -109,7 +130,22 @@ const UpsertTransactionDialog = ({
   const onSubmit = async (data: FormSchema) => {
     if (isUpdate) {
       try {
-        await upsertTransaction({ ...data, id: transactionId });
+        await upsertTransaction({
+          ...data,
+          id: transactionId,
+          essentialType:
+            data.type === TransactionType.EXPENSE
+              ? data.essentialType ?? TransactionEssentialType.ESSENTIAL
+              : null,
+          category:
+            data.type === TransactionType.EXPENSE
+              ? data.category ?? TransactionCategory.OTHER
+              : null,
+          depositCategory:
+            data.type === TransactionType.DEPOSIT
+              ? data.depositCategory ?? TransactionDepositCategory.SALARY
+              : null,
+        });
         setIsOpen(false);
         return;
       } catch {
@@ -140,7 +176,10 @@ const UpsertTransactionDialog = ({
           }
         }
       } else {
-        await upsertTransaction({ ...data, id: transactionId });
+        await upsertTransaction({
+          ...data,
+          id: transactionId,
+        });
       }
       setIsOpen(false);
       form.reset();
@@ -150,6 +189,8 @@ const UpsertTransactionDialog = ({
   };
 
   const isUpdate = Boolean(transactionId);
+
+  const typeValue = form.watch("type");
 
   return (
     <Dialog
@@ -224,7 +265,36 @@ const UpsertTransactionDialog = ({
                   </FormItem>
                 )}
               />
+
               <div className="flex w-full items-center justify-center gap-2">
+                <FormField
+                  control={form.control}
+                  name="memberId"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Member</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <FormControl className="w-full">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Member" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {members.map((member) => (
+                            <SelectItem key={member.id} value={member.id}>
+                              {member.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="type"
@@ -235,7 +305,7 @@ const UpsertTransactionDialog = ({
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
-                        <FormControl>
+                        <FormControl className="w-full">
                           <SelectTrigger>
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
@@ -252,61 +322,114 @@ const UpsertTransactionDialog = ({
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="essentialType"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Necessity</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecionar" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {TRANSACTION_ESSENTIAL_TYPE_OPTIONS.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
               </div>
-              <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Category</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select category..." />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {TRANSACTION_CATEGORY_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
+
+              <div className="flex justify-between gap-2 ">
+                {/* Só mostra category e necessity se for EXPENSE */}
+                {typeValue === TransactionType.EXPENSE && (
+                  <>
+                    <FormField
+                      control={form.control}
+                      name="category"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Category</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value || ""}
+                          >
+                            <FormControl className="w-full">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Category" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {TRANSACTION_CATEGORY_OPTIONS.map((option) => (
+                                <SelectItem
+                                  key={option.value}
+                                  value={option.value}
+                                >
+                                  {option.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="essentialType"
+                      render={({ field }) => (
+                        <FormItem className=" w-full">
+                          <FormLabel>Necessity</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value || ""}
+                          >
+                            <FormControl className="w-full">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Selecionar" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {TRANSACTION_ESSENTIAL_TYPE_OPTIONS.map(
+                                (option) => (
+                                  <SelectItem
+                                    key={option.value}
+                                    value={option.value}
+                                  >
+                                    {option.label}
+                                  </SelectItem>
+                                ),
+                              )}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </>
                 )}
-              />
+
+                {/* Só mostra depositCategory se for DEPOSIT */}
+                {typeValue === TransactionType.DEPOSIT && (
+                  <FormField
+                    control={form.control}
+                    name="depositCategory"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormLabel>Category</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value || ""}
+                        >
+                          <FormControl className="w-full">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Category" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {TRANSACTION_DEPOSIT_CATEGORY_OPTIONS.map(
+                              (option) => (
+                                <SelectItem
+                                  key={option.value}
+                                  value={option.value}
+                                >
+                                  {option.label}
+                                </SelectItem>
+                              ),
+                            )}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              </div>
 
               <FormField
                 control={form.control}

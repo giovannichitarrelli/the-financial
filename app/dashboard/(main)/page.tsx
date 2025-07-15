@@ -31,7 +31,8 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
   }
   const dashboard = await getDashboard(month);
 
-  const yearDashboard = await getYearDashboard("2025");
+  const currentYear = new Date().getFullYear().toString();
+  const yearDashboard = await getYearDashboard(currentYear);
 
   return (
     <>

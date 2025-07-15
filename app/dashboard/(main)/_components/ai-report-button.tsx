@@ -45,7 +45,7 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
       }}
     >
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2" variant="outline">
           IA Report
           <BotIcon className="h-5 w-5 " />
         </Button>

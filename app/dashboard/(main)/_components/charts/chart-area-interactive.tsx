@@ -66,18 +66,18 @@ export function ChartAreaInteractive({ yearlyData }: Props) {
     ); // Ordenar do mais recente ao mais antigo
   }, [yearlyData]);
 
-  // Definir o ano inicial como o mais recente com transações, ou o ano atual se não houver transações
   const [selectedYear, setSelectedYear] = React.useState(
-    availableYears[0] || new Date().getFullYear().toString(),
+    new Date().getFullYear().toString(),
   );
 
   const filteredData = yearlyData.filter((item) =>
     item.month.startsWith(selectedYear),
   );
+
   return (
     <Card className="pt-0">
-      <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
-        <div className="grid flex-1 gap-1">
+      <CardHeader className="flex-row items-center gap-2 space-y-0 border-b py-5 ">
+        <div className="grid flex-1 gap-1 pr-4">
           <span className="text-sm">Total Balance</span>
           <CardDescription>
             Showing total balance for the year selected
@@ -98,10 +98,10 @@ export function ChartAreaInteractive({ yearlyData }: Props) {
         </Select>
       </CardHeader>
 
-      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+      <CardContent className="pt-4 sm:pt-6">
         <ChartContainer
           config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
+          className="aspect-auto h-[250px] w-full "
         >
           <AreaChart data={filteredData}>
             <defs>
@@ -130,22 +130,10 @@ export function ChartAreaInteractive({ yearlyData }: Props) {
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
-                const [, month] = value.split("-");
-                const monthNames = [
-                  "Jan",
-                  "Fev",
-                  "Mar",
-                  "Abr",
-                  "Mai",
-                  "Jun",
-                  "Jul",
-                  "Ago",
-                  "Set",
-                  "Out",
-                  "Nov",
-                  "Dez",
-                ];
-                return monthNames[parseInt(month) - 1];
+                const date = new Date(value + -1);
+                return date.toLocaleDateString("pt-BR", {
+                  month: "short",
+                });
               }}
             />
 
@@ -154,14 +142,11 @@ export function ChartAreaInteractive({ yearlyData }: Props) {
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => {
-                    const date = new Date(value);
-                    const monthYear = date.toLocaleDateString("pt-BR", {
+                    const date = new Date(value + -1);
+                    return date.toLocaleDateString("pt-BR", {
                       month: "long",
                       year: "numeric",
                     });
-                    return (
-                      monthYear.charAt(0).toUpperCase() + monthYear.slice(1)
-                    );
                   }}
                   indicator="dot"
                 />

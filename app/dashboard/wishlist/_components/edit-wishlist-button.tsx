@@ -4,7 +4,7 @@ import { Button } from "@/app/_components/ui/button";
 import { Wishlist } from "@prisma/client";
 import { PencilIcon } from "lucide-react";
 import { useState } from "react";
-import UpsertTransactionDialog from "./upsert-wishlist-dialog";
+import UpsertWishlistDialog from "./upsert-wishlist-dialog";
 
 interface Props {
   wishlist: Wishlist;
@@ -23,7 +23,7 @@ const EditWishlistButton = ({ wishlist }: Props) => {
       >
         <PencilIcon className="ml-1 size-4" />
       </Button>
-      <UpsertTransactionDialog
+      <UpsertWishlistDialog
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
         defaultValues={{

@@ -64,23 +64,24 @@ model VerificationToken {
 }
 
 model Transactions {
-  id       String   @id @default(cuid())
-  name     String
-  userId   String
-  amount   Float
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-  date     DateTime
-  done     Boolean  @default(false)
-  isFixed  Boolean  @default(false)
-
-  members       Member[]
-  user          User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category      TransactionCategory
-  type          TransactionType
-  essentialType TransactionEssentialType
-  Wishlist      Wishlist?                @relation(fields: [wishlistId], references: [id])
-  wishlistId    String?
+  id              String                      @id @default(cuid())
+  name            String
+  userId          String
+  amount          Float
+  createAt        DateTime                    @default(now())
+  updateAt        DateTime                    @updatedAt
+  date            DateTime
+  done            Boolean                     @default(false)
+  isFixed         Boolean                     @default(false)
+  member          Member?                     @relation(fields: [memberId], references: [id])
+  memberId        String?
+  user            User                        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  depositCategory TransactionDepositCategory?
+  category        TransactionCategory?
+  type            TransactionType?
+  essentialType   TransactionEssentialType?
+  Wishlist        Wishlist?                   @relation(fields: [wishlistId], references: [id])
+  wishlistId      String?
 }
 
 enum TransactionType {
@@ -104,15 +105,20 @@ enum TransactionCategory {
   COMMUNICATIONS
   PERSONAL_CARE
   SHOPPING
-  SALARY
   EDUCATION
   DONATIONS_AND_PRESENTS
   SECURITIES
   SUBSCRIPTIONS
   PET
   HEALTH
+  SALARY
   HOME_RENOVATION
   OTHER
+}
+
+enum TransactionDepositCategory {
+  SALARY
+  EXTRA
 }
 
 model Investments {
@@ -151,11 +157,11 @@ model Wishlist {
 }
 
 model Member {
-  id             String        @id @default(cuid())
+  id             String         @id @default(cuid())
   name           String
   userId         String
-  createAt       DateTime      @default(now())
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Transactions   Transactions? @relation(fields: [transactionsId], references: [id])
+  createAt       DateTime       @default(now())
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Transactions   Transactions[]
   transactionsId String?
 }

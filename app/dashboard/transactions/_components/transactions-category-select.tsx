@@ -24,7 +24,7 @@ const TransactionsCategorySelect = () => {
     const params = new URLSearchParams(searchParams);
     params.set("category", category);
     params.set("month", month);
-    push(`/app/transactions?${params.toString()}`);
+    push(`/dashboard/transactions?${params.toString()}`);
   };
 
   return (
@@ -32,8 +32,8 @@ const TransactionsCategorySelect = () => {
       onValueChange={(value) => handleCategoryChange(value)}
       defaultValue={category ?? ""}
     >
-      <SelectTrigger className="w-max rounded-full bg-muted">
-        <SelectValue placeholder="Categoria" />
+      <SelectTrigger className="w-max  bg-muted">
+        <SelectValue placeholder="Category" />
       </SelectTrigger>
 
       <SelectContent>

@@ -14,9 +14,9 @@ import { AppWindowMac, Table } from "lucide-react";
 import MsgNoData from "../_components/no-data-table";
 import CardsTransactions from "./_components/cards-transactions";
 import { isMatch } from "date-fns";
-import TransactionsTimeSelect from "./_components/transactions-time-select";
 import TransactionsCategorySelect from "./_components/transactions-category-select";
 import { TransactionCategory } from "@prisma/client";
+import TimeSelect from "../(main)/_components/time-select";
 
 interface Props {
   searchParams: {
@@ -55,6 +55,15 @@ const TransactionsPage = async ({
     },
   });
 
+  const member = await db.member.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createAt: "desc",
+    },
+  });
+
   return (
     <>
       <div className="flex flex-col space-y-6 overflow-hidden p-6">
@@ -74,7 +83,7 @@ const TransactionsPage = async ({
             </TabsList>
 
             <div className="flex items-center gap-2">
-              <TransactionsTimeSelect />
+              <TimeSelect />
               <TransactionsCategorySelect />
             </div>
           </div>
@@ -83,7 +92,10 @@ const TransactionsPage = async ({
             {transactions.length > 0 ? (
               transactions.map((transactions) => (
                 <>
-                  <CardsTransactions transactions={transactions} />
+                  <CardsTransactions
+                    transactions={transactions}
+                    members={member}
+                  />
                 </>
               ))
             ) : (

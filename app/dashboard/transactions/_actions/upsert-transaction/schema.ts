@@ -2,6 +2,7 @@ import {
   TransactionCategory,
   TransactionEssentialType,
   TransactionType,
+  TransactionDepositCategory,
 } from "@prisma/client";
 import { z } from "zod";
 
@@ -9,9 +10,14 @@ export const upsertTransactionSchema = z.object({
   name: z.string().trim().min(1),
   amount: z.number().positive(),
   type: z.nativeEnum(TransactionType),
-  essentialType: z.nativeEnum(TransactionEssentialType),
-  category: z.nativeEnum(TransactionCategory),
+  category: z.nativeEnum(TransactionCategory).nullable().optional(),
+  depositCategory: z
+    .nativeEnum(TransactionDepositCategory)
+    .nullable()
+    .optional(),
+  essentialType: z.nativeEnum(TransactionEssentialType).nullable().optional(),
   date: z.date(),
   done: z.boolean(),
   isFixed: z.boolean(),
+  memberId: z.string(),
 });

@@ -8,10 +8,12 @@ import Link from "next/link";
 
 interface AddTransactionButtonProps {
   userCanAddTransaction?: boolean;
+  members: Array<{ id: string; name: string }>;
 }
 
 const AddTransactionButton = ({
   userCanAddTransaction,
+  members,
 }: AddTransactionButtonProps) => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
@@ -38,6 +40,7 @@ const AddTransactionButton = ({
       <UpsertTransactionDialog
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
+        members={members}
       />
     </>
   );

@@ -2,6 +2,7 @@ import {
   InvestmentsObjectType,
   InvestmentsType,
   TransactionCategory,
+  TransactionDepositCategory,
   TransactionEssentialType,
   TransactionType,
 } from "@prisma/client";
@@ -15,74 +16,17 @@ export const TRANSACTION_CATEGORY_LABELS = {
   COMMUNICATIONS: "Comunicações",
   PERSONAL_CARE: "Cuidados Pessoais",
   SHOPPING: "Compras",
-  SALARY: "Salário",
+  // SALARY: "Salário",
   EDUCATION: "Educação",
   SECURITIES: "Seguros",
   SUBSCRIPTIONS: "Assinaturas",
   PET: "Pets",
   PUBLIC_SERVICES: "Serviços públicos",
-  HOME_RENOVATION: "Reformas domésticas",
+  // HOME_RENOVATION: "Reformas domésticas",
   HEALTH: "Saúde",
   DONATIONS_AND_PRESENTS: "Doações e Presentes",
   OTHER: "Outros",
 };
-
-export const TRANSACTION_TYPE_OPTIONS = [
-  {
-    value: TransactionType.EXPENSE,
-    label: "Despesa",
-  },
-  {
-    value: TransactionType.DEPOSIT,
-    label: "Depósito",
-  },
-];
-
-export const TRANSACTION_ESSENTIAL_TYPE_OPTIONS = [
-  {
-    value: TransactionEssentialType.ESSENTIAL,
-    label: "Essencial",
-  },
-  {
-    value: TransactionEssentialType.NOT_ESSENTIAL,
-    label: "Não essencial",
-  },
-  {
-    value: TransactionEssentialType.SALARY,
-    label: "Salário",
-  },
-];
-
-export const INVESTMENT_TYPE_OPTIONS = [
-  {
-    value: InvestmentsType.DEPOSIT,
-    label: "Depósito",
-  },
-  {
-    value: InvestmentsType.WITHDRAW,
-    label: "Retirada",
-  },
-];
-
-export const INVESTMENT_OBJECT_TYPE_OPTIONS = [
-  {
-    value: InvestmentsObjectType.EMERGENCY_RESERVE,
-    label: "Reserva de emergência",
-  },
-  {
-    value: InvestmentsObjectType.RETIREMENT,
-    label: "Aposentadoria",
-  },
-  {
-    value: InvestmentsObjectType.GOALS,
-    label: "Metas",
-  },
-  {
-    value: InvestmentsObjectType.OTHER,
-    label: "Outros",
-  },
-];
-
 export const TRANSACTION_CATEGORY_OPTIONS = [
   {
     value: TransactionCategory.HOUSING,
@@ -104,10 +48,10 @@ export const TRANSACTION_CATEGORY_OPTIONS = [
     value: TransactionCategory.ENTERTAINMENT,
     label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.ENTERTAINMENT],
   },
-  {
-    value: TransactionCategory.HOME_RENOVATION,
-    label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.HOME_RENOVATION],
-  },
+  // {
+  //   value: TransactionCategory.HOME_RENOVATION,
+  //   label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.HOME_RENOVATION],
+  // },
   {
     value: TransactionCategory.COMMUNICATIONS,
     label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.COMMUNICATIONS],
@@ -151,12 +95,85 @@ export const TRANSACTION_CATEGORY_OPTIONS = [
     label:
       TRANSACTION_CATEGORY_LABELS[TransactionCategory.DONATIONS_AND_PRESENTS],
   },
-  {
-    value: TransactionCategory.SALARY,
-    label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.SALARY],
-  },
+  // {
+  //   value: TransactionCategory.SALARY,
+  //   label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.SALARY],
+  // },
   {
     value: TransactionCategory.OTHER,
     label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.OTHER],
+  },
+];
+
+export const TRANSACTION_DEPOSIT_CATEGORY_LABELS = {
+  SALARY: "Salário",
+  EXTRA: "Extra",
+};
+export const TRANSACTION_DEPOSIT_CATEGORY_OPTIONS = [
+  {
+    value: TransactionDepositCategory.SALARY,
+    label:
+      TRANSACTION_DEPOSIT_CATEGORY_LABELS[TransactionDepositCategory.SALARY],
+  },
+  {
+    value: TransactionDepositCategory.EXTRA,
+    label:
+      TRANSACTION_DEPOSIT_CATEGORY_LABELS[TransactionDepositCategory.EXTRA],
+  },
+];
+
+export const TRANSACTION_TYPE_OPTIONS = [
+  {
+    value: TransactionType.EXPENSE,
+    label: "Despesa",
+  },
+  {
+    value: TransactionType.DEPOSIT,
+    label: "Depósito",
+  },
+];
+
+export const TRANSACTION_ESSENTIAL_TYPE_OPTIONS = [
+  {
+    value: TransactionEssentialType.ESSENTIAL,
+    label: "Essencial",
+  },
+  {
+    value: TransactionEssentialType.NOT_ESSENTIAL,
+    label: "Não essencial",
+  },
+  // {
+  //   value: TransactionEssentialType.SALARY,
+  //   label: "Salário",
+  // },
+];
+
+export const INVESTMENT_TYPE_OPTIONS = [
+  {
+    value: InvestmentsType.DEPOSIT,
+    label: "Depósito",
+  },
+  {
+    value: InvestmentsType.WITHDRAW,
+    label: "Retirada",
+  },
+];
+
+export const INVESTMENT_OBJECT_TYPE_OPTIONS = [
+  {
+    value: InvestmentsObjectType.EMERGENCY_RESERVE,
+    label: "Reserva de emergência",
+  },
+  {
+    value: InvestmentsObjectType.RETIREMENT,
+    label: "Aposentadoria",
+  },
+  {
+    value: InvestmentsObjectType.GOALS,
+    label: "Metas",
+  },
+  {
+    value: InvestmentsObjectType.OTHER,
+    label: "Outros",
   },
 ];

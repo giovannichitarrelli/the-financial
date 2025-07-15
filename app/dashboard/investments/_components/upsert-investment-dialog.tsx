@@ -235,12 +235,12 @@ const UpsertInvestmentDialog = ({
                   {form.formState.isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {isUpdate ? "Atualizar" : "Adicionar"}
+                      {isUpdate ? "Update" : "Add"}
                     </>
                   ) : isUpdate ? (
-                    "Atualizar"
+                    "Update"
                   ) : (
-                    "Adicionar"
+                    "Add"
                   )}
                 </Button>
               </DialogFooter>
