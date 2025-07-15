@@ -15,18 +15,20 @@ import MsgNoData from "../_components/no-data-table";
 import CardsTransactions from "./_components/cards-transactions";
 import { isMatch } from "date-fns";
 import TransactionsCategorySelect from "./_components/transactions-category-select";
-import { TransactionCategory } from "@prisma/client";
+import { TransactionCategory, TransactionType } from "@prisma/client";
 import TimeSelect from "../(main)/_components/time-select";
+import TransactionsTypeSelect from "./_components/transactions-type-select";
 
 interface Props {
   searchParams: {
     month: string;
     category: string;
+    type: string;
   };
 }
 
 const TransactionsPage = async ({
-  searchParams: { month, category },
+  searchParams: { month, category, type },
 }: Props) => {
   const session = await getServerSession(auth);
   const userId = session?.user.id;
@@ -48,6 +50,7 @@ const TransactionsPage = async ({
         lt: new Date(`2025-${month}-31`),
       },
       ...(category ? { category: category as TransactionCategory } : {}),
+      ...(type ? { type: type as TransactionType } : {}),
     },
 
     orderBy: {
@@ -85,6 +88,7 @@ const TransactionsPage = async ({
             <div className="flex items-center gap-2">
               <TimeSelect />
               <TransactionsCategorySelect />
+              <TransactionsTypeSelect />
             </div>
           </div>
 
