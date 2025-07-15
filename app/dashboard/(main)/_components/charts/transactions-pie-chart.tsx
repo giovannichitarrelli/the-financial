@@ -61,7 +61,7 @@ const TransactionsPieChart = ({
       <CardHeader>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
+            <div className="flex items-center justify-between gap-2 font-medium leading-none">
               {depositsTotal > expensesTotal ? (
                 <>
                   Deposits are{" "}

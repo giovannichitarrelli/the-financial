@@ -13,7 +13,9 @@ import AiReportButton from "./_components/ai-report-button";
 import DepositsPending from "./_components/deposits-pending";
 import { ChartAreaInteractive } from "@/app/dashboard/(main)/_components/charts/chart-area-interactive";
 import TransactionsEssentialsPieChart from "./_components/charts/essentials-pie-chart";
+import MemberExpensesPieChart from "./_components/charts/member-expenses-chart";
 import { getDashboard, getYearDashboard } from "../_actions/data/get-dashboard";
+import MemberDepositsPieChart from "./_components/charts/member-deposits-chart";
 interface HomeProps {
   searchParams: {
     month: string;
@@ -46,12 +48,21 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
 
         <ChartAreaInteractive yearlyData={yearDashboard.yearlyData} />
 
-        <div className="grid  grid-cols-1 gap-4 lg:grid-cols-3">
-          <TransactionsPieChart {...dashboard} />
-          <TransactionsEssentialsPieChart {...dashboard} />
+        <div className="grid  grid-cols-1 gap-4   lg:grid-cols-3">
           <ExpensesPerCategory
             totalExpensePerCategory={dashboard.totalExpensePerCategory}
           />
+          <MemberExpensesPieChart
+            totalExpensePerMember={dashboard.totalExpensePerMember}
+          />
+          <MemberDepositsPieChart
+            totalDepositsPerMember={dashboard.totalDepositsPerMember}
+          />
+        </div>
+
+        <div className="grid  grid-cols-1 gap-4   lg:grid-cols-2">
+          <TransactionsPieChart {...dashboard} />
+          <TransactionsEssentialsPieChart {...dashboard} />
         </div>
 
         <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-2">

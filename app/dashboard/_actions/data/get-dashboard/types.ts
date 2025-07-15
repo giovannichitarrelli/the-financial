@@ -19,3 +19,17 @@ export interface TotalExpensePerCategory {
 export type TransactionEssentialPercentagePerType = {
   [key in Exclude<TransactionEssentialType, "SALARY">]: number;
 };
+
+export interface TotalExpensePerMember {
+  memberId: string;
+  memberName: string;
+  totalAmount: number;
+  percentageOfTotal: number;
+}
+
+export interface TotalDepositsPerMember {
+  memberId: string;
+  memberName: string;
+  totalAmount: number;
+  percentageOfTotal: number;
+}
