@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import TimeSelect from "./_components/time-select";
+import TimeSelect from "../_components/time-select";
 import { isMatch } from "date-fns";
 
 import ExpensesPerCategory from "./_components/charts/expenses-per-category";

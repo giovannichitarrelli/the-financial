@@ -16,7 +16,7 @@ import CardsTransactions from "./_components/cards-transactions";
 import { isMatch } from "date-fns";
 import TransactionsCategorySelect from "./_components/transactions-category-select";
 import { TransactionCategory, TransactionType } from "@prisma/client";
-import TimeSelect from "../(main)/_components/time-select";
+import TimeSelect from "../_components/time-select";
 import TransactionsTypeSelect from "./_components/transactions-type-select";
 
 interface Props {
@@ -75,7 +75,7 @@ const TransactionsPage = async ({
         </div>
 
         <Tabs defaultValue="cards">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <TabsList className="grid max-w-[200px] grid-cols-2">
               <TabsTrigger value="cards">
                 <AppWindowMac className="h-4 w-4" />
@@ -85,7 +85,7 @@ const TransactionsPage = async ({
               </TabsTrigger>
             </TabsList>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <TimeSelect />
               <TransactionsCategorySelect />
               <TransactionsTypeSelect />

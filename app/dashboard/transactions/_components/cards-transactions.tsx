@@ -80,7 +80,7 @@ const CardsTransactions = ({ transactions, members }: Props) => {
 
         <div className="text-sm">
           <span className="mr-1 text-xs font-semibold text-muted-foreground ">
-            Responsible:
+            By:
           </span>
           <span className="text-xs text-muted-foreground">
             {member ? member.name : "-"}
