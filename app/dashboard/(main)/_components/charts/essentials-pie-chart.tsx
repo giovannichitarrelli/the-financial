@@ -57,33 +57,29 @@ const TransactionsEssentialsPieChart = ({
   return (
     <Card className="flex flex-col  ">
       <CardHeader>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center justify-between gap-2 font-medium leading-none">
-              {essentialTypesPercentage[
-                TransactionEssentialType.NOT_ESSENTIAL
-              ] > 30 ? (
-                <>
-                  <span>You need to pay attention to your expenses! </span>
-                  <TrendingDownIcon className="h-4 w-4 text-red-500" />
-                </>
-              ) : (
-                <>
-                  <span>Your expenses are well managed!</span>
-                  <TrendingDownIcon className="h-4 w-4 text-green-500" />
-                </>
-              )}
-            </div>
+        <div className="w-full text-sm">
+          <div className="flex items-center justify-between gap-2 font-medium leading-none  ">
+            {essentialTypesPercentage[TransactionEssentialType.NOT_ESSENTIAL] >
+            30 ? (
+              <>
+                <span>You need to pay attention to your expenses! </span>
+                <TrendingDownIcon className="h-4 w-4 text-red-500" />
+              </>
+            ) : (
+              <>
+                <span>Your expenses are well managed!</span>
+                <TrendingDownIcon className="h-4 w-4 text-green-500" />
+              </>
+            )}
+          </div>
 
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              {essentialTypesPercentage[
-                TransactionEssentialType.NOT_ESSENTIAL
-              ] > 20 ? (
-                <span>Non-essential are above 30%! 😥</span>
-              ) : (
-                <span>Congratulations! You are spending wisely! 🥳 </span>
-              )}
-            </div>
+          <div className="flex items-center gap-2 leading-none text-muted-foreground">
+            {essentialTypesPercentage[TransactionEssentialType.NOT_ESSENTIAL] >
+            20 ? (
+              <span>Non-essential are above 30%! 😥</span>
+            ) : (
+              <span>Congratulations! You are spending wisely! 🥳 </span>
+            )}
           </div>
         </div>
       </CardHeader>

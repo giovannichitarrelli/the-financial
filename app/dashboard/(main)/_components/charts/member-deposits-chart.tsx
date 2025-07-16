@@ -47,16 +47,14 @@ const MemberDepositsPieChart = ({ totalDepositsPerMember }: Props) => {
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center justify-between gap-2 font-medium leading-none">
-              <span>Deposits by family member</span>
-              <Users className="h-4 w-4" />
-            </div>
+        <div className="w-full text-sm">
+          <div className="flex  items-center justify-between gap-2 font-medium leading-none  ">
+            <span>Deposits by family member</span>
+            <Users className="h-4 w-4" />
+          </div>
 
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              <span>Now, you can see deposits by family member! 🤑</span>
-            </div>
+          <div className="flex items-center gap-2 leading-none text-muted-foreground">
+            <span>Now, you can see deposits by family member! 🤑</span>
           </div>
         </div>
       </CardHeader>
@@ -66,9 +64,9 @@ const MemberDepositsPieChart = ({ totalDepositsPerMember }: Props) => {
           <>
             <ChartContainer
               config={dynamicChartConfig}
-              className="mx-auto aspect-square max-h-[220px]"
+              className="mx-auto aspect-square max-h-[200px]"
             >
-              <PieChart className="max-h-[100px] max-w-[100px]">
+              <PieChart width={180} height={180}>
                 <ChartTooltip
                   cursor={false}
                   content={<ChartTooltipContent hideLabel />}

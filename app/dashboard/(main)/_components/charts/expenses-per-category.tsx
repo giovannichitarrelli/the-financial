@@ -7,12 +7,11 @@ import { TransactionCategory } from "@prisma/client";
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/app/_components/ui/chart";
 import { SquareActivityIcon } from "lucide-react";
+import { TRANSACTION_CATEGORY_LABELS } from "@/app/_constants/transactions";
 
 const chartConfig = {
   [TransactionCategory.HOUSING]: {
@@ -110,35 +109,53 @@ const ExpensesPerCategory = ({ totalExpensePerCategory }: Props) => {
   return (
     <Card className="flex flex-col ">
       <CardHeader>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center justify-between gap-2 font-medium leading-none">
-              <span>Categories for a clearer financial overview.</span>
-              <SquareActivityIcon className="h-4 w-4  " />
-            </div>
+        <div className="w-full text-sm">
+          <div className="flex  items-center justify-between gap-2 font-medium leading-none">
+            <span>Categories for a clearer financial overview.</span>
+            <SquareActivityIcon className="h-4 w-4  " />
+          </div>
 
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              <span>Overview complete! 🧐 </span>
-            </div>
+          <div className="flex items-center gap-2 leading-none text-muted-foreground">
+            <span>Overview complete! 🧐 </span>
           </div>
         </div>
       </CardHeader>
 
       <CardContent className="flex-1">
-        <ChartContainer config={chartConfig} className=" aspect-square">
-          <PieChart>
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-[220px]"
+        >
+          <PieChart width={180} height={180}>
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Pie data={chartData} dataKey="amount" nameKey="type" />
 
-            <ChartLegend
-              content={<ChartLegendContent nameKey="name" />}
-              className=" flex-wrap gap-2 "
-            />
+            <Pie data={chartData} dataKey="amount" nameKey="type" />
           </PieChart>
         </ChartContainer>
+
+        <div className="flex flex-wrap gap-2">
+          {chartData.map((item) => (
+            <div
+              key={item.name}
+              className="flex items-center gap-2 text-xs text-muted-foreground"
+            >
+              <span
+                className="h-2 w-2"
+                style={{ backgroundColor: item.fill }}
+              ></span>
+              <span>
+                {
+                  TRANSACTION_CATEGORY_LABELS[
+                    item.name as keyof typeof TRANSACTION_CATEGORY_LABELS
+                  ]
+                }
+              </span>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );

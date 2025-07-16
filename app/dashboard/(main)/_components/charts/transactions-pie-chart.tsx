@@ -57,42 +57,40 @@ const TransactionsPieChart = ({
     },
   ];
   return (
-    <Card className="flex flex-col   ">
+    <Card className="flex flex-col">
       <CardHeader>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center justify-between gap-2 font-medium leading-none">
-              {depositsTotal > expensesTotal ? (
-                <>
-                  Deposits are{" "}
-                  {(
-                    (100 * (depositsTotal - expensesTotal)) /
-                    (expensesTotal || 1)
-                  ).toFixed(1)}
-                  % higher than expenses this month
-                  <TrendingUp className="h-4 w-4 text-green-500" />
-                </>
-              ) : depositsTotal < expensesTotal ? (
-                <>
-                  Expenses are{" "}
-                  {(
-                    (100 * (expensesTotal - depositsTotal)) /
-                    (depositsTotal || 1)
-                  ).toFixed(1)}
-                  % higher than deposits this month
-                  <TrendingDownIcon className="h-4 w-4 text-red-500" />
-                </>
-              ) : (
-                <>No change this month</>
-              )}
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              {depositsTotal > expensesTotal ? (
-                <span>Congratulations! 🥳 </span>
-              ) : (
-                <span>you need to cut down on expenses! 😥</span>
-              )}
-            </div>
+        <div className="w-full text-sm">
+          <div className="flex  items-center justify-between gap-2 font-medium leading-none  ">
+            {depositsTotal > expensesTotal ? (
+              <>
+                Deposits are{" "}
+                {(
+                  (100 * (depositsTotal - expensesTotal)) /
+                  (expensesTotal || 1)
+                ).toFixed(1)}
+                % higher than expenses this month
+                <TrendingUp className="h-4 w-4 text-green-500" />
+              </>
+            ) : depositsTotal < expensesTotal ? (
+              <>
+                Expenses are{" "}
+                {(
+                  (100 * (expensesTotal - depositsTotal)) /
+                  (depositsTotal || 1)
+                ).toFixed(1)}
+                % higher than deposits this month
+                <TrendingDownIcon className="h-4 w-4 text-red-500" />
+              </>
+            ) : (
+              <>No change this month</>
+            )}
+          </div>
+          <div className="flex items-center gap-2 leading-none text-muted-foreground">
+            {depositsTotal > expensesTotal ? (
+              <span>Congratulations! 🥳 </span>
+            ) : (
+              <span>you need to cut down on expenses! 😥</span>
+            )}
           </div>
         </div>
       </CardHeader>

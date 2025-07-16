@@ -13,7 +13,7 @@ export default function Logo() {
     //   style={{ width: "120px", height: "40px" }}
     // />
 
-    <div>
+    <div className="flex items-center gap-2">
       <ArrowUpCircleIcon className="h-5 w-5 text-primary" />
       <span className="text-base font-semibold">The financial.</span>
     </div>
