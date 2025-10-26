@@ -9,7 +9,7 @@ export function middleware(req: NextRequest) {
     req.cookies.get("__Secure-next-auth.session-token")?.value;
   const pathname = req.nextUrl.pathname;
   if (pathname === "/auth" && token) {
-    return NextResponse.redirect(new URL(getUrl("/app")));
+    return NextResponse.redirect(new URL(getUrl("/dashboard")));
   }
 
   if (pathname.includes("/dashboard") && !token) {
