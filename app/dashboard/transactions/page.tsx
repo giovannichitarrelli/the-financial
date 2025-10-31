@@ -39,7 +39,7 @@ const TransactionsPage = async ({
 
   const monthIsInvalid = !month || !isMatch(month, "MM");
   if (monthIsInvalid) {
-    redirect(`/dashboard/transactions?month=0${new Date().getMonth() + 1}`);
+    redirect(`/dashboard/transactions?month=${new Date().getMonth() + 1}`);
   }
 
   const transactions = await db.transactions.findMany({
