@@ -1,9 +1,7 @@
-import { transactionColumns } from "./_columns";
 import { redirect } from "next/navigation";
 import { auth } from "@/services/auth";
 import { db } from "@/services/database";
 import { getServerSession } from "next-auth";
-import { DataTable } from "@/app/_components/ui/data-table";
 import {
   Tabs,
   TabsContent,
@@ -21,6 +19,7 @@ import TransactionsTypeSelect from "./_components/transactions-type-select";
 import TransactionsDoneSelect from "./_components/transactions-done-select";
 import YearSelect from "../_components/year-select";
 import { getAvailableYears } from "../_actions/data/get-available-years";
+import { TransactionsDataTable } from "./_components/transactions-data-table";
 
 interface Props {
   searchParams: {
@@ -139,9 +138,9 @@ const TransactionsPage = async ({
             )}
           </TabsContent>
           <TabsContent value="table">
-            <DataTable
-              columns={transactionColumns}
-              data={JSON.parse(JSON.stringify(transactions))}
+            <TransactionsDataTable
+              transactions={transactions}
+              members={member}
             />
           </TabsContent>
         </Tabs>

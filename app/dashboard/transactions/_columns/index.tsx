@@ -7,13 +7,15 @@ import {
   TRANSACTION_CATEGORY_LABELS,
   TRANSACTION_DEPOSIT_CATEGORY_LABELS,
 } from "@/app/_constants/transactions";
-// import EditTransactionButton from "../_components/edit-transaction-button";
+import EditTransactionButton from "../_components/edit-transaction-button";
 import DeleteTransactionButton from "../_components/delete-transaction-button";
 import TransactionEssentialTypeBadge from "../_components/type-essential-badge";
 import DoneBadge from "../_components/done-badge";
 import FixedBadge from "../_components/fixed-badge";
 
-export const transactionColumns: ColumnDef<Transactions>[] = [
+export const createTransactionColumns = (
+  members: Array<{ id: string; name: string }>,
+): ColumnDef<Transactions>[] => [
   {
     accessorKey: "name",
     header: "Nome",
@@ -115,7 +117,8 @@ export const transactionColumns: ColumnDef<Transactions>[] = [
     header: "Ações",
     cell: ({ row: { original: transaction } }) => {
       return (
-        <div className="space-x-1 text-xs">
+        <div className="flex items-center space-x-1 text-xs">
+          <EditTransactionButton transaction={transaction} members={members} />
           <DeleteTransactionButton transactionId={transaction.id} />
         </div>
       );
