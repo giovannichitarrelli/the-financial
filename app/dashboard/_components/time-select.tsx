@@ -37,10 +37,22 @@ const TimeSelect = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("month", month);
 
-    // Preservar o ano se existir
+    // Preservar todos os parâmetros de filtro se existirem
     const year = searchParams.get("year");
     if (year) {
       params.set("year", year);
+    }
+    const category = searchParams.get("category");
+    if (category) {
+      params.set("category", category);
+    }
+    const type = searchParams.get("type");
+    if (type) {
+      params.set("type", type);
+    }
+    const done = searchParams.get("done");
+    if (done) {
+      params.set("done", done);
     }
 
     push(`${currentPath}?${params.toString()}`);

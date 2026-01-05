@@ -18,6 +18,7 @@ import TransactionsCategorySelect from "./_components/transactions-category-sele
 import { TransactionCategory, TransactionType } from "@prisma/client";
 import TimeSelect from "../_components/time-select";
 import TransactionsTypeSelect from "./_components/transactions-type-select";
+import TransactionsDoneSelect from "./_components/transactions-done-select";
 import YearSelect from "../_components/year-select";
 import { getAvailableYears } from "../_actions/data/get-available-years";
 
@@ -27,11 +28,12 @@ interface Props {
     year?: string;
     category: string;
     type: string;
+    done?: string;
   };
 }
 
 const TransactionsPage = async ({
-  searchParams: { month, year, category, type },
+  searchParams: { month, year, category, type, done },
 }: Props) => {
   const session = await getServerSession(auth);
   const userId = session?.user.id;
@@ -72,6 +74,9 @@ const TransactionsPage = async ({
       },
       ...(category ? { category: category as TransactionCategory } : {}),
       ...(type ? { type: type as TransactionType } : {}),
+      ...(done !== undefined && done !== "all"
+        ? { done: done === "true" }
+        : {}),
     },
 
     orderBy: {
@@ -113,6 +118,7 @@ const TransactionsPage = async ({
               <TimeSelect />
               <TransactionsCategorySelect />
               <TransactionsTypeSelect />
+              <TransactionsDoneSelect />
             </div>
           </div>
 

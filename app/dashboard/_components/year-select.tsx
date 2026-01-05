@@ -24,9 +24,21 @@ const YearSelect = ({ availableYears }: YearSelectProps) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("year", newYear);
 
-    // Preservar o mês se existir
+    // Preservar todos os parâmetros de filtro se existirem
     if (month) {
       params.set("month", month);
+    }
+    const category = searchParams.get("category");
+    if (category) {
+      params.set("category", category);
+    }
+    const type = searchParams.get("type");
+    if (type) {
+      params.set("type", type);
+    }
+    const done = searchParams.get("done");
+    if (done) {
+      params.set("done", done);
     }
 
     push(`${currentPath}?${params.toString()}`);

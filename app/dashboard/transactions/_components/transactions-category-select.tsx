@@ -24,13 +24,17 @@ const TransactionsCategorySelect = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("category", category);
 
-    // Preservar month e year se existirem
+    // Preservar month, year e done se existirem
     if (month) {
       params.set("month", month);
     }
     const year = searchParams.get("year");
     if (year) {
       params.set("year", year);
+    }
+    const done = searchParams.get("done");
+    if (done) {
+      params.set("done", done);
     }
 
     push(`/dashboard/transactions?${params.toString()}`);
