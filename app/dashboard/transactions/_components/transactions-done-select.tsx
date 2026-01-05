@@ -40,11 +40,11 @@ const TransactionsDoneSelect = () => {
       params.set("year", year);
     }
     const category = searchParams.get("category");
-    if (category) {
+    if (category && category !== "all") {
       params.set("category", category);
     }
     const type = searchParams.get("type");
-    if (type) {
+    if (type && type !== "all") {
       params.set("type", type);
     }
 

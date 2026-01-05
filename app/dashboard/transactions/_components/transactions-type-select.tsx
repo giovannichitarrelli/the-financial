@@ -22,9 +22,14 @@ const TransactionsTypeSelect = () => {
 
   const handleTypeChange = (type: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("type", type);
 
-    // Preservar month, year e done se existirem
+    if (type === "all") {
+      params.delete("type");
+    } else {
+      params.set("type", type);
+    }
+
+    // Preservar month, year, category e done se existirem
     if (month) {
       params.set("month", month);
     }
@@ -32,8 +37,12 @@ const TransactionsTypeSelect = () => {
     if (year) {
       params.set("year", year);
     }
+    const category = searchParams.get("category");
+    if (category && category !== "all") {
+      params.set("category", category);
+    }
     const done = searchParams.get("done");
-    if (done) {
+    if (done && done !== "all") {
       params.set("done", done);
     }
 
@@ -43,13 +52,14 @@ const TransactionsTypeSelect = () => {
   return (
     <Select
       onValueChange={(value) => handleTypeChange(value)}
-      defaultValue={type ?? ""}
+      defaultValue={type ?? "all"}
     >
       <SelectTrigger className="w-max  bg-muted">
         <SelectValue placeholder="Type" />
       </SelectTrigger>
 
       <SelectContent>
+        <SelectItem value="all">Tipo</SelectItem>
         {TYPE_OPTIONS.map((option) => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}

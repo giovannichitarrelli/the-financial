@@ -22,9 +22,14 @@ const TransactionsCategorySelect = () => {
 
   const handleCategoryChange = (category: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("category", category);
 
-    // Preservar month, year e done se existirem
+    if (category === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", category);
+    }
+
+    // Preservar month, year, type e done se existirem
     if (month) {
       params.set("month", month);
     }
@@ -32,8 +37,12 @@ const TransactionsCategorySelect = () => {
     if (year) {
       params.set("year", year);
     }
+    const type = searchParams.get("type");
+    if (type && type !== "all") {
+      params.set("type", type);
+    }
     const done = searchParams.get("done");
-    if (done) {
+    if (done && done !== "all") {
       params.set("done", done);
     }
 
@@ -43,13 +52,14 @@ const TransactionsCategorySelect = () => {
   return (
     <Select
       onValueChange={(value) => handleCategoryChange(value)}
-      defaultValue={category ?? ""}
+      defaultValue={category ?? "all"}
     >
       <SelectTrigger className="w-max  bg-muted">
         <SelectValue placeholder="Category" />
       </SelectTrigger>
 
       <SelectContent>
+        <SelectItem value="all">Categoria</SelectItem>
         {CATEGORY_OPTIONS.map((option) => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}

@@ -72,8 +72,10 @@ const TransactionsPage = async ({
         gte: startDate,
         lte: endDate,
       },
-      ...(category ? { category: category as TransactionCategory } : {}),
-      ...(type ? { type: type as TransactionType } : {}),
+      ...(category && category !== "all"
+        ? { category: category as TransactionCategory }
+        : {}),
+      ...(type && type !== "all" ? { type: type as TransactionType } : {}),
       ...(done !== undefined && done !== "all"
         ? { done: done === "true" }
         : {}),
