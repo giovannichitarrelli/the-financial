@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import TimeSelect from "../_components/time-select";
+import YearSelect from "../_components/year-select";
 import { isMatch } from "date-fns";
+import { getAvailableYears } from "../_actions/data/get-available-years";
 
 import ExpensesPerCategory from "./_components/charts/expenses-per-category";
 import PaymentPending from "./_components/payment-pending";
@@ -19,29 +21,44 @@ import MemberDepositsPieChart from "./_components/charts/member-deposits-chart";
 interface HomeProps {
   searchParams: {
     month: string;
+    year?: string;
   };
 }
 
-const Home = async ({ searchParams: { month } }: HomeProps) => {
+const Home = async ({ searchParams: { month, year } }: HomeProps) => {
   const session = await getServerSession(auth);
   if (!session) {
     redirect("/auth");
   }
   const monthIsInvalid = !month || !isMatch(month, "MM");
   if (monthIsInvalid) {
-    redirect(`/dashboard?month=${new Date().getMonth() + 1}`);
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    redirect(`/dashboard?month=${currentMonth}&year=${currentYear}`);
   }
-  const dashboard = await getDashboard(month);
 
-  const currentYear = new Date().getFullYear().toString();
-  const yearDashboard = await getYearDashboard(currentYear);
+  // Usar o ano fornecido ou o ano atual
+  const selectedYear = year || new Date().getFullYear().toString();
+
+  // Se não houver ano na URL, redirecionar para incluir o ano atual
+  if (!year) {
+    redirect(`/dashboard?month=${month}&year=${selectedYear}`);
+  }
+
+  const dashboard = await getDashboard(month, selectedYear);
+  const yearDashboard = await getYearDashboard(selectedYear);
+
+  const availableYears = await getAvailableYears();
 
   return (
     <>
       <div className="@container/main flex flex-1 flex-col gap-4 p-4 lg:px-6">
         <div className="flex items-center justify-between gap-4  ">
-          <AiReportButton month={month} />
-          <TimeSelect />
+          <AiReportButton month={month} year={selectedYear} />
+          <div className="flex items-center gap-2">
+            <YearSelect availableYears={availableYears} />
+            <TimeSelect />
+          </div>
         </div>
 
         <SummaryCards month={month} {...dashboard} />

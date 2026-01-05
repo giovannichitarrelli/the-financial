@@ -14,18 +14,28 @@ import { db } from "@/services/database";
 import { getServerSession } from "next-auth";
 import { auth } from "@/services/auth";
 
-export const getDashboard = async (month: string) => {
+export const getDashboard = async (month: string, year?: string) => {
   const session = await getServerSession(auth);
   if (!session) {
     throw new Error("Unauthorized");
   }
   const userId = session.user.id;
 
+  // Usar o ano fornecido ou o ano atual
+  const selectedYear = year || new Date().getFullYear().toString();
+  const monthNum = parseInt(month);
+
+  // Calcular o primeiro e último dia do mês corretamente
+  // monthNum é 1-12, então monthNum - 1 é o índice do mês (0-11)
+  const startDate = new Date(parseInt(selectedYear), monthNum - 1, 1);
+  // Para obter o último dia do mês, usamos o mês seguinte com dia 0
+  const endDate = new Date(parseInt(selectedYear), monthNum, 0);
+
   const where = {
     userId,
     date: {
-      gte: new Date(`2025-${month}-01`),
-      lt: new Date(`2025-${month}-31`),
+      gte: startDate,
+      lte: endDate,
     },
   };
 
@@ -53,8 +63,8 @@ export const getDashboard = async (month: string) => {
         where: {
           userId,
           createAt: {
-            gte: new Date(`2025-${month}-01`),
-            lt: new Date(`2025-${month}-31`),
+            gte: startDate,
+            lte: endDate,
           },
           type: "DEPOSIT",
         },

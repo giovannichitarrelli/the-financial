@@ -34,7 +34,16 @@ const TimeSelect = () => {
 
   const handleMonthChange = (month: string) => {
     const currentPath = window.location.pathname;
-    push(`${currentPath}?month=${month}`);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("month", month);
+
+    // Preservar o ano se existir
+    const year = searchParams.get("year");
+    if (year) {
+      params.set("year", year);
+    }
+
+    push(`${currentPath}?${params.toString()}`);
   };
 
   return (

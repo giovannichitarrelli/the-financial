@@ -18,17 +18,20 @@ import TransactionsCategorySelect from "./_components/transactions-category-sele
 import { TransactionCategory, TransactionType } from "@prisma/client";
 import TimeSelect from "../_components/time-select";
 import TransactionsTypeSelect from "./_components/transactions-type-select";
+import YearSelect from "../_components/year-select";
+import { getAvailableYears } from "../_actions/data/get-available-years";
 
 interface Props {
   searchParams: {
     month: string;
+    year?: string;
     category: string;
     type: string;
   };
 }
 
 const TransactionsPage = async ({
-  searchParams: { month, category, type },
+  searchParams: { month, year, category, type },
 }: Props) => {
   const session = await getServerSession(auth);
   const userId = session?.user.id;
@@ -39,15 +42,33 @@ const TransactionsPage = async ({
 
   const monthIsInvalid = !month || !isMatch(month, "MM");
   if (monthIsInvalid) {
-    redirect(`/dashboard/transactions?month=${new Date().getMonth() + 1}`);
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    redirect(
+      `/dashboard/transactions?month=${currentMonth}&year=${currentYear}`,
+    );
   }
+
+  // Usar o ano fornecido ou o ano atual
+  const selectedYear = year || new Date().getFullYear().toString();
+
+  // Se não houver ano na URL, redirecionar para incluir o ano atual
+  if (!year) {
+    redirect(`/dashboard/transactions?month=${month}&year=${selectedYear}`);
+  }
+  const monthNum = parseInt(month);
+
+  // Calcular o primeiro e último dia do mês corretamente
+  const startDate = new Date(parseInt(selectedYear), monthNum - 1, 1);
+  // Para obter o último dia do mês, usamos o mês seguinte com dia 0
+  const endDate = new Date(parseInt(selectedYear), monthNum, 0);
 
   const transactions = await db.transactions.findMany({
     where: {
       userId,
       date: {
-        gte: new Date(`2025-${month}-01`),
-        lt: new Date(`2025-${month}-31`),
+        gte: startDate,
+        lte: endDate,
       },
       ...(category ? { category: category as TransactionCategory } : {}),
       ...(type ? { type: type as TransactionType } : {}),
@@ -66,6 +87,8 @@ const TransactionsPage = async ({
       createAt: "desc",
     },
   });
+
+  const availableYears = await getAvailableYears();
 
   return (
     <>
@@ -86,6 +109,7 @@ const TransactionsPage = async ({
             </TabsList>
 
             <div className="flex flex-wrap items-center gap-2">
+              <YearSelect availableYears={availableYears} />
               <TimeSelect />
               <TransactionsCategorySelect />
               <TransactionsTypeSelect />

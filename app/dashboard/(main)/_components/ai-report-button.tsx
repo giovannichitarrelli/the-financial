@@ -19,15 +19,16 @@ import Markdown from "react-markdown";
 
 interface AiReportButtonProps {
   month: string;
+  year?: string;
 }
 
-const AiReportButton = ({ month }: AiReportButtonProps) => {
+const AiReportButton = ({ month, year }: AiReportButtonProps) => {
   const [report, setReport] = useState<string | null>(null);
   const [reportIsLoading, setReportIsLoading] = useState(false);
   const handleGenerateReportClick = async () => {
     try {
       setReportIsLoading(true);
-      const aiReport = await generateAiReport({ month });
+      const aiReport = await generateAiReport({ month, year });
       console.log({ aiReport });
       setReport(aiReport);
     } catch (error) {

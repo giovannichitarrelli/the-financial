@@ -21,9 +21,18 @@ const TransactionsTypeSelect = () => {
   const month = searchParams.get("month") || `0${new Date().getMonth() + 1}`;
 
   const handleTypeChange = (type: string) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString());
     params.set("type", type);
-    params.set("month", month);
+
+    // Preservar month e year se existirem
+    if (month) {
+      params.set("month", month);
+    }
+    const year = searchParams.get("year");
+    if (year) {
+      params.set("year", year);
+    }
+
     push(`/dashboard/transactions?${params.toString()}`);
   };
 
