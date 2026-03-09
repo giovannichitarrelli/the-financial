@@ -52,7 +52,6 @@ model User {
   transactions Transactions[]
   investments  Investments[]
   wishlist     Wishlist[]
-  Member       Member[]
 }
 
 model VerificationToken {
@@ -73,13 +72,10 @@ model Transactions {
   date            DateTime
   done            Boolean                     @default(false)
   isFixed         Boolean                     @default(false)
-  member          Member?                     @relation(fields: [memberId], references: [id])
-  memberId        String?
   user            User                        @relation(fields: [userId], references: [id], onDelete: Cascade)
   depositCategory TransactionDepositCategory?
   category        TransactionCategory?
   type            TransactionType?
-  essentialType   TransactionEssentialType?
   Wishlist        Wishlist?                   @relation(fields: [wishlistId], references: [id])
   wishlistId      String?
 }
@@ -89,11 +85,7 @@ enum TransactionType {
   EXPENSE
 }
 
-enum TransactionEssentialType {
-  ESSENTIAL
-  NOT_ESSENTIAL
-  SALARY
-}
+
 
 enum TransactionCategory {
   HOUSING
@@ -156,12 +148,4 @@ model Wishlist {
   Transactions Transactions[]
 }
 
-model Member {
-  id             String         @id @default(cuid())
-  name           String
-  userId         String
-  createAt       DateTime       @default(now())
-  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Transactions   Transactions[]
-  transactionsId String?
-}
+

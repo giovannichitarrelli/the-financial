@@ -9,13 +9,10 @@ import {
 } from "@/app/_constants/transactions";
 import EditTransactionButton from "../_components/edit-transaction-button";
 import DeleteTransactionButton from "../_components/delete-transaction-button";
-import TransactionEssentialTypeBadge from "../_components/type-essential-badge";
 import DoneBadge from "../_components/done-badge";
 import FixedBadge from "../_components/fixed-badge";
 
-export const createTransactionColumns = (
-  members: Array<{ id: string; name: string }>,
-): ColumnDef<Transactions>[] => [
+export const createTransactionColumns = (): ColumnDef<Transactions>[] => [
   {
     accessorKey: "name",
     header: "Nome",
@@ -86,15 +83,6 @@ export const createTransactionColumns = (
     ),
   },
   {
-    accessorKey: "essentialType",
-    header: "Necessidade",
-    cell: ({ row: { original: transaction } }) => (
-      <div className="text-xs">
-        <TransactionEssentialTypeBadge transaction={transaction} />
-      </div>
-    ),
-  },
-  {
     accessorKey: "done",
     header: "Pago",
     cell: ({ row: { original: transaction } }) => (
@@ -118,7 +106,7 @@ export const createTransactionColumns = (
     cell: ({ row: { original: transaction } }) => {
       return (
         <div className="flex items-center space-x-1 text-xs">
-          <EditTransactionButton transaction={transaction} members={members} />
+          <EditTransactionButton transaction={transaction} />
           <DeleteTransactionButton transactionId={transaction.id} />
         </div>
       );

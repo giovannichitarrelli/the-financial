@@ -2,7 +2,6 @@
 
 import {
   TransactionCategory,
-  TransactionEssentialType,
   TransactionType,
   TransactionDepositCategory,
 } from "@prisma/client";
@@ -17,13 +16,11 @@ interface UpsertTransactionParams {
   name: string;
   amount: number;
   type: TransactionType;
-  essentialType?: TransactionEssentialType | null;
   category?: TransactionCategory | null;
   depositCategory?: TransactionDepositCategory | null;
   done: boolean;
   isFixed: boolean;
   date: Date;
-  memberId: string;
 }
 
 export const upsertTransaction = async (params: UpsertTransactionParams) => {

@@ -7,9 +7,8 @@ import AddTransactionButton from "../transactions/_components/add-transaction-bu
 type Props = {
   user: Session["user"];
   userCanAddTransaction?: boolean;
-  members: Array<{ id: string; name: string }>;
 };
-export function SiteHeader({ userCanAddTransaction, user, members }: Props) {
+export function SiteHeader({ userCanAddTransaction, user }: Props) {
   const userName = user.name.split(" ")[0];
 
   return (
@@ -22,10 +21,7 @@ export function SiteHeader({ userCanAddTransaction, user, members }: Props) {
         />
         <span className="text-xs">Olá, {userName} 👋</span>
         <div className="ml-auto flex items-center gap-2">
-          <AddTransactionButton
-            members={members}
-            userCanAddTransaction={userCanAddTransaction}
-          />
+          <AddTransactionButton userCanAddTransaction={userCanAddTransaction} />
         </div>
       </div>
     </header>

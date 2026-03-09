@@ -9,7 +9,6 @@ import {
   LayoutDashboardIcon,
   ListIcon,
   SettingsIcon,
-  UsersIcon,
 } from "lucide-react";
 import { NavMain } from "@/app/dashboard/_components/nav-main";
 import {
@@ -47,11 +46,6 @@ const data = {
       title: "Wishlist",
       url: "/dashboard/wishlist",
       icon: HeartIcon,
-    },
-    {
-      title: "Members",
-      url: "/dashboard/member",
-      icon: UsersIcon,
     },
   ],
   navSecondary: [

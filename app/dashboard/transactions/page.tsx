@@ -85,15 +85,6 @@ const TransactionsPage = async ({
     },
   });
 
-  const member = await db.member.findMany({
-    where: {
-      userId,
-    },
-    orderBy: {
-      createAt: "desc",
-    },
-  });
-
   const availableYears = await getAvailableYears();
 
   return (
@@ -127,10 +118,7 @@ const TransactionsPage = async ({
             {transactions.length > 0 ? (
               transactions.map((transactions) => (
                 <>
-                  <CardsTransactions
-                    transactions={transactions}
-                    members={member}
-                  />
+                  <CardsTransactions transactions={transactions} />
                 </>
               ))
             ) : (
@@ -138,10 +126,7 @@ const TransactionsPage = async ({
             )}
           </TabsContent>
           <TabsContent value="table">
-            <TransactionsDataTable
-              transactions={transactions}
-              members={member}
-            />
+            <TransactionsDataTable transactions={transactions} />
           </TabsContent>
         </Tabs>
       </div>

@@ -1,10 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import {
-  TransactionCategory,
-  TransactionEssentialType,
-  TransactionType,
-} from "@prisma/client";
+import { TransactionCategory, TransactionType } from "@prisma/client";
 
 export type TransactionPercentagePerType = {
   [key in TransactionType]: number;
@@ -12,24 +8,6 @@ export type TransactionPercentagePerType = {
 
 export interface TotalExpensePerCategory {
   category: TransactionCategory;
-  totalAmount: number;
-  percentageOfTotal: number;
-}
-
-export type TransactionEssentialPercentagePerType = {
-  [key in Exclude<TransactionEssentialType, "SALARY">]: number;
-};
-
-export interface TotalExpensePerMember {
-  memberId: string;
-  memberName: string;
-  totalAmount: number;
-  percentageOfTotal: number;
-}
-
-export interface TotalDepositsPerMember {
-  memberId: string;
-  memberName: string;
   totalAmount: number;
   percentageOfTotal: number;
 }

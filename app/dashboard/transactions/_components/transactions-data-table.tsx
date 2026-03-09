@@ -6,16 +6,14 @@ import { createTransactionColumns } from "../_columns";
 
 interface TransactionsDataTableProps {
   transactions: Transactions[];
-  members: Array<{ id: string; name: string }>;
 }
 
 export function TransactionsDataTable({
   transactions,
-  members,
 }: TransactionsDataTableProps) {
   return (
     <DataTable
-      columns={createTransactionColumns(members)}
+      columns={createTransactionColumns()}
       data={JSON.parse(JSON.stringify(transactions))}
     />
   );

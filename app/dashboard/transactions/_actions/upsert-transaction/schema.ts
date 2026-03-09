@@ -1,6 +1,5 @@
 import {
   TransactionCategory,
-  TransactionEssentialType,
   TransactionType,
   TransactionDepositCategory,
 } from "@prisma/client";
@@ -15,9 +14,7 @@ export const upsertTransactionSchema = z.object({
     .nativeEnum(TransactionDepositCategory)
     .nullable()
     .optional(),
-  essentialType: z.nativeEnum(TransactionEssentialType).nullable().optional(),
   date: z.date(),
   done: z.boolean(),
   isFixed: z.boolean(),
-  memberId: z.string(),
 });

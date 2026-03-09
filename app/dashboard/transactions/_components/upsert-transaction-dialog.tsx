@@ -30,14 +30,12 @@ import {
   TRANSACTION_CATEGORY_OPTIONS,
   TRANSACTION_DEPOSIT_CATEGORY_OPTIONS,
   TRANSACTION_TYPE_OPTIONS,
-  TRANSACTION_ESSENTIAL_TYPE_OPTIONS,
 } from "../../../_constants/transactions";
 import { DatePicker } from "@/app/_components/ui/date-picker";
 import { z } from "zod";
 import {
   TransactionType,
   TransactionCategory,
-  TransactionEssentialType,
   TransactionDepositCategory,
 } from "@prisma/client";
 import { useForm } from "react-hook-form";
@@ -55,7 +53,6 @@ interface UpsertTransactionDialogProps {
   defaultValues?: FormSchema;
   transactionId?: string;
   setIsOpen: (isOpen: boolean) => void;
-  members: Array<{ id: string; name: string }>;
 }
 
 const formSchema = z
@@ -70,9 +67,6 @@ const formSchema = z
       .positive({
         message: "O valor deve ser positivo.",
       }),
-    memberId: z.string({
-      required_error: "Responsável é obrigatório.",
-    }),
     date: z.date({
       required_error: "A data é obrigatória.",
     }),
@@ -84,23 +78,16 @@ const formSchema = z
       .nativeEnum(TransactionDepositCategory)
       .nullable()
       .optional(),
-    essentialType: z.nativeEnum(TransactionEssentialType).nullable().optional(),
   })
-  .refine(
-    (data) => {
-      if (data.type === TransactionType.EXPENSE) {
-        return !!data.category && !!data.essentialType;
-      }
-      if (data.type === TransactionType.DEPOSIT) {
-        return !!data.depositCategory;
-      }
-      return true;
-    },
-    // {
-    //   message: "Preencha todos os campos obrigatórios de acordo com o tipo.",
-    //   path: ["category"],
-    // },
-  );
+  .refine((data) => {
+    if (data.type === TransactionType.EXPENSE) {
+      return !!data.category;
+    }
+    if (data.type === TransactionType.DEPOSIT) {
+      return !!data.depositCategory;
+    }
+    return true;
+  });
 
 type FormSchema = z.infer<typeof formSchema>;
 
@@ -109,7 +96,6 @@ const UpsertTransactionDialog = ({
   defaultValues,
   transactionId,
   setIsOpen,
-  members,
 }: UpsertTransactionDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -117,10 +103,8 @@ const UpsertTransactionDialog = ({
       amount: 0,
       category: undefined,
       depositCategory: undefined,
-      essentialType: undefined,
       date: new Date(),
       name: "",
-      memberId: "",
       type: TransactionType.EXPENSE,
       done: false,
       isFixed: false,
@@ -133,10 +117,6 @@ const UpsertTransactionDialog = ({
         await upsertTransaction({
           ...data,
           id: transactionId,
-          essentialType:
-            data.type === TransactionType.EXPENSE
-              ? data.essentialType ?? TransactionEssentialType.ESSENTIAL
-              : null,
           category:
             data.type === TransactionType.EXPENSE
               ? data.category ?? TransactionCategory.OTHER
@@ -266,132 +246,67 @@ const UpsertTransactionDialog = ({
                 )}
               />
 
-              <div className="flex w-full items-center justify-center gap-2">
-                <FormField
-                  control={form.control}
-                  name="memberId"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Member</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <FormControl className="w-full">
-                          <SelectTrigger>
-                            <SelectValue placeholder="Member" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {members.map((member) => (
-                            <SelectItem key={member.id} value={member.id}>
-                              {member.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="type"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Type</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl className="w-full">
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {TRANSACTION_TYPE_OPTIONS.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Type</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl className="w-full">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {TRANSACTION_TYPE_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <div className="flex justify-between gap-2 ">
-                {/* Só mostra category e necessity se for EXPENSE */}
+                {/* Só mostra category se for EXPENSE */}
                 {typeValue === TransactionType.EXPENSE && (
-                  <>
-                    <FormField
-                      control={form.control}
-                      name="category"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Category</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value || ""}
-                          >
-                            <FormControl className="w-full">
-                              <SelectTrigger>
-                                <SelectValue placeholder="Category" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {TRANSACTION_CATEGORY_OPTIONS.map((option) => (
-                                <SelectItem
-                                  key={option.value}
-                                  value={option.value}
-                                >
-                                  {option.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="essentialType"
-                      render={({ field }) => (
-                        <FormItem className=" w-full">
-                          <FormLabel>Necessity</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value || ""}
-                          >
-                            <FormControl className="w-full">
-                              <SelectTrigger>
-                                <SelectValue placeholder="Selecionar" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {TRANSACTION_ESSENTIAL_TYPE_OPTIONS.map(
-                                (option) => (
-                                  <SelectItem
-                                    key={option.value}
-                                    value={option.value}
-                                  >
-                                    {option.label}
-                                  </SelectItem>
-                                ),
-                              )}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </>
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormLabel>Category</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value || ""}
+                        >
+                          <FormControl className="w-full">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Category" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {TRANSACTION_CATEGORY_OPTIONS.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                value={option.value}
+                              >
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 )}
 
                 {/* Só mostra depositCategory se for DEPOSIT */}

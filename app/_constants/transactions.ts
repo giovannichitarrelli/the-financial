@@ -3,7 +3,6 @@ import {
   InvestmentsType,
   TransactionCategory,
   TransactionDepositCategory,
-  TransactionEssentialType,
   TransactionType,
 } from "@prisma/client";
 
@@ -131,21 +130,6 @@ export const TRANSACTION_TYPE_OPTIONS = [
     value: TransactionType.DEPOSIT,
     label: "Depósito",
   },
-];
-
-export const TRANSACTION_ESSENTIAL_TYPE_OPTIONS = [
-  {
-    value: TransactionEssentialType.ESSENTIAL,
-    label: "Essencial",
-  },
-  {
-    value: TransactionEssentialType.NOT_ESSENTIAL,
-    label: "Não essencial",
-  },
-  // {
-  //   value: TransactionEssentialType.SALARY,
-  //   label: "Salário",
-  // },
 ];
 
 export const INVESTMENT_TYPE_OPTIONS = [
